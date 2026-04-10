@@ -1,4 +1,5 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
+import { ZoomIn, ZoomOut } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface ProductImageSpinProps {
@@ -6,7 +7,6 @@ interface ProductImageSpinProps {
 }
 
 const ProductImageSpin = ({ images }: ProductImageSpinProps) => {
-  // Build 4 frames from available images
   const frames = images.length >= 3
     ? [
         { src: images[0], mirror: false },
@@ -23,12 +23,16 @@ const ProductImageSpin = ({ images }: ProductImageSpinProps) => {
 
   const [currentFrame, setCurrentFrame] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
+  const [zoom, setZoom] = useState(0.75); // start slightly pulled back
   const startX = useRef(0);
   const frameAtStart = useRef(0);
   const autoRotateTimer = useRef<ReturnType<typeof setInterval> | null>(null);
   const resumeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const THRESHOLD = 120;
+  const MIN_ZOOM = 0.6;
+  const MAX_ZOOM = 1.8;
+  const ZOOM_STEP = 0.15;
 
   const startAutoRotate = useCallback(() => {
     if (autoRotateTimer.current) clearInterval(autoRotateTimer.current);
@@ -50,9 +54,7 @@ const ProductImageSpin = ({ images }: ProductImageSpinProps) => {
 
   useEffect(() => {
     startAutoRotate();
-    return () => {
-      stopAutoRotate();
-    };
+    return () => { stopAutoRotate(); };
   }, [startAutoRotate, stopAutoRotate]);
 
   const handlePointerDown = useCallback((e: React.PointerEvent) => {
@@ -73,10 +75,13 @@ const ProductImageSpin = ({ images }: ProductImageSpinProps) => {
 
   const handlePointerUp = useCallback(() => {
     setIsDragging(false);
-    resumeTimer.current = setTimeout(() => {
-      startAutoRotate();
-    }, 3000);
+    resumeTimer.current = setTimeout(() => { startAutoRotate(); }, 3000);
   }, [startAutoRotate]);
+
+  const handleWheel = useCallback((e: React.WheelEvent) => {
+    e.preventDefault();
+    setZoom(prev => Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, prev - e.deltaY * 0.002)));
+  }, []);
 
   const frame = frames[currentFrame];
 
@@ -90,14 +95,35 @@ const ProductImageSpin = ({ images }: ProductImageSpinProps) => {
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
       onPointerLeave={handlePointerUp}
+      onWheel={handleWheel}
     >
       <img
         src={frame.src}
         alt="Product view"
-        className="w-full h-full object-cover transition-transform duration-100"
-        style={frame.mirror ? { transform: 'scaleX(-1)' } : undefined}
+        className="w-full h-full object-contain transition-transform duration-200"
+        style={{
+          transform: `scale(${zoom})${frame.mirror ? ' scaleX(-1)' : ''}`,
+        }}
         draggable={false}
       />
+
+      {/* Zoom controls */}
+      <div className="absolute top-3 right-3 flex flex-col gap-1.5 pointer-events-auto z-10">
+        <button
+          className="w-8 h-8 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+          onClick={(e) => { e.stopPropagation(); setZoom(prev => Math.min(MAX_ZOOM, prev + ZOOM_STEP)); }}
+        >
+          <ZoomIn className="h-4 w-4" />
+        </button>
+        <button
+          className="w-8 h-8 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+          onClick={(e) => { e.stopPropagation(); setZoom(prev => Math.max(MIN_ZOOM, prev - ZOOM_STEP)); }}
+        >
+          <ZoomOut className="h-4 w-4" />
+        </button>
+      </div>
+
+      {/* Dot indicators */}
       <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
         {frames.map((_, i) => (
           <button
