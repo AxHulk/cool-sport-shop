@@ -4,6 +4,10 @@ import catRashguards from '@/assets/cat-rashguards.jpg';
 import catBags from '@/assets/cat-bags.jpg';
 import jacketFront from '@/assets/black_jacket_front.png';
 import jacketBack from '@/assets/black_jacket_back.png';
+import brownJacketFront from '@/assets/brown_jacket_front.png';
+import brownJacketBack from '@/assets/brown_jacket_back.png';
+import whiteJacketFront from '@/assets/white_jacket_front.png';
+import whiteJacketBack from '@/assets/white_jacket_back.png';
 import braFront from '@/assets/black_bra_3d_front.png';
 import braBack from '@/assets/black_bra_3d_back.png';
 import blueBraFront from '@/assets/blue_bra_3d_front.png';
@@ -68,28 +72,6 @@ export const products: Product[] = [
     isBestseller: true,
   },
   {
-    id: '3',
-    name: 'Рашгард Aero Long Sleeve',
-    category: 'rashguards',
-    price: 4790,
-    images: [catRashguards],
-    colors: [
-      { name: 'Коралловый', hex: '#ff6347' },
-      { name: 'Чёрный', hex: '#1a1a1a' },
-      { name: 'Олива', hex: '#6b7c4e' },
-    ],
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-    description: 'Рашгард с длинным рукавом из быстросохнущей ткани с UV-защитой. Облегающий крой.',
-    specs: {
-      'Состав': '85% полиэстер, 15% спандекс',
-      'Крой': 'Облегающий',
-      'Рукав': 'Длинный',
-      'UV-защита': 'UPF 50+',
-      'Уход': 'Машинная стирка при 30°C',
-    },
-    isNew: true,
-  },
-  {
     id: '4',
     name: 'Сумка Studio Duffel',
     category: 'bags',
@@ -124,25 +106,6 @@ export const products: Product[] = [
       'Состав': '75% нейлон, 25% спандекс',
       'Посадка': 'Средняя',
       'Пуш-ап': 'Нет',
-      'Уход': 'Машинная стирка при 30°C',
-    },
-  },
-  {
-    id: '7',
-    name: 'Рашгард Zen Short Sleeve',
-    category: 'rashguards',
-    price: 3990,
-    images: [catRashguards],
-    colors: [
-      { name: 'Чёрный', hex: '#1a1a1a' },
-      { name: 'Пыльная роза', hex: '#c9a0a0' },
-    ],
-    sizes: ['S', 'M', 'L'],
-    description: 'Рашгард с коротким рукавом. Дышащая ткань, идеальна для йоги и пилатеса.',
-    specs: {
-      'Состав': '88% полиэстер, 12% спандекс',
-      'Крой': 'Свободный',
-      'Рукав': 'Короткий',
       'Уход': 'Машинная стирка при 30°C',
     },
   },
