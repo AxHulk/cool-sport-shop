@@ -134,9 +134,22 @@ export const products: Product[] = [
     name: 'Рашгард Stealth Pro',
     category: 'rashguards',
     price: 5490,
-    images: [jacketFront, jacketBack],
+    images: [jacketFront],
+    spinImages: [jacketFront, jacketBack],
+    colorSpinImages: {
+      'Чёрный': [jacketFront, jacketBack],
+      'Шоколад': [brownJacketFront, brownJacketBack],
+      'Сливочный': [whiteJacketFront, whiteJacketBack],
+    },
+    colorImages: {
+      'Чёрный': jacketFront,
+      'Шоколад': brownJacketFront,
+      'Сливочный': whiteJacketFront,
+    },
     colors: [
       { name: 'Чёрный', hex: '#1a1a1a' },
+      { name: 'Шоколад', hex: '#3e2723' },
+      { name: 'Сливочный', hex: '#f0e6d3' },
     ],
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
     description: 'Премиальный рашгард с компрессионной посадкой. Быстросохнущая ткань с UV-защитой UPF 50+. Идеален для интенсивных тренировок и водных видов спорта.',
