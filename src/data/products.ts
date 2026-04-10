@@ -27,6 +27,8 @@ import leggingsBrownFront from '@/assets/leggings_brown_front.png';
 import leggingsBrownBack from '@/assets/leggings_brown_back.png';
 import leggingsWhiteFront from '@/assets/leggings_white_front.png';
 import leggingsWhiteBack from '@/assets/leggings_white_back.png';
+import bagBlueFront from '@/assets/bag_blue_front_v3.png';
+import bagBlueBack from '@/assets/bag_blue_back_v3.png';
 
 export type ProductCategory = 'leggings' | 'tops' | 'rashguards' | 'bags';
 export type ProductSize = 'XS' | 'S' | 'M' | 'L' | 'XL';
@@ -130,41 +132,22 @@ export const products: Product[] = [
     isNew: true,
   },
   {
-    id: '4',
-    name: 'Сумка Studio Duffel',
+    id: '16',
+    name: 'Сумка Soft Tote',
     category: 'bags',
-    price: 6990,
-    images: [catBags],
+    price: 4590,
+    images: [bagBlueFront],
+    spinImages: [bagBlueFront, bagBlueBack],
     colors: [
-      { name: 'Бежевый', hex: '#c4b59d' },
-      { name: 'Чёрный', hex: '#1a1a1a' },
+      { name: 'Голубой', hex: '#c7dcf7' },
     ],
     sizes: ['M' as ProductSize],
-    description: 'Вместительная спортивная сумка с отделением для обуви и карманом для мокрых вещей.',
+    description: 'Мягкая текстильная сумка с верхними ручками и съёмным плечевым ремнём. Подходит для города и тренировок.',
     specs: {
-      'Материал': 'Нейлон с водоотталкивающей пропиткой',
-      'Объём': '35 л',
-      'Отделения': 'Основное, для обуви, для мокрых вещей',
+      'Материал': 'Плотный текстиль',
+      'Формат': 'Средний',
       'Ремень': 'Съёмный, регулируемый',
-    },
-  },
-  {
-    id: '8',
-    name: 'Сумка Mini Crossbody',
-    category: 'bags',
-    price: 2490,
-    images: [catBags],
-    colors: [
-      { name: 'Чёрный', hex: '#1a1a1a' },
-      { name: 'Сливочный', hex: '#f0e6d3' },
-    ],
-    sizes: ['S' as ProductSize],
-    description: 'Компактная сумка через плечо для тренировок. Вмещает телефон, ключи и карту.',
-    specs: {
-      'Материал': 'Эко-кожа',
-      'Объём': '2 л',
-      'Отделения': '2 кармана на молнии',
-      'Ремень': 'Регулируемый',
+      'Уход': 'Сухая чистка',
     },
     isNew: true,
   },
