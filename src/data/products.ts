@@ -16,6 +16,7 @@ export interface Product {
   price: number;
   oldPrice?: number;
   images: string[];
+  modelUrl?: string;
   colors: ProductColor[];
   sizes: ProductSize[];
   description: string;
@@ -217,5 +218,25 @@ export const products: Product[] = [
     },
     isNew: true,
     isBestseller: true,
+  },
+  {
+    id: '10',
+    name: 'Топ Power Bra 3D',
+    category: 'tops',
+    price: 3990,
+    images: [catTops],
+    modelUrl: '/models/bra_black.glb',
+    colors: [
+      { name: 'Чёрный', hex: '#1a1a1a' },
+    ],
+    sizes: ['XS', 'S', 'M', 'L'],
+    description: 'Спортивный топ с высокой поддержкой. Дышащая ткань, анатомический крой. Доступен в 3D-просмотре.',
+    specs: {
+      'Состав': '80% нейлон, 20% эластан',
+      'Поддержка': 'Высокая',
+      'Чашки': 'Формованные',
+      'Уход': 'Ручная стирка',
+    },
+    isNew: true,
   },
 ];
