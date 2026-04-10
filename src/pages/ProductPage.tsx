@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import ProductCard from '@/components/ProductCard';
 import ProductViewer3D from '@/components/ProductViewer3D';
+import ProductImageSpin from '@/components/ProductImageSpin';
 import { cn } from '@/lib/utils';
 
 const categoryNames: Record<string, string> = {
@@ -38,27 +39,21 @@ const ProductPage = () => {
       <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
         {/* Gallery / 3D Viewer */}
         <div>
-          {product.modelUrl && view3D ? (
+          {product.spinImages ? (
+            <ProductImageSpin images={product.spinImages} />
+          ) : product.modelUrl && view3D ? (
             <ProductViewer3D modelUrl={product.modelUrl} />
           ) : (
             <div className="aspect-square rounded-lg overflow-hidden bg-muted">
               <img src={product.images[0]} alt={product.name} className="w-full h-full object-cover" />
             </div>
           )}
-          {product.modelUrl && (
+          {product.modelUrl && !product.spinImages && (
             <div className="flex gap-2 mt-3 justify-center">
-              <Button
-                variant={view3D ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setView3D(true)}
-              >
+              <Button variant={view3D ? 'default' : 'outline'} size="sm" onClick={() => setView3D(true)}>
                 <RotateCcw className="h-4 w-4 mr-1" /> 3D
               </Button>
-              <Button
-                variant={!view3D ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setView3D(false)}
-              >
+              <Button variant={!view3D ? 'default' : 'outline'} size="sm" onClick={() => setView3D(false)}>
                 <Image className="h-4 w-4 mr-1" /> Фото
               </Button>
             </div>
