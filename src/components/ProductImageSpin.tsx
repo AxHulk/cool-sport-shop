@@ -7,19 +7,7 @@ interface ProductImageSpinProps {
 }
 
 const ProductImageSpin = ({ images }: ProductImageSpinProps) => {
-  const frames = images.length >= 3
-    ? [
-        { src: images[0], mirror: false },
-        { src: images[1], mirror: false },
-        { src: images[2], mirror: false },
-        { src: images[1], mirror: true },
-      ]
-    : [
-        { src: images[0], mirror: false },
-        { src: images[0], mirror: true },
-        { src: images[1] || images[0], mirror: false },
-        { src: images[1] || images[0], mirror: true },
-      ];
+  const frames = images.map(src => ({ src, mirror: false }));
 
   const [currentFrame, setCurrentFrame] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
