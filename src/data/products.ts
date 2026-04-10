@@ -15,6 +15,10 @@ import blueBraBack from '@/assets/blue_bra_3d_back.png';
 import brownBraFront from '@/assets/brown_bra_3d_front.png';
 import brownBraBack from '@/assets/brown_bra_3d_back.png';
 import brownBraAngle from '@/assets/brown_bra_3d_angle.png';
+import blackTopFront from '@/assets/black_top_front.png';
+import blackTopBack from '@/assets/black_top_back.png';
+import whiteTopFront from '@/assets/white_top_front.png';
+import whiteTopBack from '@/assets/white_top_back.png';
 
 export type ProductCategory = 'leggings' | 'tops' | 'rashguards' | 'bags';
 export type ProductSize = 'XS' | 'S' | 'M' | 'L' | 'XL';
@@ -210,6 +214,35 @@ export const products: Product[] = [
       'Чашки': 'Вшитые',
       'Лямки': 'Перекрёстные',
       'Уход': 'Ручная стирка',
+    },
+    isNew: true,
+  },
+  {
+    id: '12',
+    name: 'Топ Ribbed Cami',
+    category: 'tops',
+    price: 2990,
+    images: [blackTopFront],
+    spinImages: [blackTopFront, blackTopBack],
+    colorSpinImages: {
+      'Чёрный': [blackTopFront, blackTopBack],
+      'Сливочный': [whiteTopFront, whiteTopBack],
+    },
+    colorImages: {
+      'Чёрный': blackTopFront,
+      'Сливочный': whiteTopFront,
+    },
+    colors: [
+      { name: 'Чёрный', hex: '#1a1a1a' },
+      { name: 'Сливочный', hex: '#f0e6d3' },
+    ],
+    sizes: ['XS', 'S', 'M', 'L'],
+    description: 'Топ на тонких бретелях из рубчатого трикотажа. V-образный вырез, приталенный силуэт. Доступен в 3D-просмотре.',
+    specs: {
+      'Состав': '92% хлопок, 8% эластан',
+      'Поддержка': 'Лёгкая',
+      'Бретели': 'Тонкие, регулируемые',
+      'Уход': 'Машинная стирка при 30°C',
     },
     isNew: true,
   },
