@@ -5,7 +5,6 @@ import catBags from '@/assets/cat-bags.jpg';
 import jacketFront from '@/assets/black_jacket_front.png';
 import jacketBack from '@/assets/black_jacket_back.png';
 import braFront from '@/assets/black_bra_3d_front.png';
-import braAngle from '@/assets/black_bra_3d_angle.png';
 import braBack from '@/assets/black_bra_3d_back.png';
 
 export type ProductCategory = 'leggings' | 'tops' | 'rashguards' | 'bags';
@@ -229,7 +228,7 @@ export const products: Product[] = [
     category: 'tops',
     price: 3990,
     images: [braFront],
-    spinImages: [braFront, braAngle, braBack],
+    spinImages: [braFront, braBack],
     colors: [
       { name: 'Чёрный', hex: '#1a1a1a' },
     ],
