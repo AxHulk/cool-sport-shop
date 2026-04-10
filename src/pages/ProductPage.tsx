@@ -1,13 +1,21 @@
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Heart, ShoppingBag, Ruler } from 'lucide-react';
+import { Heart, ShoppingBag, Ruler, RotateCcw, Image } from 'lucide-react';
 import { products } from '@/data/products';
 import { useCart } from '@/context/CartContext';
 import { useFavorites } from '@/context/FavoritesContext';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import ProductCard from '@/components/ProductCard';
+import ProductViewer3D from '@/components/ProductViewer3D';
 import { cn } from '@/lib/utils';
+
+const categoryNames: Record<string, string> = {
+  leggings: 'Леггинсы',
+  tops: 'Топы',
+  rashguards: 'Рашгарды',
+  bags: 'Сумки',
+};
 
 const ProductPage = () => {
   const { id } = useParams();
@@ -17,9 +25,11 @@ const ProductPage = () => {
 
   const [selectedColor, setSelectedColor] = useState(product?.colors[0]);
   const [selectedSize, setSelectedSize] = useState(product?.sizes[1] || product?.sizes[0]);
+  const [view3D, setView3D] = useState(true);
 
   if (!product) return <div className="container py-20 text-center">Товар не найден</div>;
 
+  const has3D = product.images.length >= 2;
   const related = products.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4);
   const formatPrice = (p: number) => p.toLocaleString('ru-RU') + ' ₽';
   const fav = isFavorite(product.id);
@@ -27,14 +37,38 @@ const ProductPage = () => {
   return (
     <div className="container py-8">
       <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
-        {/* Gallery */}
-        <div className="aspect-square rounded-lg overflow-hidden bg-muted">
-          <img src={product.images[0]} alt={product.name} className="w-full h-full object-cover" />
+        {/* Gallery / 3D Viewer */}
+        <div>
+          {has3D && view3D ? (
+            <ProductViewer3D frontImage={product.images[0]} backImage={product.images[1]} />
+          ) : (
+            <div className="aspect-square rounded-lg overflow-hidden bg-muted">
+              <img src={product.images[0]} alt={product.name} className="w-full h-full object-cover" />
+            </div>
+          )}
+          {has3D && (
+            <div className="flex gap-2 mt-3 justify-center">
+              <Button
+                variant={view3D ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setView3D(true)}
+              >
+                <RotateCcw className="h-4 w-4 mr-1" /> 3D
+              </Button>
+              <Button
+                variant={!view3D ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setView3D(false)}
+              >
+                <Image className="h-4 w-4 mr-1" /> Фото
+              </Button>
+            </div>
+          )}
         </div>
 
         {/* Info */}
         <div>
-          <p className="text-sm text-muted-foreground mb-1">{product.category === 'leggings' ? 'Леггинсы' : product.category === 'tops' ? 'Топы' : product.category === 'rashguards' ? 'Рашгарды' : 'Сумки'}</p>
+          <p className="text-sm text-muted-foreground mb-1">{categoryNames[product.category] || product.category}</p>
           <h1 className="text-3xl font-serif mb-3">{product.name}</h1>
           <div className="flex items-center gap-3 mb-6">
             <span className="text-2xl font-semibold">{formatPrice(product.price)}</span>
@@ -81,13 +115,7 @@ const ProductPage = () => {
             </div>
             <div className="flex gap-2">
               {product.sizes.map(s => (
-                <Button
-                  key={s}
-                  variant={selectedSize === s ? 'default' : 'outline'}
-                  size="sm"
-                  className="h-10 w-12"
-                  onClick={() => setSelectedSize(s)}
-                >
+                <Button key={s} variant={selectedSize === s ? 'default' : 'outline'} size="sm" className="h-10 w-12" onClick={() => setSelectedSize(s)}>
                   {s}
                 </Button>
               ))}

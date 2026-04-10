@@ -2,6 +2,8 @@ import catLeggings from '@/assets/cat-leggings.jpg';
 import catTops from '@/assets/cat-tops.jpg';
 import catRashguards from '@/assets/cat-rashguards.jpg';
 import catBags from '@/assets/cat-bags.jpg';
+import jacketFront from '@/assets/black_jacket_front.png';
+import jacketBack from '@/assets/black_jacket_back.png';
 
 export type ProductCategory = 'leggings' | 'tops' | 'rashguards' | 'bags';
 export type ProductSize = 'XS' | 'S' | 'M' | 'L' | 'XL';
@@ -194,5 +196,26 @@ export const products: Product[] = [
       'Ремень': 'Регулируемый',
     },
     isNew: true,
+  },
+  {
+    id: '9',
+    name: 'Рашгард Stealth Pro',
+    category: 'rashguards',
+    price: 5490,
+    images: [jacketFront, jacketBack],
+    colors: [
+      { name: 'Чёрный', hex: '#1a1a1a' },
+    ],
+    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    description: 'Премиальный рашгард с компрессионной посадкой. Быстросохнущая ткань с UV-защитой UPF 50+. Идеален для интенсивных тренировок и водных видов спорта.',
+    specs: {
+      'Состав': '85% полиэстер, 15% спандекс',
+      'Крой': 'Облегающий',
+      'Рукав': 'Длинный',
+      'UV-защита': 'UPF 50+',
+      'Уход': 'Машинная стирка при 30°C',
+    },
+    isNew: true,
+    isBestseller: true,
   },
 ];
