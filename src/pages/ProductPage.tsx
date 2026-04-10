@@ -10,6 +10,7 @@ import ProductCard from '@/components/ProductCard';
 import ProductViewer3D from '@/components/ProductViewer3D';
 import ProductImageSpin from '@/components/ProductImageSpin';
 import { cn } from '@/lib/utils';
+import { toast } from 'sonner';
 
 const categoryNames: Record<string, string> = {
   leggings: 'Леггинсы',
@@ -124,7 +125,14 @@ const ProductPage = () => {
 
           {/* Actions */}
           <div className="flex gap-3 mb-8">
-            <Button size="lg" className="flex-1" onClick={() => selectedColor && selectedSize && addItem(product, selectedSize, selectedColor)}>
+            <Button size="lg" className="flex-1" onClick={() => {
+              if (selectedColor && selectedSize) {
+                addItem(product, selectedSize, selectedColor);
+                toast.success(`${product.name} добавлен в корзину`, {
+                  description: `${selectedColor.name}, ${selectedSize}`,
+                });
+              }
+            }}>
               <ShoppingBag className="h-5 w-5 mr-2" /> Добавить в корзину
             </Button>
             <Button variant="outline" size="lg" onClick={() => toggleFavorite(product.id)}>
