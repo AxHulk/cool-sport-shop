@@ -8,6 +8,9 @@ import braFront from '@/assets/black_bra_3d_front.png';
 import braBack from '@/assets/black_bra_3d_back.png';
 import blueBraFront from '@/assets/blue_bra_3d_front.png';
 import blueBraBack from '@/assets/blue_bra_3d_back.png';
+import brownBraFront from '@/assets/brown_bra_3d_front.png';
+import brownBraBack from '@/assets/brown_bra_3d_back.png';
+import brownBraAngle from '@/assets/brown_bra_3d_angle.png';
 
 export type ProductCategory = 'leggings' | 'tops' | 'rashguards' | 'bags';
 export type ProductSize = 'XS' | 'S' | 'M' | 'L' | 'XL';
