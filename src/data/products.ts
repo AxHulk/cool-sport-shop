@@ -19,6 +19,10 @@ import blackTopFront from '@/assets/black_top_front.png';
 import blackTopBack from '@/assets/black_top_back.png';
 import whiteTopFront from '@/assets/white_top_front.png';
 import whiteTopBack from '@/assets/white_top_back.png';
+import leggingsBlackFront from '@/assets/leggings_black_front.png';
+import leggingsBlackBack from '@/assets/leggings_black_back.png';
+import leggingsBlueFront from '@/assets/leggings_blue_front.png';
+import leggingsBlueBack from '@/assets/leggings_blue_back.png';
 
 export type ProductCategory = 'leggings' | 'tops' | 'rashguards' | 'bags';
 export type ProductSize = 'XS' | 'S' | 'M' | 'L' | 'XL';
@@ -53,27 +57,33 @@ export const categories = [
 
 export const products: Product[] = [
   {
-    id: '1',
-    name: 'Леггинсы Cloud High-Rise',
+    id: '13',
+    name: 'Леггинсы Smooth Fit',
     category: 'leggings',
-    price: 5990,
-    images: [catLeggings],
+    price: 4990,
+    images: [leggingsBlackFront],
+    spinImages: [leggingsBlackFront, leggingsBlackBack],
+    colorSpinImages: {
+      'Чёрный': [leggingsBlackFront, leggingsBlackBack],
+      'Голубой': [leggingsBlueFront, leggingsBlueBack],
+    },
+    colorImages: {
+      'Чёрный': leggingsBlackFront,
+      'Голубой': leggingsBlueFront,
+    },
     colors: [
       { name: 'Чёрный', hex: '#1a1a1a' },
-      { name: 'Графит', hex: '#4a4a4a' },
-      { name: 'Пудра', hex: '#d4a0a0' },
+      { name: 'Голубой', hex: '#c7dcf7' },
     ],
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
-    description: 'Леггинсы с высокой посадкой из премиальной компрессионной ткани. Бесшовная технология для максимального комфорта.',
+    description: 'Гладкие леггинсы с высокой посадкой и мягкой компрессией. Подходят для тренировок и повседневной носки.',
     specs: {
       'Состав': '78% нейлон, 22% спандекс',
       'Посадка': 'Высокая',
-      'Пуш-ап': 'Да',
-      'Особенности': 'Бесшовная технология, карман для телефона',
+      'Компрессия': 'Средняя',
       'Уход': 'Машинная стирка при 30°C',
     },
     isNew: true,
-    isBestseller: true,
   },
   {
     id: '4',
@@ -92,25 +102,6 @@ export const products: Product[] = [
       'Объём': '35 л',
       'Отделения': 'Основное, для обуви, для мокрых вещей',
       'Ремень': 'Съёмный, регулируемый',
-    },
-  },
-  {
-    id: '5',
-    name: 'Леггинсы Sculpt Mid-Rise',
-    category: 'leggings',
-    price: 4990,
-    images: [catLeggings],
-    colors: [
-      { name: 'Тёмно-синий', hex: '#1a2744' },
-      { name: 'Бордо', hex: '#722f37' },
-    ],
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-    description: 'Моделирующие леггинсы со средней посадкой. Ткань с эффектом скульптурирования.',
-    specs: {
-      'Состав': '75% нейлон, 25% спандекс',
-      'Посадка': 'Средняя',
-      'Пуш-ап': 'Нет',
-      'Уход': 'Машинная стирка при 30°C',
     },
   },
   {
