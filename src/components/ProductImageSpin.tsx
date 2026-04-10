@@ -20,7 +20,7 @@ const ProductImageSpin = ({ images }: ProductImageSpinProps) => {
   const accumulatedDelta = useRef(0);
   const frameAtStart = useRef(0);
 
-  const THRESHOLD = 60;
+  const THRESHOLD = 120;
 
   const handlePointerDown = useCallback((e: React.PointerEvent) => {
     setIsDragging(true);
