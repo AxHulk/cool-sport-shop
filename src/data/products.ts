@@ -8,6 +8,9 @@ import braFront from '@/assets/black_bra_3d_front.png';
 import braBack from '@/assets/black_bra_3d_back.png';
 import blueBraFront from '@/assets/blue_bra_3d_front.png';
 import blueBraBack from '@/assets/blue_bra_3d_back.png';
+import brownBraFront from '@/assets/brown_bra_3d_front.png';
+import brownBraBack from '@/assets/brown_bra_3d_back.png';
+import brownBraAngle from '@/assets/brown_bra_3d_angle.png';
 
 export type ProductCategory = 'leggings' | 'tops' | 'rashguards' | 'bags';
 export type ProductSize = 'XS' | 'S' | 'M' | 'L' | 'XL';
@@ -251,6 +254,27 @@ export const products: Product[] = [
       'Состав': '80% нейлон, 20% эластан',
       'Поддержка': 'Высокая',
       'Чашки': 'Формованные',
+      'Уход': 'Ручная стирка',
+    },
+    isNew: true,
+  },
+  {
+    id: '11',
+    name: 'Топ CrossBack Bra',
+    category: 'tops',
+    price: 4290,
+    images: [brownBraFront],
+    spinImages: [brownBraFront, brownBraAngle, brownBraBack],
+    colors: [
+      { name: 'Шоколад', hex: '#3e2723' },
+    ],
+    sizes: ['XS', 'S', 'M', 'L'],
+    description: 'Спортивный топ с перекрёстными лямками на спине. Средняя поддержка, мягкая компрессионная ткань. Доступен в 3D-просмотре.',
+    specs: {
+      'Состав': '80% нейлон, 20% эластан',
+      'Поддержка': 'Средняя',
+      'Чашки': 'Вшитые',
+      'Лямки': 'Перекрёстные',
       'Уход': 'Ручная стирка',
     },
     isNew: true,
