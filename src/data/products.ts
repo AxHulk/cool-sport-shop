@@ -16,6 +16,7 @@ export interface Product {
   price: number;
   oldPrice?: number;
   images: string[];
+  modelUrl?: string;
   colors: ProductColor[];
   sizes: ProductSize[];
   description: string;
