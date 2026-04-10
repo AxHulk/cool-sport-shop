@@ -39,15 +39,21 @@ const ProductPage = () => {
       <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
         {/* Gallery / 3D Viewer */}
         <div>
-          {product.spinImages ? (
-            <ProductImageSpin images={product.spinImages} />
-          ) : product.modelUrl && view3D ? (
-            <ProductViewer3D modelUrl={product.modelUrl} />
-          ) : (
-            <div className="aspect-square rounded-lg overflow-hidden bg-muted">
-              <img src={product.images[0]} alt={product.name} className="w-full h-full object-cover" />
-            </div>
-          )}
+          {(() => {
+            const spinImgs = (selectedColor && product.colorSpinImages?.[selectedColor.name]) || product.spinImages;
+            const mainImg = (selectedColor && product.colorImages?.[selectedColor.name]) || product.images[0];
+            if (spinImgs) {
+              return <ProductImageSpin key={selectedColor?.name} images={spinImgs} />;
+            } else if (product.modelUrl && view3D) {
+              return <ProductViewer3D modelUrl={product.modelUrl} />;
+            } else {
+              return (
+                <div className="aspect-square rounded-lg overflow-hidden bg-muted">
+                  <img src={mainImg} alt={product.name} className="w-full h-full object-cover" />
+                </div>
+              );
+            }
+          })()}
           {product.modelUrl && !product.spinImages && (
             <div className="flex gap-2 mt-3 justify-center">
               <Button variant={view3D ? 'default' : 'outline'} size="sm" onClick={() => setView3D(true)}>
