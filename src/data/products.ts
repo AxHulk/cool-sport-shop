@@ -258,4 +258,25 @@ export const products: Product[] = [
     },
     isNew: true,
   },
+  {
+    id: '11',
+    name: 'Топ CrossBack Bra',
+    category: 'tops',
+    price: 4290,
+    images: [brownBraFront],
+    spinImages: [brownBraFront, brownBraAngle, brownBraBack],
+    colors: [
+      { name: 'Шоколад', hex: '#3e2723' },
+    ],
+    sizes: ['XS', 'S', 'M', 'L'],
+    description: 'Спортивный топ с перекрёстными лямками на спине. Средняя поддержка, мягкая компрессионная ткань. Доступен в 3D-просмотре.',
+    specs: {
+      'Состав': '80% нейлон, 20% эластан',
+      'Поддержка': 'Средняя',
+      'Чашки': 'Вшитые',
+      'Лямки': 'Перекрёстные',
+      'Уход': 'Ручная стирка',
+    },
+    isNew: true,
+  },
 ];
