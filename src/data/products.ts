@@ -23,6 +23,8 @@ import leggingsBlackFront from '@/assets/leggings_black_front.png';
 import leggingsBlackBack from '@/assets/leggings_black_back.png';
 import leggingsBlueFront from '@/assets/leggings_blue_front.png';
 import leggingsBlueBack from '@/assets/leggings_blue_back.png';
+import leggingsBrownFront from '@/assets/leggings_brown_front.png';
+import leggingsBrownBack from '@/assets/leggings_brown_back.png';
 
 export type ProductCategory = 'leggings' | 'tops' | 'rashguards' | 'bags';
 export type ProductSize = 'XS' | 'S' | 'M' | 'L' | 'XL';
@@ -77,6 +79,26 @@ export const products: Product[] = [
     ],
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
     description: 'Гладкие леггинсы с высокой посадкой и мягкой компрессией. Подходят для тренировок и повседневной носки.',
+    specs: {
+      'Состав': '78% нейлон, 22% спандекс',
+      'Посадка': 'Высокая',
+      'Компрессия': 'Средняя',
+      'Уход': 'Машинная стирка при 30°C',
+    },
+    isNew: true,
+  },
+  {
+    id: '14',
+    name: 'Леггинсы Sculpt Flex',
+    category: 'leggings',
+    price: 5190,
+    images: [leggingsBrownFront],
+    spinImages: [leggingsBrownFront, leggingsBrownBack],
+    colors: [
+      { name: 'Шоколад', hex: '#5a3b32' },
+    ],
+    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    description: 'Леггинсы с высокой посадкой и гладкой эластичной тканью. Плотно садятся по фигуре и подходят для зала и повседневной носки.',
     specs: {
       'Состав': '78% нейлон, 22% спандекс',
       'Посадка': 'Высокая',
