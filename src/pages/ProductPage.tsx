@@ -29,7 +29,6 @@ const ProductPage = () => {
 
   if (!product) return <div className="container py-20 text-center">Товар не найден</div>;
 
-  const has3D = product.images.length >= 2;
   const related = products.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4);
   const formatPrice = (p: number) => p.toLocaleString('ru-RU') + ' ₽';
   const fav = isFavorite(product.id);
@@ -39,14 +38,14 @@ const ProductPage = () => {
       <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
         {/* Gallery / 3D Viewer */}
         <div>
-          {has3D && view3D ? (
-            <ProductViewer3D frontImage={product.images[0]} backImage={product.images[1]} />
+          {product.modelUrl && view3D ? (
+            <ProductViewer3D modelUrl={product.modelUrl} />
           ) : (
             <div className="aspect-square rounded-lg overflow-hidden bg-muted">
               <img src={product.images[0]} alt={product.name} className="w-full h-full object-cover" />
             </div>
           )}
-          {has3D && (
+          {product.modelUrl && (
             <div className="flex gap-2 mt-3 justify-center">
               <Button
                 variant={view3D ? 'default' : 'outline'}
