@@ -29,6 +29,8 @@ import leggingsWhiteFront from '@/assets/leggings_white_front.png';
 import leggingsWhiteBack from '@/assets/leggings_white_back.png';
 import bagBlueFront from '@/assets/bag_blue_front_v3.png';
 import bagBlueBack from '@/assets/bag_blue_back_v3.png';
+import bagBlackFront from '@/assets/bag_black_front_v3.png';
+import bagBlackBack from '@/assets/bag_black_back_v3.png';
 
 export type ProductCategory = 'leggings' | 'tops' | 'rashguards' | 'bags';
 export type ProductSize = 'XS' | 'S' | 'M' | 'L' | 'XL';
@@ -143,6 +145,26 @@ export const products: Product[] = [
     ],
     sizes: ['M' as ProductSize],
     description: 'Мягкая текстильная сумка с верхними ручками и съёмным плечевым ремнём. Подходит для города и тренировок.',
+    specs: {
+      'Материал': 'Плотный текстиль',
+      'Формат': 'Средний',
+      'Ремень': 'Съёмный, регулируемый',
+      'Уход': 'Сухая чистка',
+    },
+    isNew: true,
+  },
+  {
+    id: '17',
+    name: 'Сумка Soft Tote Black',
+    category: 'bags',
+    price: 4590,
+    images: [bagBlackFront],
+    spinImages: [bagBlackFront, bagBlackBack],
+    colors: [
+      { name: 'Чёрный', hex: '#1a1a1a' },
+    ],
+    sizes: ['M' as ProductSize],
+    description: 'Мягкая текстильная сумка с верхними ручками и съёмным плечевым ремнём в чёрном цвете.',
     specs: {
       'Материал': 'Плотный текстиль',
       'Формат': 'Средний',
