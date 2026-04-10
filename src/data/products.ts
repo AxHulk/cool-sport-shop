@@ -24,6 +24,7 @@ export interface Product {
   spinImages?: string[];
   colorSpinImages?: Record<string, string[]>;
   colorImages?: Record<string, string>;
+  colors: ProductColor[];
   sizes: ProductSize[];
   description: string;
   specs: Record<string, string>;
