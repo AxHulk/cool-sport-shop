@@ -1,7 +1,20 @@
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, useTexture } from '@react-three/drei';
-import { FrontSide, CylinderGeometry, BufferGeometry } from 'three';
+import { FrontSide, PlaneGeometry, BufferGeometry } from 'three';
 import { Suspense, useMemo } from 'react';
+
+function createCurvedPlane(width: number, height: number, depth: number, segments: number): BufferGeometry {
+  const geo = new PlaneGeometry(width, height, segments, 1);
+  const pos = geo.attributes.position;
+  for (let i = 0; i < pos.count; i++) {
+    const x = pos.getX(i);
+    const u = (x / width) + 0.5; // 0→1
+    pos.setZ(i, depth * Math.sin(u * Math.PI));
+  }
+  pos.needsUpdate = true;
+  geo.computeVertexNormals();
+  return geo as BufferGeometry;
+}
 
 interface ProductBodyProps {
   frontImage: string;
@@ -12,24 +25,11 @@ const ProductBody = ({ frontImage, backImage }: ProductBodyProps) => {
   const [frontTex, backTex] = useTexture([frontImage, backImage]);
 
   const { frontGeo, backGeo } = useMemo(() => {
-    const radiusTop = 1.35;
-    const radiusBottom = 1.1;
-    const height = 4;
-    const radialSegs = 32;
-    const heightSegs = 1;
-
-    // Front half-cylinder: theta 0 → π
-    const front = new CylinderGeometry(
-      radiusTop, radiusBottom, height, radialSegs, heightSegs, true,
-      Math.PI / 2, Math.PI
-    );
-    // Back half-cylinder: theta π → 2π
-    const back = new CylinderGeometry(
-      radiusTop, radiusBottom, height, radialSegs, heightSegs, true,
-      -Math.PI / 2, Math.PI
-    );
-
-    return { frontGeo: front as BufferGeometry, backGeo: back as BufferGeometry };
+    const w = 2.8, h = 3.6, depth = 0.45, segs = 32;
+    return {
+      frontGeo: createCurvedPlane(w, h, depth, segs),
+      backGeo: createCurvedPlane(w, h, depth, segs),
+    };
   }, []);
 
   return (
@@ -37,7 +37,7 @@ const ProductBody = ({ frontImage, backImage }: ProductBodyProps) => {
       <mesh geometry={frontGeo}>
         <meshStandardMaterial map={frontTex} side={FrontSide} transparent />
       </mesh>
-      <mesh geometry={backGeo}>
+      <mesh geometry={backGeo} rotation={[0, Math.PI, 0]}>
         <meshStandardMaterial map={backTex} side={FrontSide} transparent />
       </mesh>
     </group>
