@@ -229,7 +229,7 @@ export const products: Product[] = [
     category: 'tops',
     price: 3990,
     images: [braFront],
-    modelUrl: '/models/bra_black.glb',
+    spinImages: [braFront, braAngle, braBack],
     colors: [
       { name: 'Чёрный', hex: '#1a1a1a' },
     ],
