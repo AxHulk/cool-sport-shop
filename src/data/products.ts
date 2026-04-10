@@ -4,9 +4,9 @@ import catRashguards from '@/assets/cat-rashguards.jpg';
 import catBags from '@/assets/cat-bags.jpg';
 import jacketFront from '@/assets/black_jacket_front.png';
 import jacketBack from '@/assets/black_jacket_back.png';
-import braFront from '@/assets/black_bra_3d_front.png';
+import braFront from '@/assets/black_bra_3d_front2.png';
 import braAngle from '@/assets/black_bra_3d_angle.png';
-import braBack from '@/assets/black_bra_3d_back.png';
+import braBack from '@/assets/black_bra_3d_back2.png';
 
 export type ProductCategory = 'leggings' | 'tops' | 'rashguards' | 'bags';
 export type ProductSize = 'XS' | 'S' | 'M' | 'L' | 'XL';
