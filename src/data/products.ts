@@ -2,6 +2,8 @@ import catLeggings from '@/assets/cat-leggings.jpg';
 import catTops from '@/assets/cat-tops.jpg';
 import catRashguards from '@/assets/cat-rashguards.jpg';
 import catBags from '@/assets/cat-bags.jpg';
+import jacketFront from '@/assets/black_jacket_front.png';
+import jacketBack from '@/assets/black_jacket_back.png';
 
 export type ProductCategory = 'leggings' | 'tops' | 'rashguards' | 'bags';
 export type ProductSize = 'XS' | 'S' | 'M' | 'L' | 'XL';
