@@ -21,7 +21,7 @@ const Index = () => {
     <div>
       {/* Hero */}
       <section className="relative h-[80vh] min-h-[500px] overflow-hidden">
-        <img src={heroImg} alt="FORMA спортивная одежда" width={1920} height={1080} className="absolute inset-0 w-full h-full object-cover" />
+        <img src={heroImg} alt="āsana спортивная одежда" width={1920} height={1080} className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-r from-foreground/60 to-foreground/20" />
         <div className="relative container h-full flex flex-col justify-center">
           <h1 className="text-4xl md:text-6xl font-serif text-background max-w-lg leading-tight">
@@ -68,7 +68,7 @@ const Index = () => {
       {/* Advantages */}
       <section className="bg-secondary py-16">
         <div className="container">
-          <h2 className="text-3xl font-serif text-center mb-10">Почему FORMA</h2>
+          <h2 className="text-3xl font-serif text-center mb-10">Почему āsana</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {advantages.map(a => (
               <div key={a.title} className="text-center">

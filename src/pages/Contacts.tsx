@@ -8,8 +8,8 @@ const Contacts = () => (
     <div className="grid md:grid-cols-2 gap-6">
       {[
         { icon: Phone, title: 'Телефон', value: '+7 (800) 123-45-67', desc: 'Ежедневно с 9:00 до 21:00' },
-        { icon: Mail, title: 'Email', value: 'hello@forma-sport.ru', desc: 'Ответим в течение 2 часов' },
-        { icon: MessageCircle, title: 'Telegram', value: '@forma_support', desc: 'Самый быстрый способ связи' },
+        { icon: Mail, title: 'Email', value: 'hello@asana-sport.ru', desc: 'Ответим в течение 2 часов' },
+        { icon: MessageCircle, title: 'Telegram', value: '@asana_support', desc: 'Самый быстрый способ связи' },
         { icon: MapPin, title: 'Шоурум', value: 'Москва, ул. Покровка, 10', desc: 'Пн–Вс 10:00–21:00' },
       ].map(c => (
         <div key={c.title} className="flex gap-4 p-6 bg-secondary rounded-lg">
