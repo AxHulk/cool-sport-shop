@@ -25,6 +25,8 @@ import leggingsBlueFront from '@/assets/leggings_blue_front.png';
 import leggingsBlueBack from '@/assets/leggings_blue_back.png';
 import leggingsBrownFront from '@/assets/leggings_brown_front.png';
 import leggingsBrownBack from '@/assets/leggings_brown_back.png';
+import leggingsWhiteFront from '@/assets/leggings_white_front.png';
+import leggingsWhiteBack from '@/assets/leggings_white_back.png';
 
 export type ProductCategory = 'leggings' | 'tops' | 'rashguards' | 'bags';
 export type ProductSize = 'XS' | 'S' | 'M' | 'L' | 'XL';
@@ -99,6 +101,26 @@ export const products: Product[] = [
     ],
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
     description: 'Леггинсы с высокой посадкой и гладкой эластичной тканью. Плотно садятся по фигуре и подходят для зала и повседневной носки.',
+    specs: {
+      'Состав': '78% нейлон, 22% спандекс',
+      'Посадка': 'Высокая',
+      'Компрессия': 'Средняя',
+      'Уход': 'Машинная стирка при 30°C',
+    },
+    isNew: true,
+  },
+  {
+    id: '15',
+    name: 'Леггинсы Pure Motion',
+    category: 'leggings',
+    price: 5190,
+    images: [leggingsWhiteFront],
+    spinImages: [leggingsWhiteFront, leggingsWhiteBack],
+    colors: [
+      { name: 'Молочный', hex: '#f0ede4' },
+    ],
+    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    description: 'Светлые леггинсы с высокой посадкой и мягкой эластичной тканью для тренировок и повседневной носки.',
     specs: {
       'Состав': '78% нейлон, 22% спандекс',
       'Посадка': 'Высокая',
