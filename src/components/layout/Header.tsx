@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, Heart, User, ShoppingBag, Menu, X } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
+import logo from '@/assets/logo.png';
 import { useFavorites } from '@/context/FavoritesContext';
 import { Button } from '@/components/ui/button';
 
@@ -21,8 +22,8 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
       <div className="container flex items-center justify-between h-16">
-        <Link to="/" className="font-serif text-2xl font-bold tracking-tight">
-          FORMA
+        <Link to="/">
+          <img src={logo} alt="āsana" className="h-8" />
         </Link>
 
         <nav className="hidden md:flex items-center gap-6">

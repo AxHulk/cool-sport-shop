@@ -2,12 +2,13 @@ import { Link } from 'react-router-dom';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Instagram, Send } from 'lucide-react';
+import logo from '@/assets/logo.png';
 
 const Footer = () => (
   <footer className="bg-primary text-primary-foreground mt-20">
     <div className="container py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
       <div>
-        <h3 className="font-serif text-xl font-bold mb-4">FORMA</h3>
+        <img src={logo} alt="āsana" className="h-6 mb-4 brightness-0 invert" />
         <p className="text-sm opacity-80">Премиальная спортивная одежда для женщин, которые выбирают стиль и комфорт.</p>
       </div>
       <div>
@@ -42,7 +43,7 @@ const Footer = () => (
     </div>
     <div className="border-t border-primary-foreground/10 py-4">
       <div className="container text-center text-xs opacity-60">
-        © 2026 FORMA. Все права защищены.
+        © 2026 āsana. Все права защищены.
       </div>
     </div>
   </footer>
