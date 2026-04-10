@@ -1,6 +1,6 @@
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, useTexture } from '@react-three/drei';
-import { FrontSide, BackSide, DoubleSide, BufferGeometry, Float32BufferAttribute, Shape, ExtrudeGeometry, Vector2 } from 'three';
+import { FrontSide, DoubleSide, Shape, ExtrudeGeometry } from 'three';
 import { Suspense, useMemo } from 'react';
 
 // Garment silhouette points (normalized -1 to 1 range, will be scaled)
