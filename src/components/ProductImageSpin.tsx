@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 
 interface ProductImageSpinProps {
@@ -6,29 +6,62 @@ interface ProductImageSpinProps {
 }
 
 const ProductImageSpin = ({ images }: ProductImageSpinProps) => {
-  // Build 4 frames: front, angle, back, angle-mirrored
-  const frames = [
-    { src: images[0], mirror: false }, // front
-    { src: images[1], mirror: false }, // angle left
-    { src: images[2], mirror: false }, // back
-    { src: images[1], mirror: true },  // angle right (mirrored)
-  ];
+  // Build 4 frames from available images
+  const frames = images.length >= 3
+    ? [
+        { src: images[0], mirror: false },
+        { src: images[1], mirror: false },
+        { src: images[2], mirror: false },
+        { src: images[1], mirror: true },
+      ]
+    : [
+        { src: images[0], mirror: false },
+        { src: images[0], mirror: true },
+        { src: images[1] || images[0], mirror: false },
+        { src: images[1] || images[0], mirror: true },
+      ];
 
   const [currentFrame, setCurrentFrame] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const startX = useRef(0);
-  const accumulatedDelta = useRef(0);
   const frameAtStart = useRef(0);
+  const autoRotateTimer = useRef<ReturnType<typeof setInterval> | null>(null);
+  const resumeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const THRESHOLD = 120;
+
+  const startAutoRotate = useCallback(() => {
+    if (autoRotateTimer.current) clearInterval(autoRotateTimer.current);
+    autoRotateTimer.current = setInterval(() => {
+      setCurrentFrame(prev => (prev + 1) % frames.length);
+    }, 2500);
+  }, [frames.length]);
+
+  const stopAutoRotate = useCallback(() => {
+    if (autoRotateTimer.current) {
+      clearInterval(autoRotateTimer.current);
+      autoRotateTimer.current = null;
+    }
+    if (resumeTimer.current) {
+      clearTimeout(resumeTimer.current);
+      resumeTimer.current = null;
+    }
+  }, []);
+
+  useEffect(() => {
+    startAutoRotate();
+    return () => {
+      stopAutoRotate();
+    };
+  }, [startAutoRotate, stopAutoRotate]);
 
   const handlePointerDown = useCallback((e: React.PointerEvent) => {
     setIsDragging(true);
     startX.current = e.clientX;
-    accumulatedDelta.current = 0;
     frameAtStart.current = currentFrame;
     (e.target as HTMLElement).setPointerCapture(e.pointerId);
-  }, [currentFrame]);
+    stopAutoRotate();
+  }, [currentFrame, stopAutoRotate]);
 
   const handlePointerMove = useCallback((e: React.PointerEvent) => {
     if (!isDragging) return;
@@ -40,7 +73,10 @@ const ProductImageSpin = ({ images }: ProductImageSpinProps) => {
 
   const handlePointerUp = useCallback(() => {
     setIsDragging(false);
-  }, []);
+    resumeTimer.current = setTimeout(() => {
+      startAutoRotate();
+    }, 3000);
+  }, [startAutoRotate]);
 
   const frame = frames[currentFrame];
 
@@ -62,7 +98,6 @@ const ProductImageSpin = ({ images }: ProductImageSpinProps) => {
         style={frame.mirror ? { transform: 'scaleX(-1)' } : undefined}
         draggable={false}
       />
-      {/* Dot indicators */}
       <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
         {frames.map((_, i) => (
           <button
