@@ -6,6 +6,8 @@ import jacketFront from '@/assets/black_jacket_front.png';
 import jacketBack from '@/assets/black_jacket_back.png';
 import braFront from '@/assets/black_bra_3d_front.png';
 import braBack from '@/assets/black_bra_3d_back.png';
+import blueBraFront from '@/assets/blue_bra_3d_front.png';
+import blueBraBack from '@/assets/blue_bra_3d_back.png';
 
 export type ProductCategory = 'leggings' | 'tops' | 'rashguards' | 'bags';
 export type ProductSize = 'XS' | 'S' | 'M' | 'L' | 'XL';
@@ -20,7 +22,8 @@ export interface Product {
   images: string[];
   modelUrl?: string;
   spinImages?: string[];
-  colors: ProductColor[];
+  colorSpinImages?: Record<string, string[]>;
+  colorImages?: Record<string, string>;
   sizes: ProductSize[];
   description: string;
   specs: Record<string, string>;
@@ -229,8 +232,17 @@ export const products: Product[] = [
     price: 3990,
     images: [braFront],
     spinImages: [braFront, braBack],
+    colorSpinImages: {
+      'Чёрный': [braFront, braBack],
+      'Голубой': [blueBraFront, blueBraBack],
+    },
+    colorImages: {
+      'Чёрный': braFront,
+      'Голубой': blueBraFront,
+    },
     colors: [
       { name: 'Чёрный', hex: '#1a1a1a' },
+      { name: 'Голубой', hex: '#8bb8e8' },
     ],
     sizes: ['XS', 'S', 'M', 'L'],
     description: 'Спортивный топ с высокой поддержкой. Дышащая ткань, анатомический крой. Доступен в 3D-просмотре.',
