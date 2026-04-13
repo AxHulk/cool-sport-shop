@@ -1,5 +1,5 @@
-import { useState, useRef, useCallback, useEffect } from 'react';
-import { ZoomIn, ZoomOut } from 'lucide-react';
+import { useState, useRef, useCallback } from 'react';
+import { ZoomIn, ZoomOut, ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface ProductImageSpinProps {
@@ -91,7 +91,24 @@ const ProductImageSpin = ({ images }: ProductImageSpinProps) => {
         draggable={false}
       />
 
-      {/* Zoom controls */}
+      {/* Arrow controls */}
+      {images.length > 1 && (
+        <>
+          <button
+            className="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-background/70 backdrop-blur-sm flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-background/90 transition-colors z-10"
+            onClick={(e) => { e.stopPropagation(); selectFrame((currentFrame - 1 + images.length) % images.length); }}
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+          <button
+            className="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-background/70 backdrop-blur-sm flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-background/90 transition-colors z-10"
+            onClick={(e) => { e.stopPropagation(); selectFrame((currentFrame + 1) % images.length); }}
+          >
+            <ChevronRight className="h-5 w-5" />
+          </button>
+        </>
+      )}
+
       <div className="absolute top-3 right-3 flex flex-col gap-1.5 z-10">
         <button
           className="w-8 h-8 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
