@@ -274,6 +274,10 @@ export const products: Product[] = [
     category: 'tops',
     price: 5500,
     images: [blackTopFront],
+    modelUrl: '/models/black_top.glb',
+    colorModelUrls: {
+      'Чёрный': '/models/black_top.glb',
+    },
     spinImages: [blackTopFront, blackTopBack],
     colorSpinImages: {
       'Чёрный': [blackTopFront, blackTopBack],
