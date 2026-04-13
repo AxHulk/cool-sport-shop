@@ -65,6 +65,8 @@ import ivoryLeggings4 from '@/assets/ivory_leggings_4.jpg';
 import ivoryLeggings5 from '@/assets/ivory_leggings_5.jpg';
 import bagBlueFront from '@/assets/bag_blue_front_v3.png';
 import bagBlueBack from '@/assets/bag_blue_back_v3.png';
+import bagBlueDetail1 from '@/assets/bag_blue_detail1.jpg';
+import bagBlueDetail2 from '@/assets/bag_blue_detail2.jpg';
 import bagBlackFront from '@/assets/bag_black_front_v3.png';
 import bagBlackBack from '@/assets/bag_black_back_v3.png';
 import bagBlackDetail1 from '@/assets/bag_black_detail1.jpg';
@@ -338,9 +340,9 @@ export const products: Product[] = [
       'Голубой': '/models/blue_bag.glb',
       'Чёрный': '/models/black_bag.glb',
     },
-    spinImages: [bagBlueFront, bagBlueBack],
+    spinImages: [bagBlueFront, bagBlueBack, bagBlueDetail1, bagBlueDetail2],
     colorSpinImages: {
-      'Голубой': [bagBlueFront, bagBlueBack],
+      'Голубой': [bagBlueFront, bagBlueBack, bagBlueDetail1, bagBlueDetail2],
       'Чёрный': [bagBlackFront, bagBlackBack, bagBlackDetail1, bagBlackDetail2],
     },
     colorImages: {
