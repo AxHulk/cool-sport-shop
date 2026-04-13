@@ -22,7 +22,7 @@ interface FormData {
 }
 
 const Checkout = () => {
-  const { items, totalPrice, totalItems, clearCart, removeItem, updateQuantity } = useCart();
+  const { items, totalPrice, totalPriceWithDiscount, appliedCombo, totalItems, clearCart, removeItem, updateQuantity } = useCart();
   const [step, setStep] = useState(0);
   const [done, setDone] = useState(false);
   const [orderNumber, setOrderNumber] = useState('');
@@ -101,8 +101,9 @@ const Checkout = () => {
     toast.success('Заказ оформлен!', { description: `Номер заказа: ${num}` });
   };
 
-  const deliveryPrice = totalPrice >= 10000 ? 0 : 490;
-  const finalPrice = totalPrice + deliveryPrice;
+  const priceAfterCombo = totalPriceWithDiscount;
+  const deliveryPrice = priceAfterCombo >= 10000 ? 0 : 490;
+  const finalPrice = priceAfterCombo + deliveryPrice;
 
   return (
     <div className="container py-8 max-w-4xl mx-auto">
@@ -249,6 +250,12 @@ const Checkout = () => {
               <span className="text-muted-foreground">Товары ({totalItems})</span>
               <span>{formatPrice(totalPrice)}</span>
             </div>
+            {appliedCombo && (
+              <div className="flex justify-between text-accent">
+                <span>Скидка «{appliedCombo.comboName}» (-{appliedCombo.discountPercent}%)</span>
+                <span>-{formatPrice(appliedCombo.savings)}</span>
+              </div>
+            )}
             <div className="flex justify-between">
               <span className="text-muted-foreground">Доставка</span>
               <span>{deliveryPrice === 0 ? 'Бесплатно' : formatPrice(deliveryPrice)}</span>
