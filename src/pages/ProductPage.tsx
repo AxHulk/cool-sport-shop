@@ -46,7 +46,8 @@ const ProductPage = () => {
             const mainImg = (selectedColor && product.colorImages?.[selectedColor.name]) || product.images[0];
             const currentModelUrl = (selectedColor && product.colorModelUrls?.[selectedColor.name]) || product.modelUrl;
             if (currentModelUrl && view3D) {
-              return <ProductViewer3D key={selectedColor?.name} modelUrl={currentModelUrl} />;
+              const isRashguard = product.category === 'rashguards';
+              return <ProductViewer3D key={selectedColor?.name} modelUrl={currentModelUrl} autoRotate={!isRashguard} cameraPosition={isRashguard ? [0, 0.2, 3] : [0, 0, 3]} />;
             } else if (spinImgs) {
               return <ProductImageSpin key={selectedColor?.name} images={spinImgs} />;
             } else {
