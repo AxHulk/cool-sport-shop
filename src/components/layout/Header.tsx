@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, Heart, User, ShoppingBag, Menu, X } from 'lucide-react';
+import { Heart, ShoppingBag, Menu, X } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import logo from '@/assets/logo.png';
 import { useFavorites } from '@/context/FavoritesContext';
@@ -47,9 +47,6 @@ const Header = () => {
                 </span>
               )}
             </Link>
-          </Button>
-          <Button variant="ghost" size="icon" asChild>
-            <Link to="/profile"><User className="h-5 w-5" /></Link>
           </Button>
           <Button variant="ghost" size="icon" className="relative" onClick={() => setIsCartOpen(true)}>
             <ShoppingBag className="h-5 w-5" />
