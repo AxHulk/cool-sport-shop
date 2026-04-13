@@ -14,7 +14,6 @@ import blueBraFront from '@/assets/blue_bra_3d_front.png';
 import blueBraBack from '@/assets/blue_bra_3d_back.png';
 import brownBraFront from '@/assets/brown_bra_3d_front.png';
 import brownBraBack from '@/assets/brown_bra_3d_back.png';
-import brownBraAngle from '@/assets/brown_bra_3d_angle.png';
 import blackTopFront from '@/assets/black_top_front.png';
 import blackTopBack from '@/assets/black_top_back.png';
 import whiteTopFront from '@/assets/white_top_front.png';
@@ -33,7 +32,7 @@ import bagBlackFront from '@/assets/bag_black_front_v3.png';
 import bagBlackBack from '@/assets/bag_black_back_v3.png';
 
 export type ProductCategory = 'leggings' | 'tops' | 'rashguards' | 'bags';
-export type ProductSize = 'XS' | 'S' | 'M' | 'L' | 'XL';
+export type ProductSize = 'XS' | 'S' | 'M' | 'L' | 'ONE SIZE';
 export type ProductColor = { name: string; hex: string };
 
 export interface Product {
@@ -64,11 +63,48 @@ export const categories = [
 ];
 
 export const products: Product[] = [
+  // --- РАШГАРДЫ ---
+  {
+    id: '9',
+    name: 'Рашгард на молнии',
+    category: 'rashguards',
+    price: 7600,
+    images: [jacketFront],
+    spinImages: [jacketFront, jacketBack],
+    colorSpinImages: {
+      'Чёрный': [jacketFront, jacketBack],
+      'Шоколад': [brownJacketFront, brownJacketBack],
+      'Айвори': [whiteJacketFront, whiteJacketBack],
+    },
+    colorImages: {
+      'Чёрный': jacketFront,
+      'Шоколад': brownJacketFront,
+      'Айвори': whiteJacketFront,
+    },
+    colors: [
+      { name: 'Чёрный', hex: '#1a1a1a' },
+      { name: 'Шоколад', hex: '#3e2723' },
+      { name: 'Айвори', hex: '#f0e6d3' },
+    ],
+    sizes: ['XS', 'S', 'M', 'L'],
+    description: 'Приталенный силуэт с моделирующим эффектом. Карманы на молнии. Плотный эластичный материал.',
+    specs: {
+      'Силуэт': 'Приталенный',
+      'Застёжка': 'Молния',
+      'Карманы': 'На молнии',
+      'Материал': 'Плотный эластичный',
+      'Уход': 'Машинная стирка при 30°C',
+    },
+    isNew: true,
+    isBestseller: true,
+  },
+
+  // --- ЛЕГГИНСЫ ---
   {
     id: '13',
-    name: 'Леггинсы Smooth Fit',
+    name: 'Леггинсы компрессионные',
     category: 'leggings',
-    price: 4990,
+    price: 6500,
     images: [leggingsBlackFront],
     spinImages: [leggingsBlackFront, leggingsBlackBack],
     colorSpinImages: {
@@ -83,135 +119,69 @@ export const products: Product[] = [
       { name: 'Чёрный', hex: '#1a1a1a' },
       { name: 'Голубой', hex: '#c7dcf7' },
     ],
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-    description: 'Гладкие леггинсы с высокой посадкой и мягкой компрессией. Подходят для тренировок и повседневной носки.',
+    sizes: ['XS', 'S', 'M', 'L'],
+    description: 'Облегающий силуэт с посадкой на талии. Компрессионный эффект с утягивающей вставкой в области живота. Потайной карман на поясе сзади. Плоские фигурные швы. Дышащий материал высокой эластичности. Непросвечивающая ткань.',
     specs: {
-      'Состав': '78% нейлон, 22% спандекс',
-      'Посадка': 'Высокая',
-      'Компрессия': 'Средняя',
+      'Силуэт': 'Облегающий',
+      'Посадка': 'На талии',
+      'Компрессия': 'С утягивающей вставкой',
+      'Карман': 'Потайной на поясе',
+      'Ткань': 'Дышащая, непросвечивающая',
       'Уход': 'Машинная стирка при 30°C',
     },
     isNew: true,
   },
   {
     id: '14',
-    name: 'Леггинсы Sculpt Flex',
+    name: 'Леггинсы в шоколадном цвете',
     category: 'leggings',
-    price: 5190,
+    price: 6500,
     images: [leggingsBrownFront],
     spinImages: [leggingsBrownFront, leggingsBrownBack],
     colors: [
       { name: 'Шоколад', hex: '#5a3b32' },
     ],
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-    description: 'Леггинсы с высокой посадкой и гладкой эластичной тканью. Плотно садятся по фигуре и подходят для зала и повседневной носки.',
+    sizes: ['XS', 'S', 'M', 'L'],
+    description: 'Облегающий силуэт с посадкой на талии. Компрессионный эффект с утягивающей вставкой в области живота. Потайной карман на поясе сзади. Плоские фигурные швы. Дышащий материал высокой эластичности. Непросвечивающая ткань.',
     specs: {
-      'Состав': '78% нейлон, 22% спандекс',
-      'Посадка': 'Высокая',
-      'Компрессия': 'Средняя',
+      'Силуэт': 'Облегающий',
+      'Посадка': 'На талии',
+      'Компрессия': 'С утягивающей вставкой',
+      'Карман': 'Потайной на поясе',
+      'Ткань': 'Дышащая, непросвечивающая',
       'Уход': 'Машинная стирка при 30°C',
     },
     isNew: true,
   },
   {
     id: '15',
-    name: 'Леггинсы Pure Motion',
+    name: 'Леггинсы в цвете айвори',
     category: 'leggings',
-    price: 5190,
+    price: 6500,
     images: [leggingsWhiteFront],
     spinImages: [leggingsWhiteFront, leggingsWhiteBack],
     colors: [
-      { name: 'Молочный', hex: '#f0ede4' },
+      { name: 'Айвори', hex: '#f0ede4' },
     ],
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-    description: 'Светлые леггинсы с высокой посадкой и мягкой эластичной тканью для тренировок и повседневной носки.',
+    sizes: ['XS', 'S', 'M', 'L'],
+    description: 'Облегающий силуэт с посадкой на талии. Компрессионный эффект с утягивающей вставкой в области живота. Потайной карман на поясе сзади. Плоские фигурные швы. Дышащий материал высокой эластичности. Непросвечивающая ткань.',
     specs: {
-      'Состав': '78% нейлон, 22% спандекс',
-      'Посадка': 'Высокая',
-      'Компрессия': 'Средняя',
+      'Силуэт': 'Облегающий',
+      'Посадка': 'На талии',
+      'Компрессия': 'С утягивающей вставкой',
+      'Карман': 'Потайной на поясе',
+      'Ткань': 'Дышащая, непросвечивающая',
       'Уход': 'Машинная стирка при 30°C',
     },
     isNew: true,
   },
-  {
-    id: '16',
-    name: 'Сумка Soft Tote',
-    category: 'bags',
-    price: 4590,
-    images: [bagBlueFront],
-    spinImages: [bagBlueFront, bagBlueBack],
-    colors: [
-      { name: 'Голубой', hex: '#c7dcf7' },
-    ],
-    sizes: ['M' as ProductSize],
-    description: 'Мягкая текстильная сумка с верхними ручками и съёмным плечевым ремнём. Подходит для города и тренировок.',
-    specs: {
-      'Материал': 'Плотный текстиль',
-      'Формат': 'Средний',
-      'Ремень': 'Съёмный, регулируемый',
-      'Уход': 'Сухая чистка',
-    },
-    isNew: true,
-  },
-  {
-    id: '17',
-    name: 'Сумка Soft Tote Black',
-    category: 'bags',
-    price: 4590,
-    images: [bagBlackFront],
-    spinImages: [bagBlackFront, bagBlackBack],
-    colors: [
-      { name: 'Чёрный', hex: '#1a1a1a' },
-    ],
-    sizes: ['M' as ProductSize],
-    description: 'Мягкая текстильная сумка с верхними ручками и съёмным плечевым ремнём в чёрном цвете.',
-    specs: {
-      'Материал': 'Плотный текстиль',
-      'Формат': 'Средний',
-      'Ремень': 'Съёмный, регулируемый',
-      'Уход': 'Сухая чистка',
-    },
-    isNew: true,
-  },
-  {
-    id: '9',
-    name: 'Рашгард Stealth Pro',
-    category: 'rashguards',
-    price: 5490,
-    images: [jacketFront],
-    spinImages: [jacketFront, jacketBack],
-    colorSpinImages: {
-      'Чёрный': [jacketFront, jacketBack],
-      'Шоколад': [brownJacketFront, brownJacketBack],
-      'Сливочный': [whiteJacketFront, whiteJacketBack],
-    },
-    colorImages: {
-      'Чёрный': jacketFront,
-      'Шоколад': brownJacketFront,
-      'Сливочный': whiteJacketFront,
-    },
-    colors: [
-      { name: 'Чёрный', hex: '#1a1a1a' },
-      { name: 'Шоколад', hex: '#3e2723' },
-      { name: 'Сливочный', hex: '#f0e6d3' },
-    ],
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-    description: 'Премиальный рашгард с компрессионной посадкой. Быстросохнущая ткань с UV-защитой UPF 50+. Идеален для интенсивных тренировок и водных видов спорта.',
-    specs: {
-      'Состав': '85% полиэстер, 15% спандекс',
-      'Крой': 'Облегающий',
-      'Рукав': 'Длинный',
-      'UV-защита': 'UPF 50+',
-      'Уход': 'Машинная стирка при 30°C',
-    },
-    isNew: true,
-    isBestseller: true,
-  },
+
+  // --- ТОПЫ ---
   {
     id: '10',
-    name: 'Топ Power Bra 3D',
+    name: 'Топ спортивный',
     category: 'tops',
-    price: 3990,
+    price: 5500,
     images: [braFront],
     spinImages: [braFront, braBack],
     colorSpinImages: {
@@ -227,62 +197,98 @@ export const products: Product[] = [
       { name: 'Голубой', hex: '#8bb8e8' },
     ],
     sizes: ['XS', 'S', 'M', 'L'],
-    description: 'Спортивный топ с высокой поддержкой. Дышащая ткань, анатомический крой. Доступен в 3D-просмотре.',
+    description: 'Укороченный фасон с квадратным вырезом. Тонкие бретели, надёжная фиксация груди, съёмные чашки. Эластичный непросвечивающий материал. Силиконовый логотип на спинке.',
     specs: {
-      'Состав': '80% нейлон, 20% эластан',
-      'Поддержка': 'Высокая',
-      'Чашки': 'Формованные',
+      'Фасон': 'Укороченный',
+      'Вырез': 'Квадратный',
+      'Бретели': 'Тонкие',
+      'Чашки': 'Съёмные',
+      'Материал': 'Эластичный, непросвечивающий',
       'Уход': 'Ручная стирка',
     },
     isNew: true,
   },
   {
     id: '11',
-    name: 'Топ CrossBack Bra',
+    name: 'Топ спортивный с перекрёстными бретелями',
     category: 'tops',
-    price: 4290,
+    price: 5500,
     images: [brownBraFront],
-    spinImages: [brownBraFront, brownBraAngle, brownBraBack],
+    spinImages: [brownBraFront, brownBraBack],
     colors: [
       { name: 'Шоколад', hex: '#3e2723' },
     ],
     sizes: ['XS', 'S', 'M', 'L'],
-    description: 'Спортивный топ с перекрёстными лямками на спине. Средняя поддержка, мягкая компрессионная ткань. Доступен в 3D-просмотре.',
+    description: 'Укороченный фасон с квадратным вырезом. Перекрёстные бретели на спине. Надёжная фиксация груди, съёмные чашки. Эластичный непросвечивающий материал. Силиконовый логотип на спинке.',
     specs: {
-      'Состав': '80% нейлон, 20% эластан',
-      'Поддержка': 'Средняя',
-      'Чашки': 'Вшитые',
-      'Лямки': 'Перекрёстные',
+      'Фасон': 'Укороченный',
+      'Вырез': 'Квадратный',
+      'Бретели': 'Перекрёстные',
+      'Чашки': 'Съёмные',
+      'Материал': 'Эластичный, непросвечивающий',
       'Уход': 'Ручная стирка',
     },
     isNew: true,
   },
   {
     id: '12',
-    name: 'Топ Ribbed Cami',
+    name: 'Майка моделирующая на тонких бретелях',
     category: 'tops',
-    price: 2990,
+    price: 5500,
     images: [blackTopFront],
     spinImages: [blackTopFront, blackTopBack],
     colorSpinImages: {
       'Чёрный': [blackTopFront, blackTopBack],
-      'Сливочный': [whiteTopFront, whiteTopBack],
+      'Айвори': [whiteTopFront, whiteTopBack],
     },
     colorImages: {
       'Чёрный': blackTopFront,
-      'Сливочный': whiteTopFront,
+      'Айвори': whiteTopFront,
     },
     colors: [
       { name: 'Чёрный', hex: '#1a1a1a' },
-      { name: 'Сливочный', hex: '#f0e6d3' },
+      { name: 'Айвори', hex: '#f0e6d3' },
     ],
     sizes: ['XS', 'S', 'M', 'L'],
-    description: 'Топ на тонких бретелях из рубчатого трикотажа. V-образный вырез, приталенный силуэт. Доступен в 3D-просмотре.',
+    description: 'Удлинённый фасон с приталенным силуэтом. V-образный вырез, тонкие лямки с регулировкой. Быстросохнущий материал. Поддержка груди, съёмные чашки.',
     specs: {
-      'Состав': '92% хлопок, 8% эластан',
-      'Поддержка': 'Лёгкая',
-      'Бретели': 'Тонкие, регулируемые',
+      'Фасон': 'Удлинённый',
+      'Вырез': 'V-образный',
+      'Лямки': 'Тонкие, регулируемые',
+      'Чашки': 'Съёмные',
+      'Материал': 'Быстросохнущий',
       'Уход': 'Машинная стирка при 30°C',
+    },
+    isNew: true,
+  },
+
+  // --- СУМКИ ---
+  {
+    id: '16',
+    name: 'Сумка спортивная',
+    category: 'bags',
+    price: 6900,
+    images: [bagBlueFront],
+    spinImages: [bagBlueFront, bagBlueBack],
+    colorSpinImages: {
+      'Голубой': [bagBlueFront, bagBlueBack],
+      'Чёрный': [bagBlackFront, bagBlackBack],
+    },
+    colorImages: {
+      'Голубой': bagBlueFront,
+      'Чёрный': bagBlackFront,
+    },
+    colors: [
+      { name: 'Голубой', hex: '#c7dcf7' },
+      { name: 'Чёрный', hex: '#1a1a1a' },
+    ],
+    sizes: ['ONE SIZE'],
+    description: 'Мягкая текстильная сумка с верхними ручками и съёмным плечевым ремнём. Подходит для города и тренировок.',
+    specs: {
+      'Материал': 'Плотный текстиль',
+      'Формат': 'Средний',
+      'Ремень': 'Съёмный, регулируемый',
+      'Уход': 'Сухая чистка',
     },
     isNew: true,
   },
