@@ -331,6 +331,11 @@ export const products: Product[] = [
     category: 'bags',
     price: 6900,
     images: [bagBlueFront],
+    modelUrl: '/models/blue_bag.glb',
+    colorModelUrls: {
+      'Голубой': '/models/blue_bag.glb',
+      'Чёрный': '/models/black_bag.glb',
+    },
     spinImages: [bagBlueFront, bagBlueBack],
     colorSpinImages: {
       'Голубой': [bagBlueFront, bagBlueBack],
