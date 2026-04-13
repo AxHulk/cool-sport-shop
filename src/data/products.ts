@@ -13,8 +13,11 @@ import brownJacket2 from '@/assets/brown_jacket_2.jpg';
 import brownJacket3 from '@/assets/brown_jacket_3.jpg';
 import brownJacket4 from '@/assets/brown_jacket_4.jpg';
 import brownJacket5 from '@/assets/brown_jacket_5.jpg';
-import whiteJacketFront from '@/assets/white_jacket_front.png';
-import whiteJacketBack from '@/assets/white_jacket_back.png';
+import ivoryJacket1 from '@/assets/ivory_jacket_1.jpg';
+import ivoryJacket2 from '@/assets/ivory_jacket_2.jpg';
+import ivoryJacket3 from '@/assets/ivory_jacket_3.jpg';
+import ivoryJacket4 from '@/assets/ivory_jacket_4.jpg';
+import ivoryJacket5 from '@/assets/ivory_jacket_5.jpg';
 import braFront from '@/assets/black_bra_3d_front.png';
 import braBack from '@/assets/black_bra_3d_back.png';
 import blueBraFront from '@/assets/blue_bra_3d_front.png';
@@ -102,12 +105,12 @@ export const products: Product[] = [
     colorSpinImages: {
       'Чёрный': [blackJacket1, blackJacket2, blackJacket3, blackJacket4, blackJacket5, blackJacket6],
       'Шоколад': [brownJacket1, brownJacket2, brownJacket3, brownJacket4, brownJacket5],
-      'Айвори': [whiteJacketFront, whiteJacketBack],
+      'Айвори': [ivoryJacket1, ivoryJacket2, ivoryJacket3, ivoryJacket4, ivoryJacket5],
     },
     colorImages: {
       'Чёрный': blackJacket1,
       'Шоколад': brownJacket1,
-      'Айвори': whiteJacketFront,
+      'Айвори': ivoryJacket1,
     },
     colors: [
       { name: 'Чёрный', hex: '#1a1a1a' },
