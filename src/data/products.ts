@@ -285,9 +285,9 @@ export const products: Product[] = [
       'Чёрный': '/models/black_top.glb',
       'Айвори': '/models/ivory_top.glb',
     },
-    spinImages: [blackTopFront, blackTopBack],
+    spinImages: [blackTopFront, blackTopBack, blackTopDetail1, blackTopDetail2, blackTopDetail3],
     colorSpinImages: {
-      'Чёрный': [blackTopFront, blackTopBack],
+      'Чёрный': [blackTopFront, blackTopBack, blackTopDetail1, blackTopDetail2, blackTopDetail3],
       'Айвори': [whiteTopFront, whiteTopBack, whiteTopDetail1, whiteTopDetail2, whiteTopDetail3],
     },
     colorImages: {
