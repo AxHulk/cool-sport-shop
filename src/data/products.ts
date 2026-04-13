@@ -105,12 +105,12 @@ export const products: Product[] = [
     colorSpinImages: {
       'Чёрный': [blackJacket1, blackJacket2, blackJacket3, blackJacket4, blackJacket5, blackJacket6],
       'Шоколад': [brownJacket1, brownJacket2, brownJacket3, brownJacket4, brownJacket5],
-      'Айвори': [whiteJacketFront, whiteJacketBack],
+      'Айвори': [ivoryJacket1, ivoryJacket2, ivoryJacket3, ivoryJacket4, ivoryJacket5],
     },
     colorImages: {
       'Чёрный': blackJacket1,
       'Шоколад': brownJacket1,
-      'Айвори': whiteJacketFront,
+      'Айвори': ivoryJacket1,
     },
     colors: [
       { name: 'Чёрный', hex: '#1a1a1a' },
