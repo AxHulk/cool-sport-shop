@@ -60,12 +60,18 @@ function getVariantImage(sel: SlotSelection): string {
   return sel.product.colorImages?.[sel.color.name] || sel.product.images[0];
 }
 
-/** Short display name: category + color */
+/** Derive a short product type name from the product name */
+function getShortProductName(product: Product): string {
+  const name = product.name.toLowerCase();
+  if (name.startsWith('майка')) return 'Майка';
+  return shortCategoryName[product.category] || product.category;
+}
+
+/** Short display name: product type + color */
 function getVariantLabel(sel: SlotSelection): string {
-  const cat = shortCategoryName[sel.product.category] || sel.product.category;
-  return sel.product.colors.length > 1 || products.filter(p => p.category === sel.product.category).length > 1
-    ? `${cat} (${sel.color.name})`
-    : cat;
+  const base = getShortProductName(sel.product);
+  const variants = getCategoryVariants(sel.product.category);
+  return variants.length > 1 ? `${base} (${sel.color.name})` : base;
 }
 
 interface ComboCardProps {
