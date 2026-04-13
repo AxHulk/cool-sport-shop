@@ -23,8 +23,11 @@ import blackLeggings2 from '@/assets/black_leggings_2.jpg';
 import blackLeggings3 from '@/assets/black_leggings_3.jpg';
 import blackLeggings4 from '@/assets/black_leggings_4.jpg';
 import blackLeggings5 from '@/assets/black_leggings_5.jpg';
-import leggingsBlueFront from '@/assets/leggings_blue_front.png';
-import leggingsBlueBack from '@/assets/leggings_blue_back.png';
+import blueLeggings1 from '@/assets/blue_leggings_1.jpg';
+import blueLeggings2 from '@/assets/blue_leggings_2.jpg';
+import blueLeggings3 from '@/assets/blue_leggings_3.jpg';
+import blueLeggings4 from '@/assets/blue_leggings_4.jpg';
+import blueLeggings5 from '@/assets/blue_leggings_5.jpg';
 import brownLeggingsFront from '@/assets/brown_leggings_front.jpg';
 import brownLeggingsBack from '@/assets/brown_leggings_back.jpg';
 import brownLeggingsDetail1 from '@/assets/brown_leggings_detail1.jpg';
@@ -123,11 +126,11 @@ export const products: Product[] = [
     spinImages: [blackLeggings1, blackLeggings2, blackLeggings3, blackLeggings4, blackLeggings5],
     colorSpinImages: {
       'Чёрный': [blackLeggings1, blackLeggings2, blackLeggings3, blackLeggings4, blackLeggings5],
-      'Голубой': [leggingsBlueFront, leggingsBlueBack],
+      'Голубой': [blueLeggings1, blueLeggings2, blueLeggings3, blueLeggings4, blueLeggings5],
     },
     colorImages: {
       'Чёрный': blackLeggings1,
-      'Голубой': leggingsBlueFront,
+      'Голубой': blueLeggings1,
     },
     colors: [
       { name: 'Чёрный', hex: '#1a1a1a' },
