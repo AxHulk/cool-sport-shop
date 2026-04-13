@@ -30,7 +30,21 @@ interface CartContextType {
   setIsCartOpen: (open: boolean) => void;
 }
 
-const CartContext = createContext<CartContextType | undefined>(undefined);
+const fallbackCartContext: CartContextType = {
+  items: [],
+  addItem: () => undefined,
+  removeItem: () => undefined,
+  updateQuantity: () => undefined,
+  clearCart: () => undefined,
+  totalItems: 0,
+  totalPrice: 0,
+  totalPriceWithDiscount: 0,
+  appliedCombo: null,
+  isCartOpen: false,
+  setIsCartOpen: () => undefined,
+};
+
+const CartContext = createContext<CartContextType>(fallbackCartContext);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [items, setItems] = useState<CartItem[]>(() => {
@@ -121,8 +135,4 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export const useCart = () => {
-  const ctx = useContext(CartContext);
-  if (!ctx) throw new Error('useCart must be inside CartProvider');
-  return ctx;
-};
+export const useCart = () => useContext(CartContext);
