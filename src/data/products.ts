@@ -88,8 +88,9 @@ export const products: Product[] = [
     category: 'rashguards',
     price: 7600,
     images: [jacketFront],
-    modelUrl: '/models/brown_rashguard.glb',
+    modelUrl: '/models/black_rashguard.glb',
     colorModelUrls: {
+      'Чёрный': '/models/black_rashguard.glb',
       'Шоколад': '/models/brown_rashguard.glb',
     },
     spinImages: [jacketFront, jacketBack],
