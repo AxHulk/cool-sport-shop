@@ -44,10 +44,10 @@ const ProductPage = () => {
           {(() => {
             const spinImgs = (selectedColor && product.colorSpinImages?.[selectedColor.name]) || product.spinImages;
             const mainImg = (selectedColor && product.colorImages?.[selectedColor.name]) || product.images[0];
-            if (spinImgs) {
-              return <ProductImageSpin key={selectedColor?.name} images={spinImgs} />;
-            } else if (product.modelUrl && view3D) {
+            if (product.modelUrl && view3D) {
               return <ProductViewer3D modelUrl={product.modelUrl} />;
+            } else if (spinImgs) {
+              return <ProductImageSpin key={selectedColor?.name} images={spinImgs} />;
             } else {
               return (
                 <div className="aspect-square rounded-lg overflow-hidden bg-muted">
@@ -56,7 +56,7 @@ const ProductPage = () => {
               );
             }
           })()}
-          {product.modelUrl && !product.spinImages && (
+          {product.modelUrl && (
             <div className="flex gap-2 mt-3 justify-center">
               <Button variant={view3D ? 'default' : 'outline'} size="sm" onClick={() => setView3D(true)}>
                 <RotateCcw className="h-4 w-4 mr-1" /> 3D
