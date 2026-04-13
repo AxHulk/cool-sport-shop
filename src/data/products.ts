@@ -96,6 +96,7 @@ export const products: Product[] = [
     colorModelUrls: {
       'Чёрный': '/models/black_rashguard.glb',
       'Шоколад': '/models/brown_rashguard.glb',
+      'Айвори': '/models/ivory_rashguard.glb',
     },
     spinImages: [blackJacket1, blackJacket2, blackJacket3, blackJacket4, blackJacket5, blackJacket6],
     colorSpinImages: {
