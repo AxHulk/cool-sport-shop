@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
 import { cn } from '@/lib/utils';
 
-const sizes = ['XS', 'S', 'M', 'L', 'ONE SIZE'] as const;
+const sizes = ['XS', 'S', 'M', 'L'] as const;
 const sortOptions = [
   { value: 'popular', label: 'По популярности' },
   { value: 'price-asc', label: 'Цена ↑' },

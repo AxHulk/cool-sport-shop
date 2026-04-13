@@ -32,7 +32,7 @@ import bagBlackFront from '@/assets/bag_black_front_v3.png';
 import bagBlackBack from '@/assets/bag_black_back_v3.png';
 
 export type ProductCategory = 'leggings' | 'tops' | 'rashguards' | 'bags';
-export type ProductSize = 'XS' | 'S' | 'M' | 'L' | 'ONE SIZE';
+export type ProductSize = 'XS' | 'S' | 'M' | 'L';
 export type ProductColor = { name: string; hex: string };
 
 export interface Product {
@@ -282,7 +282,7 @@ export const products: Product[] = [
       { name: 'Голубой', hex: '#c7dcf7' },
       { name: 'Чёрный', hex: '#1a1a1a' },
     ],
-    sizes: ['ONE SIZE'],
+    sizes: ['M', 'L'],
     description: 'Мягкая текстильная сумка с верхними ручками и съёмным плечевым ремнём. Подходит для города и тренировок.',
     specs: {
       'Материал': 'Плотный текстиль',
