@@ -95,12 +95,12 @@ export const products: Product[] = [
     spinImages: [jacketFront, jacketBack],
     colorSpinImages: {
       'Чёрный': [jacketFront, jacketBack],
-      'Шоколад': [brownJacketFront, brownJacketBack],
+      'Шоколад': [brownJacket1, brownJacket2, brownJacket3, brownJacket4, brownJacket5],
       'Айвори': [whiteJacketFront, whiteJacketBack],
     },
     colorImages: {
       'Чёрный': jacketFront,
-      'Шоколад': brownJacketFront,
+      'Шоколад': brownJacket1,
       'Айвори': whiteJacketFront,
     },
     colors: [
