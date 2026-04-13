@@ -111,6 +111,7 @@ export const products: Product[] = [
     category: 'leggings',
     price: 6500,
     images: [leggingsBlackFront],
+    modelUrl: '/models/black_leggings.glb',
     spinImages: [leggingsBlackFront, leggingsBlackBack],
     colorSpinImages: {
       'Чёрный': [leggingsBlackFront, leggingsBlackBack],
