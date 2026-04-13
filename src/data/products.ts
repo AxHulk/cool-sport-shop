@@ -285,7 +285,7 @@ export const products: Product[] = [
     spinImages: [blackTopFront, blackTopBack],
     colorSpinImages: {
       'Чёрный': [blackTopFront, blackTopBack],
-      'Айвори': [whiteTopFront, whiteTopBack],
+      'Айвори': [whiteTopFront, whiteTopBack, whiteTopDetail1, whiteTopDetail2, whiteTopDetail3],
     },
     colorImages: {
       'Чёрный': blackTopFront,
