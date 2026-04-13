@@ -28,6 +28,9 @@ import blackTopFront from '@/assets/black_top_front.png';
 import blackTopBack from '@/assets/black_top_back.png';
 import whiteTopFront from '@/assets/white_top_front.png';
 import whiteTopBack from '@/assets/white_top_back.png';
+import whiteTopDetail1 from '@/assets/white_top_detail1.jpg';
+import whiteTopDetail2 from '@/assets/white_top_detail2.jpg';
+import whiteTopDetail3 from '@/assets/white_top_detail3.jpg';
 import blackLeggings1 from '@/assets/black_leggings_1.jpg';
 import blackLeggings2 from '@/assets/black_leggings_2.jpg';
 import blackLeggings3 from '@/assets/black_leggings_3.jpg';
@@ -282,7 +285,7 @@ export const products: Product[] = [
     spinImages: [blackTopFront, blackTopBack],
     colorSpinImages: {
       'Чёрный': [blackTopFront, blackTopBack],
-      'Айвори': [whiteTopFront, whiteTopBack],
+      'Айвори': [whiteTopFront, whiteTopBack, whiteTopDetail1, whiteTopDetail2, whiteTopDetail3],
     },
     colorImages: {
       'Чёрный': blackTopFront,
