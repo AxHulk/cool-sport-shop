@@ -143,7 +143,7 @@ export const products: Product[] = [
     price: 6500,
     images: [brownLeggingsFront, brownLeggingsBack, brownLeggingsDetail1, brownLeggingsDetail2, brownLeggingsDetail3, brownLeggingsDetail4, brownLeggingsDetail5],
     modelUrl: '/models/brown_leggings.glb',
-    spinImages: [brownLeggingsFront, brownLeggingsBack],
+    spinImages: [brownLeggingsFront, brownLeggingsBack, brownLeggingsDetail1, brownLeggingsDetail2, brownLeggingsDetail3, brownLeggingsDetail4, brownLeggingsDetail5],
     colors: [
       { name: 'Шоколад', hex: '#5a3b32' },
     ],
