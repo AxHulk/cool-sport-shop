@@ -67,6 +67,8 @@ import bagBlueFront from '@/assets/bag_blue_front_v3.png';
 import bagBlueBack from '@/assets/bag_blue_back_v3.png';
 import bagBlackFront from '@/assets/bag_black_front_v3.png';
 import bagBlackBack from '@/assets/bag_black_back_v3.png';
+import bagBlackDetail1 from '@/assets/bag_black_detail1.jpg';
+import bagBlackDetail2 from '@/assets/bag_black_detail2.jpg';
 
 export type ProductCategory = 'leggings' | 'tops' | 'rashguards' | 'bags';
 export type ProductSize = 'XS' | 'S' | 'M' | 'L';
@@ -339,7 +341,7 @@ export const products: Product[] = [
     spinImages: [bagBlueFront, bagBlueBack],
     colorSpinImages: {
       'Голубой': [bagBlueFront, bagBlueBack],
-      'Чёрный': [bagBlackFront, bagBlackBack],
+      'Чёрный': [bagBlackFront, bagBlackBack, bagBlackDetail1, bagBlackDetail2],
     },
     colorImages: {
       'Голубой': bagBlueFront,
