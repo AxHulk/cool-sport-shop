@@ -232,6 +232,7 @@ export const products: Product[] = [
     modelUrl: '/models/black_bra.glb',
     colorModelUrls: {
       'Чёрный': '/models/black_bra.glb',
+      'Голубой': '/models/blue_bra.glb',
     },
     spinImages: [braFront, braBack, braDetail1, braDetail2],
     colorSpinImages: {
