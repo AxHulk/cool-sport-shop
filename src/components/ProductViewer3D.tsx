@@ -17,13 +17,15 @@ const GLBModel = ({ modelUrl }: GLBModelProps) => {
 
 interface ProductViewer3DProps {
   modelUrl: string;
+  autoRotate?: boolean;
+  cameraPosition?: [number, number, number];
 }
 
-const ProductViewer3D = ({ modelUrl }: ProductViewer3DProps) => {
+const ProductViewer3D = ({ modelUrl, autoRotate = true, cameraPosition = [0, 0, 3] }: ProductViewer3DProps) => {
   return (
     <div className="relative w-full aspect-square rounded-lg overflow-hidden bg-muted">
       <Canvas
-        camera={{ position: [0, 0, 3], fov: 45 }}
+        camera={{ position: cameraPosition, fov: 45 }}
         style={{ background: 'transparent' }}
         gl={{ alpha: true }}
       >
@@ -37,7 +39,7 @@ const ProductViewer3D = ({ modelUrl }: ProductViewer3DProps) => {
         <OrbitControls
           enableZoom={false}
           enablePan={false}
-          autoRotate
+          autoRotate={autoRotate}
           autoRotateSpeed={1.5}
         />
       </Canvas>
