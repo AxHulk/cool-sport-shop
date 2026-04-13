@@ -2,8 +2,12 @@ import catLeggings from '@/assets/cat-leggings.jpg';
 import catTops from '@/assets/cat-tops.jpg';
 import catRashguards from '@/assets/cat-rashguards.jpg';
 import catBags from '@/assets/cat-bags.jpg';
-import jacketFront from '@/assets/black_jacket_front.png';
-import jacketBack from '@/assets/black_jacket_back.png';
+import blackJacket1 from '@/assets/black_jacket_1.jpg';
+import blackJacket2 from '@/assets/black_jacket_2.jpg';
+import blackJacket3 from '@/assets/black_jacket_3.jpg';
+import blackJacket4 from '@/assets/black_jacket_4.jpg';
+import blackJacket5 from '@/assets/black_jacket_5.jpg';
+import blackJacket6 from '@/assets/black_jacket_6.jpg';
 import brownJacket1 from '@/assets/brown_jacket_1.jpg';
 import brownJacket2 from '@/assets/brown_jacket_2.jpg';
 import brownJacket3 from '@/assets/brown_jacket_3.jpg';
@@ -87,20 +91,20 @@ export const products: Product[] = [
     name: 'Рашгард на молнии',
     category: 'rashguards',
     price: 7600,
-    images: [jacketFront],
+    images: [blackJacket1],
     modelUrl: '/models/black_rashguard.glb',
     colorModelUrls: {
       'Чёрный': '/models/black_rashguard.glb',
       'Шоколад': '/models/brown_rashguard.glb',
     },
-    spinImages: [jacketFront, jacketBack],
+    spinImages: [blackJacket1, blackJacket2, blackJacket3, blackJacket4, blackJacket5, blackJacket6],
     colorSpinImages: {
-      'Чёрный': [jacketFront, jacketBack],
+      'Чёрный': [blackJacket1, blackJacket2, blackJacket3, blackJacket4, blackJacket5, blackJacket6],
       'Шоколад': [brownJacket1, brownJacket2, brownJacket3, brownJacket4, brownJacket5],
       'Айвори': [whiteJacketFront, whiteJacketBack],
     },
     colorImages: {
-      'Чёрный': jacketFront,
+      'Чёрный': blackJacket1,
       'Шоколад': brownJacket1,
       'Айвори': whiteJacketFront,
     },
