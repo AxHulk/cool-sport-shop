@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useMemo, ReactNode } from 'react';
-import { Product, ProductSize, ProductColor } from '@/data/products';
+import { Product, ProductSize, ProductColor, ProductCategory } from '@/data/products';
 import { comboSets } from '@/data/comboSets';
 
 export interface CartItem {
@@ -87,7 +87,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     let bestSavings = 0;
 
     for (const combo of comboSets) {
-      const allSlotsPresent = combo.categorySlots.every(slot => cartCategories.has(slot.category));
+      const allSlotsPresent = combo.categorySlots.every(slot => cartCategories.has(slot.category as ProductCategory));
       if (!allSlotsPresent) continue;
 
       // Calculate savings for this combo — apply discount to the cheapest set of items matching
