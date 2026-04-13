@@ -9,6 +9,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import ProductCard from '@/components/ProductCard';
 import ProductViewer3D from '@/components/ProductViewer3D';
 import ProductImageSpin from '@/components/ProductImageSpin';
+import ComboRecommendation from '@/components/ComboRecommendation';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 
@@ -154,6 +155,9 @@ const ProductPage = () => {
           </div>
         </div>
       </div>
+
+      {/* Combo Recommendations */}
+      <ComboRecommendation currentProduct={product} />
 
       {/* Related */}
       {related.length > 0 && (

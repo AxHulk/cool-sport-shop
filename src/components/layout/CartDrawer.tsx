@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
-import { Minus, Plus, Trash2 } from 'lucide-react';
+import { Minus, Plus, Trash2, Tag } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 
 const CartDrawer = () => {
-  const { items, isCartOpen, setIsCartOpen, removeItem, updateQuantity, totalPrice } = useCart();
+  const { items, isCartOpen, setIsCartOpen, removeItem, updateQuantity, totalPrice, totalPriceWithDiscount, appliedCombo } = useCart();
 
   const formatPrice = (p: number) => p.toLocaleString('ru-RU') + ' ₽';
 
@@ -26,9 +26,7 @@ const CartDrawer = () => {
               {items.map((item, idx) => (
                 <div key={idx} className="flex gap-3 border-b pb-4">
                   <img
-                    src={
-                      (item.product.colorImages?.[item.color.name]) || item.product.images[0]
-                    }
+                    src={(item.product.colorImages?.[item.color.name]) || item.product.images[0]}
                     alt={item.product.name}
                     className="w-20 h-20 object-cover rounded"
                   />
@@ -52,11 +50,36 @@ const CartDrawer = () => {
                 </div>
               ))}
             </div>
-            <div className="border-t pt-4 space-y-3">
-              <div className="flex justify-between font-semibold">
-                <span>Итого</span>
-                <span>{formatPrice(totalPrice)}</span>
+
+            {/* Combo discount banner */}
+            {appliedCombo && (
+              <div className="bg-accent/10 border border-accent/30 rounded-lg p-3 flex items-center gap-2">
+                <Tag className="h-4 w-4 text-accent shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-semibold">Комплект «{appliedCombo.comboName}»</p>
+                  <p className="text-xs text-muted-foreground">Скидка {appliedCombo.discountPercent}% — экономия {formatPrice(appliedCombo.savings)}</p>
+                </div>
               </div>
+            )}
+
+            <div className="border-t pt-4 space-y-3">
+              {appliedCombo ? (
+                <div className="space-y-1">
+                  <div className="flex justify-between text-sm text-muted-foreground">
+                    <span>Без скидки</span>
+                    <span className="line-through">{formatPrice(totalPrice)}</span>
+                  </div>
+                  <div className="flex justify-between font-semibold">
+                    <span>Итого</span>
+                    <span>{formatPrice(totalPriceWithDiscount)}</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex justify-between font-semibold">
+                  <span>Итого</span>
+                  <span>{formatPrice(totalPrice)}</span>
+                </div>
+              )}
               <Button className="w-full" asChild onClick={() => setIsCartOpen(false)}>
                 <Link to="/checkout">Оформить заказ</Link>
               </Button>
