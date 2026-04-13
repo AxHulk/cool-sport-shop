@@ -177,6 +177,7 @@ export const products: Product[] = [
     category: 'leggings',
     price: 6500,
     images: [leggingsWhiteFront],
+    modelUrl: '/models/ivory_leggings.glb',
     spinImages: [leggingsWhiteFront, leggingsWhiteBack],
     colors: [
       { name: 'Айвори', hex: '#f0ede4' },
