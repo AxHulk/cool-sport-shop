@@ -26,13 +26,13 @@ const Header = () => {
           <img src={logo} alt="āsana" className="h-8" />
         </Link>
 
-        <nav className="hidden md:flex items-center gap-6">
+        <nav className="hidden md:flex items-center gap-8">
           {navLinks.map(l => (
-            <Link key={l.to} to={l.to} className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+            <Link key={l.to} to={l.to} className="text-xs font-semibold uppercase tracking-[0.12em] text-foreground/70 hover:text-foreground transition-colors">
               {l.label}
             </Link>
           ))}
-          <Link to="/about" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+          <Link to="/about" className="text-xs font-semibold uppercase tracking-[0.12em] text-foreground/70 hover:text-foreground transition-colors">
             О бренде
           </Link>
         </nav>
