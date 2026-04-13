@@ -113,15 +113,15 @@ export const products: Product[] = [
     name: 'Леггинсы компрессионные',
     category: 'leggings',
     price: 6500,
-    images: [leggingsBlackFront],
+    images: [blackLeggings1],
     modelUrl: '/models/black_leggings.glb',
-    spinImages: [leggingsBlackFront, leggingsBlackBack],
+    spinImages: [blackLeggings1, blackLeggings2, blackLeggings3, blackLeggings4, blackLeggings5],
     colorSpinImages: {
-      'Чёрный': [leggingsBlackFront, leggingsBlackBack],
+      'Чёрный': [blackLeggings1, blackLeggings2, blackLeggings3, blackLeggings4, blackLeggings5],
       'Голубой': [leggingsBlueFront, leggingsBlueBack],
     },
     colorImages: {
-      'Чёрный': leggingsBlackFront,
+      'Чёрный': blackLeggings1,
       'Голубой': leggingsBlueFront,
     },
     colors: [
