@@ -51,6 +51,7 @@ export interface Product {
   oldPrice?: number;
   images: string[];
   modelUrl?: string;
+  colorModelUrls?: Record<string, string>;
   spinImages?: string[];
   colorSpinImages?: Record<string, string[]>;
   colorImages?: Record<string, string>;
@@ -115,6 +116,10 @@ export const products: Product[] = [
     price: 6500,
     images: [blackLeggings1],
     modelUrl: '/models/black_leggings.glb',
+    colorModelUrls: {
+      'Чёрный': '/models/black_leggings.glb',
+      'Голубой': '/models/blue_leggings.glb',
+    },
     spinImages: [blackLeggings1, blackLeggings2, blackLeggings3, blackLeggings4, blackLeggings5],
     colorSpinImages: {
       'Чёрный': [blackLeggings1, blackLeggings2, blackLeggings3, blackLeggings4, blackLeggings5],
