@@ -1,6 +1,6 @@
 import { useState, useMemo, useRef, useEffect } from 'react';
 import { ShoppingBag, Tag, ChevronDown } from 'lucide-react';
-import { Product, products } from '@/data/products';
+import { Product, ProductColor, products } from '@/data/products';
 import { ComboSet, calculateComboPrice, getDefaultProductForCategory, getRelevantCombos } from '@/data/comboSets';
 import { useCart } from '@/context/CartContext';
 import { Button } from '@/components/ui/button';
@@ -38,6 +38,36 @@ const shortCategoryName: Record<string, string> = {
   bags: 'Сумка',
 };
 
+interface SlotSelection {
+  product: Product;
+  color: ProductColor;
+}
+
+/** Build a flat list of product+color variants for a category */
+function getCategoryVariants(category: string): SlotSelection[] {
+  const categoryProducts = products.filter(p => p.category === category);
+  const variants: SlotSelection[] = [];
+  for (const p of categoryProducts) {
+    for (const c of p.colors) {
+      variants.push({ product: p, color: c });
+    }
+  }
+  return variants;
+}
+
+/** Get the display image for a product+color */
+function getVariantImage(sel: SlotSelection): string {
+  return sel.product.colorImages?.[sel.color.name] || sel.product.images[0];
+}
+
+/** Short display name: category + color */
+function getVariantLabel(sel: SlotSelection): string {
+  const cat = shortCategoryName[sel.product.category] || sel.product.category;
+  return sel.product.colors.length > 1 || products.filter(p => p.category === sel.product.category).length > 1
+    ? `${cat} (${sel.color.name})`
+    : cat;
+}
+
 interface ComboCardProps {
   combo: ComboSet;
   currentProduct: Product;
@@ -45,25 +75,22 @@ interface ComboCardProps {
 }
 
 const ComboCard = ({ combo, currentProduct, addItem }: ComboCardProps) => {
-  const [selectedProducts, setSelectedProducts] = useState<Record<string, Product>>(() => {
-    const initial: Record<string, Product> = {};
-    const usedIds: string[] = [];
+  const [selections, setSelections] = useState<Record<string, SlotSelection>>(() => {
+    const initial: Record<string, SlotSelection> = {};
     combo.categorySlots.forEach(slot => {
       if (slot.category === currentProduct.category && !initial[slot.category]) {
-        initial[slot.category] = currentProduct;
-        usedIds.push(currentProduct.id);
+        initial[slot.category] = { product: currentProduct, color: currentProduct.colors[0] };
       } else {
-        const def = getDefaultProductForCategory(slot.category, usedIds);
+        const def = getDefaultProductForCategory(slot.category);
         if (def) {
-          initial[slot.category] = def;
-          usedIds.push(def.id);
+          initial[slot.category] = { product: def, color: def.colors[0] };
         }
       }
     });
     return initial;
   });
 
-  const comboProducts = combo.categorySlots.map(slot => selectedProducts[slot.category]).filter(Boolean);
+  const comboProducts = combo.categorySlots.map(slot => selections[slot.category]?.product).filter(Boolean);
   const allSelected = comboProducts.length === combo.categorySlots.length;
 
   const { fullPrice, discountedPrice, savings } = useMemo(
@@ -74,18 +101,14 @@ const ComboCard = ({ combo, currentProduct, addItem }: ComboCardProps) => {
   const formatPrice = (p: number) => p.toLocaleString('ru-RU') + ' ₽';
 
   const handleAddCombo = () => {
-    comboProducts.forEach(product => {
-      const size = product.sizes[0];
-      const color = product.colors[0];
-      addItem(product, size, color);
+    combo.categorySlots.forEach(slot => {
+      const sel = selections[slot.category];
+      if (sel) addItem(sel.product, sel.product.sizes[0], sel.color);
     });
     toast.success(`Комплект «${combo.name}» добавлен в корзину`, {
       description: `Скидка ${combo.discountPercent}% — вы экономите ${formatPrice(savings)}`,
     });
   };
-
-  const categoryProducts = (category: string) =>
-    products.filter(p => p.category === category);
 
   return (
     <div className="border rounded-xl p-5 flex flex-col hover:border-accent/50 transition-colors">
@@ -99,24 +122,22 @@ const ComboCard = ({ combo, currentProduct, addItem }: ComboCardProps) => {
         </span>
       </div>
 
-      {/* Product slots */}
       <div className="space-y-2 mb-4">
         {combo.categorySlots.map(slot => {
-          const selected = selectedProducts[slot.category];
-          const options = categoryProducts(slot.category);
+          const selected = selections[slot.category];
+          const variants = getCategoryVariants(slot.category);
           return (
             <SlotPicker
               key={slot.category}
               category={slot.category}
               selected={selected}
-              options={options}
-              onSelect={(p) => setSelectedProducts(prev => ({ ...prev, [slot.category]: p }))}
+              variants={variants}
+              onSelect={(sel) => setSelections(prev => ({ ...prev, [slot.category]: sel }))}
             />
           );
         })}
       </div>
 
-      {/* Pricing — pushed to bottom */}
       <div className="mt-auto border-t pt-3 space-y-2">
         {allSelected && (
           <>
@@ -138,12 +159,12 @@ const ComboCard = ({ combo, currentProduct, addItem }: ComboCardProps) => {
 
 interface SlotPickerProps {
   category: string;
-  selected: Product | undefined;
-  options: Product[];
-  onSelect: (p: Product) => void;
+  selected: SlotSelection | undefined;
+  variants: SlotSelection[];
+  onSelect: (sel: SlotSelection) => void;
 }
 
-const SlotPicker = ({ category, selected, options, onSelect }: SlotPickerProps) => {
+const SlotPicker = ({ category, selected, variants, onSelect }: SlotPickerProps) => {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -157,48 +178,58 @@ const SlotPicker = ({ category, selected, options, onSelect }: SlotPickerProps) 
   }, [open]);
 
   const label = shortCategoryName[category] || category;
+  const hasOptions = variants.length > 1;
 
   return (
     <div ref={ref} className="relative">
       <button
-        onClick={() => options.length > 1 && setOpen(!open)}
+        onClick={() => hasOptions && setOpen(!open)}
         className="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-muted/50 transition-colors text-left"
       >
         {selected ? (
           <img
-            src={selected.images[0]}
-            alt={selected.name}
+            src={getVariantImage(selected)}
+            alt={label}
             className="w-10 h-10 rounded-md object-cover bg-muted shrink-0"
           />
         ) : (
           <div className="w-10 h-10 rounded-md bg-muted shrink-0" />
         )}
         <div className="flex-1 min-w-0">
-          <p className="text-xs font-medium truncate">{label}</p>
+          <p className="text-xs font-medium truncate">
+            {selected ? getVariantLabel(selected) : label}
+          </p>
           {selected && (
-            <p className="text-xs text-muted-foreground">{selected.price.toLocaleString('ru-RU')} ₽</p>
+            <p className="text-xs text-muted-foreground">{selected.product.price.toLocaleString('ru-RU')} ₽</p>
           )}
         </div>
-        {options.length > 1 && (
+        {hasOptions && (
           <ChevronDown className={`h-3.5 w-3.5 text-muted-foreground shrink-0 transition-transform ${open ? 'rotate-180' : ''}`} />
         )}
       </button>
 
-      {open && options.length > 1 && (
+      {open && hasOptions && (
         <div className="absolute z-50 top-full left-0 right-0 mt-1 bg-background border rounded-lg shadow-lg py-1 max-h-48 overflow-auto">
-          {options.map(p => (
-            <button
-              key={p.id}
-              onClick={() => { onSelect(p); setOpen(false); }}
-              className={`w-full flex items-center gap-3 px-3 py-2 hover:bg-muted/50 transition-colors text-left ${selected?.id === p.id ? 'bg-muted/30' : ''}`}
-            >
-              <img src={p.images[0]} alt={p.name} className="w-8 h-8 rounded object-cover bg-muted shrink-0" />
-              <div className="flex-1 min-w-0">
-                <p className="text-xs font-medium truncate">{p.name}</p>
-                <p className="text-xs text-muted-foreground">{p.price.toLocaleString('ru-RU')} ₽</p>
-              </div>
-            </button>
-          ))}
+          {variants.map((v, i) => {
+            const isSelected = selected?.product.id === v.product.id && selected?.color.name === v.color.name;
+            return (
+              <button
+                key={`${v.product.id}-${v.color.name}`}
+                onClick={() => { onSelect(v); setOpen(false); }}
+                className={`w-full flex items-center gap-3 px-3 py-2 hover:bg-muted/50 transition-colors text-left ${isSelected ? 'bg-muted/30' : ''}`}
+              >
+                <img src={getVariantImage(v)} alt={v.color.name} className="w-8 h-8 rounded object-cover bg-muted shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-medium truncate">{getVariantLabel(v)}</p>
+                  <p className="text-xs text-muted-foreground">{v.product.price.toLocaleString('ru-RU')} ₽</p>
+                </div>
+                <span
+                  className="w-4 h-4 rounded-full border shrink-0"
+                  style={{ backgroundColor: v.color.hex }}
+                />
+              </button>
+            );
+          })}
         </div>
       )}
     </div>
