@@ -7,77 +7,73 @@ interface ProductImageSpinProps {
 }
 
 const ProductImageSpin = ({ images }: ProductImageSpinProps) => {
-  const frames = images.map(src => ({ src, mirror: false }));
-
   const [currentFrame, setCurrentFrame] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
-  const [zoom, setZoom] = useState(0.75); // start slightly pulled back
-  const startX = useRef(0);
-  const frameAtStart = useRef(0);
-  const autoRotateTimer = useRef<ReturnType<typeof setInterval> | null>(null);
-  const resumeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [zoom, setZoom] = useState(1);
+  const [pan, setPan] = useState({ x: 0, y: 0 });
+  const [isPanning, setIsPanning] = useState(false);
+  const panStart = useRef({ x: 0, y: 0 });
+  const panOffset = useRef({ x: 0, y: 0 });
 
-  const THRESHOLD = 120;
-  const MIN_ZOOM = 0.6;
-  const MAX_ZOOM = 1.8;
-  const ZOOM_STEP = 0.15;
+  const MIN_ZOOM = 1;
+  const MAX_ZOOM = 3;
+  const ZOOM_STEP = 0.3;
 
-  const startAutoRotate = useCallback(() => {
-    if (autoRotateTimer.current) clearInterval(autoRotateTimer.current);
-    autoRotateTimer.current = setInterval(() => {
-      setCurrentFrame(prev => (prev + 1) % frames.length);
-    }, 2500);
-  }, [frames.length]);
-
-  const stopAutoRotate = useCallback(() => {
-    if (autoRotateTimer.current) {
-      clearInterval(autoRotateTimer.current);
-      autoRotateTimer.current = null;
-    }
-    if (resumeTimer.current) {
-      clearTimeout(resumeTimer.current);
-      resumeTimer.current = null;
-    }
+  const resetView = useCallback(() => {
+    setPan({ x: 0, y: 0 });
+    panOffset.current = { x: 0, y: 0 };
   }, []);
 
-  useEffect(() => {
-    startAutoRotate();
-    return () => { stopAutoRotate(); };
-  }, [startAutoRotate, stopAutoRotate]);
-
   const handlePointerDown = useCallback((e: React.PointerEvent) => {
-    setIsDragging(true);
-    startX.current = e.clientX;
-    frameAtStart.current = currentFrame;
+    if (zoom <= 1) return;
+    setIsPanning(true);
+    panStart.current = { x: e.clientX - panOffset.current.x, y: e.clientY - panOffset.current.y };
     (e.target as HTMLElement).setPointerCapture(e.pointerId);
-    stopAutoRotate();
-  }, [currentFrame, stopAutoRotate]);
+  }, [zoom]);
 
   const handlePointerMove = useCallback((e: React.PointerEvent) => {
-    if (!isDragging) return;
-    const delta = e.clientX - startX.current;
-    const frameShift = Math.round(delta / THRESHOLD);
-    const newFrame = ((frameAtStart.current + frameShift) % frames.length + frames.length) % frames.length;
-    setCurrentFrame(newFrame);
-  }, [isDragging, frames.length]);
+    if (!isPanning) return;
+    const newX = e.clientX - panStart.current.x;
+    const newY = e.clientY - panStart.current.y;
+    panOffset.current = { x: newX, y: newY };
+    setPan({ x: newX, y: newY });
+  }, [isPanning]);
 
   const handlePointerUp = useCallback(() => {
-    setIsDragging(false);
-    resumeTimer.current = setTimeout(() => { startAutoRotate(); }, 3000);
-  }, [startAutoRotate]);
+    setIsPanning(false);
+  }, []);
 
   const handleWheel = useCallback((e: React.WheelEvent) => {
     e.preventDefault();
-    setZoom(prev => Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, prev - e.deltaY * 0.002)));
+    setZoom(prev => {
+      const next = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, prev - e.deltaY * 0.003));
+      if (next <= 1) resetView();
+      return next;
+    });
+  }, [resetView]);
+
+  const zoomIn = useCallback(() => {
+    setZoom(prev => Math.min(MAX_ZOOM, prev + ZOOM_STEP));
   }, []);
 
-  const frame = frames[currentFrame];
+  const zoomOut = useCallback(() => {
+    setZoom(prev => {
+      const next = Math.max(MIN_ZOOM, prev - ZOOM_STEP);
+      if (next <= 1) resetView();
+      return next;
+    });
+  }, [resetView]);
+
+  const selectFrame = useCallback((i: number) => {
+    setCurrentFrame(i);
+    setZoom(1);
+    resetView();
+  }, [resetView]);
 
   return (
     <div
       className={cn(
         "relative w-full aspect-square rounded-lg overflow-hidden bg-muted select-none",
-        isDragging ? "cursor-grabbing" : "cursor-grab"
+        zoom > 1 ? (isPanning ? "cursor-grabbing" : "cursor-grab") : "cursor-default"
       )}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
@@ -86,46 +82,43 @@ const ProductImageSpin = ({ images }: ProductImageSpinProps) => {
       onWheel={handleWheel}
     >
       <img
-        src={frame.src}
+        src={images[currentFrame]}
         alt="Product view"
         className="w-full h-full object-contain transition-transform duration-200"
         style={{
-          transform: `scale(${zoom})${frame.mirror ? ' scaleX(-1)' : ''}`,
+          transform: `scale(${zoom}) translate(${pan.x / zoom}px, ${pan.y / zoom}px)`,
         }}
         draggable={false}
       />
 
       {/* Zoom controls */}
-      <div className="absolute top-3 right-3 flex flex-col gap-1.5 pointer-events-auto z-10">
+      <div className="absolute top-3 right-3 flex flex-col gap-1.5 z-10">
         <button
           className="w-8 h-8 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
-          onClick={(e) => { e.stopPropagation(); setZoom(prev => Math.min(MAX_ZOOM, prev + ZOOM_STEP)); }}
+          onClick={(e) => { e.stopPropagation(); zoomIn(); }}
         >
           <ZoomIn className="h-4 w-4" />
         </button>
         <button
           className="w-8 h-8 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
-          onClick={(e) => { e.stopPropagation(); setZoom(prev => Math.max(MIN_ZOOM, prev - ZOOM_STEP)); }}
+          onClick={(e) => { e.stopPropagation(); zoomOut(); }}
         >
           <ZoomOut className="h-4 w-4" />
         </button>
       </div>
 
       {/* Dot indicators */}
-      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
-        {frames.map((_, i) => (
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+        {images.map((_, i) => (
           <button
             key={i}
             className={cn(
-              "w-2 h-2 rounded-full transition-all",
-              i === currentFrame ? "bg-foreground scale-125" : "bg-foreground/30"
+              "w-2.5 h-2.5 rounded-full transition-all",
+              i === currentFrame ? "bg-foreground scale-125" : "bg-foreground/30 hover:bg-foreground/50"
             )}
-            onClick={(e) => { e.stopPropagation(); setCurrentFrame(i); }}
+            onClick={(e) => { e.stopPropagation(); selectFrame(i); }}
           />
         ))}
-      </div>
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-background/80 backdrop-blur-sm text-muted-foreground text-xs px-3 py-1.5 rounded-full pointer-events-none">
-        Перетащите для вращения
       </div>
     </div>
   );
