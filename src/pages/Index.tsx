@@ -6,15 +6,19 @@ import ProductCard from '@/components/ProductCard';
 import heroImg from '@/assets/hero.jpg';
 import look1 from '@/assets/look1.jpg';
 import look2 from '@/assets/look2.jpg';
+import premiumFabrics from '@/assets/premium_fabrics.png';
+import seamlessTech from '@/assets/seamless_tech.png';
+import fastDelivery from '@/assets/fast_delivery.png';
+import fittingReturn from '@/assets/fitting_return.png';
 
 const Index = () => {
   const featured = products.filter(p => p.isBestseller || p.isNew).slice(0, 4);
 
   const advantages = [
-    { icon: Sparkles, title: 'Премиальные ткани', desc: 'Итальянский нейлон и японский спандекс' },
-    { icon: Shield, title: 'Бесшовные технологии', desc: 'Комфорт без раздражения' },
-    { icon: Truck, title: 'Быстрая доставка', desc: 'По всей России за 2–5 дней' },
-    { icon: RefreshCw, title: 'Примерка и возврат', desc: 'Бесплатный возврат в течение 14 дней' },
+    { image: premiumFabrics, title: 'Премиальные ткани', desc: 'Итальянский нейлон и японский спандекс' },
+    { image: seamlessTech, title: 'Бесшовные технологии', desc: 'Комфорт без раздражения' },
+    { image: fastDelivery, title: 'Быстрая доставка', desc: 'По всей России за 2–5 дней' },
+    { image: fittingReturn, title: 'Примерка и возврат', desc: 'Бесплатный возврат в течение 14 дней' },
   ];
 
   return (
@@ -72,7 +76,7 @@ const Index = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {advantages.map(a => (
               <div key={a.title} className="text-center">
-                <a.icon className="h-8 w-8 mx-auto mb-3 text-accent" />
+                <img src={a.image} alt={a.title} className="h-16 w-auto mx-auto mb-3 object-contain" />
                 <h3 className="font-sans font-semibold text-sm mb-1">{a.title}</h3>
                 <p className="text-xs text-muted-foreground">{a.desc}</p>
               </div>
