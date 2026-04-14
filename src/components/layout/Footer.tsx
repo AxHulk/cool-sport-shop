@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Instagram, Send } from 'lucide-react';
+import { Send } from 'lucide-react';
 import { useState } from 'react';
 import { Checkbox } from '@/components/ui/checkbox';
 import logo from '@/assets/logo.png';
@@ -62,7 +62,7 @@ const Footer = () => {
         </div>
         <div>
           <h4 className="font-sans text-sm font-semibold mb-3 uppercase tracking-wider">Подписка</h4>
-          <p className="text-sm opacity-80 mb-3">Скидка 10% на первый заказ</p>
+          <p className="text-sm opacity-80 mb-3">Скидка 10% на первый заказ*</p>
           <div className="flex gap-2">
             <Input
               placeholder="Email"
@@ -85,10 +85,7 @@ const Footer = () => {
             </label>
           </div>
           {error && <p className="text-xs text-red-300 mt-1">{error}</p>}
-          <div className="flex gap-3 mt-4">
-            <a href="#" className="opacity-80 hover:opacity-100"><Instagram className="h-5 w-5" /></a>
-            <a href="#" className="opacity-80 hover:opacity-100"><Send className="h-5 w-5" /></a>
-          </div>
+          <p className="text-xs opacity-50 mt-3">*неприменимо к комбо наборам и акционным товарам</p>
         </div>
       </div>
       <div className="border-t border-primary-foreground/10 py-4">
