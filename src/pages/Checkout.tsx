@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { Minus, Plus, Trash2, ChevronLeft } from 'lucide-react';
+import ConsentCheckbox from '@/components/ConsentCheckbox';
 
 const steps = ['Контакты', 'Доставка', 'Оплата'];
 
@@ -26,6 +27,8 @@ const Checkout = () => {
   const [step, setStep] = useState(0);
   const [done, setDone] = useState(false);
   const [orderNumber, setOrderNumber] = useState('');
+  const [consent, setConsent] = useState(false);
+  const [consentError, setConsentError] = useState('');
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
   const [form, setForm] = useState<FormData>({
     name: '',
@@ -54,6 +57,11 @@ const Checkout = () => {
       if (!form.phone.trim()) newErrors.phone = 'Введите телефон';
       if (!form.email.trim()) newErrors.email = 'Введите email';
       else if (!/\S+@\S+\.\S+/.test(form.email)) newErrors.email = 'Некорректный email';
+      if (!consent) {
+        setConsentError('Необходимо согласие на обработку персональных данных');
+      } else {
+        setConsentError('');
+      }
     }
 
     if (s === 1) {
@@ -67,7 +75,9 @@ const Checkout = () => {
     }
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    const hasFieldErrors = Object.keys(newErrors).length > 0;
+    const hasConsentError = s === 0 && !consent;
+    return !hasFieldErrors && !hasConsentError;
   };
 
   if (items.length === 0 && !done) {
@@ -146,6 +156,12 @@ const Checkout = () => {
                 <Input value={form.email} onChange={e => updateField('email', e.target.value)} placeholder="anna@example.com" type="email" className={errors.email ? 'border-destructive' : ''} />
                 {errors.email && <p className="text-xs text-destructive mt-1">{errors.email}</p>}
               </div>
+              <ConsentCheckbox
+                id="checkout-consent"
+                checked={consent}
+                onCheckedChange={(v) => { setConsent(v); setConsentError(''); }}
+                error={consentError}
+              />
             </div>
           )}
 
