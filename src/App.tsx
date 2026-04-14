@@ -55,6 +55,7 @@ const App = () => (
             </main>
             <Footer />
             <CartDrawer />
+            <CookieBanner />
           </BrowserRouter>
         </FavoritesProvider>
       </CartProvider>
