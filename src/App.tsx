@@ -19,6 +19,7 @@ import Favorites from "./pages/Favorites";
 import Profile from "./pages/Profile";
 import Offer from "./pages/Offer";
 import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -43,6 +44,7 @@ const App = () => (
                 <Route path="/contacts" element={<Contacts />} />
                 <Route path="/offer" element={<Offer />} />
                 <Route path="/privacy" element={<Privacy />} />
+                <Route path="/terms" element={<Terms />} />
                 <Route path="/favorites" element={<Favorites />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="*" element={<NotFound />} />
