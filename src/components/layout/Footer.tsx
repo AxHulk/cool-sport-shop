@@ -26,6 +26,7 @@ const Footer = () => (
           <Link to="/about" className="block hover:opacity-100">О бренде</Link>
           <Link to="/delivery" className="block hover:opacity-100">Доставка и оплата</Link>
           <Link to="/contacts" className="block hover:opacity-100">Контакты</Link>
+          <Link to="/offer" className="block hover:opacity-100">Публичная оферта</Link>
         </div>
       </div>
       <div>
