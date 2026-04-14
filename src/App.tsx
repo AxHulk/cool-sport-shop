@@ -22,6 +22,7 @@ import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import PaymentSecurity from "./pages/PaymentSecurity";
 import NotFound from "./pages/NotFound";
+import CookieBanner from "./components/CookieBanner";
 
 const queryClient = new QueryClient();
 
@@ -54,6 +55,7 @@ const App = () => (
             </main>
             <Footer />
             <CartDrawer />
+            <CookieBanner />
           </BrowserRouter>
         </FavoritesProvider>
       </CartProvider>
