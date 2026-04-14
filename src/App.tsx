@@ -20,6 +20,7 @@ import Profile from "./pages/Profile";
 import Offer from "./pages/Offer";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
+import PaymentSecurity from "./pages/PaymentSecurity";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -45,6 +46,7 @@ const App = () => (
                 <Route path="/offer" element={<Offer />} />
                 <Route path="/privacy" element={<Privacy />} />
                 <Route path="/terms" element={<Terms />} />
+                <Route path="/payment-security" element={<PaymentSecurity />} />
                 <Route path="/favorites" element={<Favorites />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="*" element={<NotFound />} />
