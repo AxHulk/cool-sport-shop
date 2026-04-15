@@ -5,6 +5,10 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { Search, Save } from 'lucide-react';
+import { products } from '@/data/products';
+
+const productNameMap: Record<string, string> = {};
+products.forEach(p => { productNameMap[p.id] = p.name; });
 
 const AdminInventory = () => {
   const [inventory, setInventory] = useState<any[]>([]);
@@ -47,10 +51,11 @@ const AdminInventory = () => {
     }
   };
 
-  const filtered = inventory.filter(i =>
-    i.product_id.toLowerCase().includes(search.toLowerCase()) ||
-    i.color.toLowerCase().includes(search.toLowerCase())
-  );
+  const filtered = inventory.filter(i => {
+    const name = (productNameMap[i.product_id] || i.product_id).toLowerCase();
+    const q = search.toLowerCase();
+    return name.includes(q) || i.color.toLowerCase().includes(q);
+  });
 
   return (
     <div className="space-y-4">
@@ -68,7 +73,7 @@ const AdminInventory = () => {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Товар (ID)</TableHead>
+              <TableHead>Товар</TableHead>
               <TableHead>Размер</TableHead>
               <TableHead>Цвет</TableHead>
               <TableHead>Остаток</TableHead>
@@ -84,7 +89,7 @@ const AdminInventory = () => {
               const available = item.quantity - item.reserved;
               return (
                 <TableRow key={item.id} className={available <= 0 ? 'bg-destructive/5' : ''}>
-                  <TableCell className="font-medium">{item.product_id}</TableCell>
+                  <TableCell className="font-medium">{productNameMap[item.product_id] || item.product_id}</TableCell>
                   <TableCell>{item.size}</TableCell>
                   <TableCell>{item.color}</TableCell>
                   <TableCell>
