@@ -98,7 +98,7 @@ const Footer = () => {
           <p className="text-xs opacity-60">© 2026 āsana. Все права защищены.</p>
           <div className="flex items-center gap-3 opacity-60">
             <img src={payVisa} alt="Visa" className="h-5 object-contain brightness-0 invert" />
-            <img src={payMastercard} alt="MasterCard" className="h-5 object-contain brightness-0 invert" />
+            <img src={payMastercard} alt="MasterCard" className="h-5 object-contain" />
             <img src={payMir} alt="МИР" className="h-5 object-contain brightness-0 invert" />
             <img src={paySbp} alt="СБП" className="h-5 object-contain brightness-0 invert" />
             <img src={pay3ds} alt="3D Secure" className="h-5 object-contain brightness-0 invert" />
