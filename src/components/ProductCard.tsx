@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Heart, ShoppingBag } from 'lucide-react';
 import { Product } from '@/data/products';
@@ -5,23 +6,31 @@ import { useCart } from '@/context/CartContext';
 import { useFavorites } from '@/context/FavoritesContext';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const ProductCard = ({ product }: { product: Product }) => {
   const { addItem } = useCart();
   const { toggleFavorite, isFavorite } = useFavorites();
   const fav = isFavorite(product.id);
+  const [imgLoaded, setImgLoaded] = useState(false);
 
   const formatPrice = (p: number) => p.toLocaleString('ru-RU') + ' ₽';
 
   return (
     <div className="group relative">
       <Link to={`/product/${product.id}`} className="block">
-        <div className="aspect-square overflow-hidden rounded-lg bg-muted">
+        <div className="aspect-square overflow-hidden rounded-lg bg-muted relative">
+          {!imgLoaded && <Skeleton className="absolute inset-0 rounded-lg" />}
           <img
             src={product.images[0]}
             alt={product.name}
             loading="lazy"
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            decoding="async"
+            onLoad={() => setImgLoaded(true)}
+            className={cn(
+              "w-full h-full object-cover group-hover:scale-105 transition-transform duration-500",
+              !imgLoaded && "opacity-0"
+            )}
           />
         </div>
         {(product.isNew || product.oldPrice) && (
