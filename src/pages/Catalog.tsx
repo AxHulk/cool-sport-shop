@@ -3,7 +3,6 @@ import { useSearchParams } from 'react-router-dom';
 import { products, categories, ProductCategory } from '@/data/products';
 import ProductCard from '@/components/ProductCard';
 import { Button } from '@/components/ui/button';
-import { Slider } from '@/components/ui/slider';
 import { cn } from '@/lib/utils';
 
 const sizes = ['XS', 'S', 'M', 'L'] as const;
