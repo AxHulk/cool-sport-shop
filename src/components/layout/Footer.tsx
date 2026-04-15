@@ -5,6 +5,11 @@ import { Send } from 'lucide-react';
 import { useState } from 'react';
 import { Checkbox } from '@/components/ui/checkbox';
 import logo from '@/assets/logo.png';
+import payVisa from '@/assets/pay-visa.png';
+import payMastercard from '@/assets/pay-mastercard.png';
+import payMir from '@/assets/pay-mir.png';
+import paySbp from '@/assets/pay-sbp.png';
+import pay3ds from '@/assets/pay-3dsecure.png';
 
 const Footer = () => {
   const [email, setEmail] = useState('');
