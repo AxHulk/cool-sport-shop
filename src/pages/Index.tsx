@@ -3,13 +3,13 @@ import { ArrowRight, Truck, RefreshCw, Shield, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { products, categories } from '@/data/products';
 import ProductCard from '@/components/ProductCard';
-import heroImg from '@/assets/hero.jpg';
-import look1 from '@/assets/look1.jpg';
-import look2 from '@/assets/look2.jpg';
-import premiumFabrics from '@/assets/premium_fabrics.png';
-import seamlessTech from '@/assets/seamless_tech.png';
-import fastDelivery from '@/assets/fast_delivery.png';
-import fittingReturn from '@/assets/fitting_return.png';
+import heroImg from '@/assets/hero.webp';
+import look1 from '@/assets/look1.webp';
+import look2 from '@/assets/look2.webp';
+import premiumFabrics from '@/assets/premium_fabrics.webp';
+import seamlessTech from '@/assets/seamless_tech.webp';
+import fastDelivery from '@/assets/fast_delivery.webp';
+import fittingReturn from '@/assets/fitting_return.webp';
 
 const Index = () => {
   const featured = products.filter(p => p.isBestseller || p.isNew).slice(0, 4);

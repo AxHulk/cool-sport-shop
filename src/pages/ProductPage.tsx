@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, lazy, Suspense } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Heart, ShoppingBag, Ruler, RotateCcw, Image } from 'lucide-react';
 import { products } from '@/data/products';
@@ -7,11 +7,13 @@ import { useFavorites } from '@/context/FavoritesContext';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import ProductCard from '@/components/ProductCard';
-import ProductViewer3D from '@/components/ProductViewer3D';
 import ProductImageSpin from '@/components/ProductImageSpin';
 import ComboRecommendation from '@/components/ComboRecommendation';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
+import { Skeleton } from '@/components/ui/skeleton';
+
+const ProductViewer3D = lazy(() => import('@/components/ProductViewer3D'));
 
 const categoryNames: Record<string, string> = {
   leggings: 'Леггинсы',
@@ -28,7 +30,7 @@ const ProductPage = () => {
 
   const [selectedColor, setSelectedColor] = useState(product?.colors[0]);
   const [selectedSize, setSelectedSize] = useState(product?.sizes[1] || product?.sizes[0]);
-  const [view3D, setView3D] = useState(true);
+  const [view3D, setView3D] = useState(false);
 
   if (!product) return <div className="container py-20 text-center">Товар не найден</div>;
 
@@ -47,13 +49,17 @@ const ProductPage = () => {
             const currentModelUrl = (selectedColor && product.colorModelUrls?.[selectedColor.name]) || product.modelUrl;
             if (currentModelUrl && view3D) {
               const isRashguard = product.category === 'rashguards';
-              return <ProductViewer3D key={selectedColor?.name} modelUrl={currentModelUrl} autoRotate={!isRashguard} cameraPosition={isRashguard ? [0, 0.2, 3] : [0, 0, 3]} />;
+              return (
+                <Suspense fallback={<Skeleton className="w-full aspect-square rounded-lg" />}>
+                  <ProductViewer3D key={selectedColor?.name} modelUrl={currentModelUrl} autoRotate={!isRashguard} cameraPosition={isRashguard ? [0, 0.2, 3] : [0, 0, 3]} />
+                </Suspense>
+              );
             } else if (spinImgs) {
               return <ProductImageSpin key={selectedColor?.name} images={spinImgs} />;
             } else {
               return (
                 <div className="aspect-square rounded-lg overflow-hidden bg-muted">
-                  <img src={mainImg} alt={product.name} className="w-full h-full object-cover" />
+                  <img src={mainImg} alt={product.name} className="w-full h-full object-cover" loading="lazy" decoding="async" />
                 </div>
               );
             }
