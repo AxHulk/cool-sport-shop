@@ -73,7 +73,7 @@ const AdminInventory = () => {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Товар (ID)</TableHead>
+              <TableHead>Товар</TableHead>
               <TableHead>Размер</TableHead>
               <TableHead>Цвет</TableHead>
               <TableHead>Остаток</TableHead>
