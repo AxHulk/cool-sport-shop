@@ -30,7 +30,7 @@ const AdminReturns = () => {
   };
 
   const changeStatus = async (id: string, newStatus: string) => {
-    await supabase.from('returns').update({ status: newStatus }).eq('id', id);
+    await supabase.from('returns').update({ status: newStatus as any }).eq('id', id);
     toast.success(`Статус возврата изменён`);
     loadReturns();
   };

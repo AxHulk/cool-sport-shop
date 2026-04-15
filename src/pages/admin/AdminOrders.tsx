@@ -27,7 +27,7 @@ const AdminOrders = () => {
 
   const loadOrders = async () => {
     let q = supabase.from('orders').select('*').order('created_at', { ascending: false });
-    if (filter !== 'all') q = q.eq('status', filter);
+    if (filter !== 'all') q = q.eq('status', filter as any);
     const { data } = await q;
     setOrders(data || []);
   };
@@ -44,7 +44,7 @@ const AdminOrders = () => {
   };
 
   const changeStatus = async (orderId: string, oldStatus: string, newStatus: string) => {
-    await supabase.from('orders').update({ status: newStatus }).eq('id', orderId);
+    await supabase.from('orders').update({ status: newStatus as any }).eq('id', orderId);
     await supabase.from('order_history').insert({
       order_id: orderId,
       field_changed: 'status',

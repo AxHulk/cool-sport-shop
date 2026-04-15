@@ -15,7 +15,7 @@ const AdminAnalytics = () => {
 
   const loadAnalytics = async () => {
     // Top products
-    const { data: items } = await supabase.from('order_items').select('product_name, quantity');
+    const { data: items } = await supabase.from('order_items').select('product_name, quantity, size');
     const productMap: Record<string, number> = {};
     (items || []).forEach(i => { productMap[i.product_name] = (productMap[i.product_name] || 0) + i.quantity; });
     const sorted = Object.entries(productMap).sort((a, b) => b[1] - a[1]).slice(0, 5);
