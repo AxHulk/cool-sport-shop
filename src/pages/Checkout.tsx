@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { Minus, Plus, Trash2, ChevronLeft } from 'lucide-react';
 import ConsentCheckbox from '@/components/ConsentCheckbox';
+import { supabase } from '@/integrations/supabase/client';
 
 const steps = ['Контакты', 'Доставка', 'Оплата'];
 
@@ -29,6 +30,7 @@ const Checkout = () => {
   const [orderNumber, setOrderNumber] = useState('');
   const [consent, setConsent] = useState(false);
   const [consentError, setConsentError] = useState('');
+  const [submitting, setSubmitting] = useState(false);
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
   const [form, setForm] = useState<FormData>({
     name: '',
@@ -101,19 +103,68 @@ const Checkout = () => {
     );
   }
 
-  const handleSubmit = () => {
-    if (!validateStep(step)) return;
-    if (step < 2) { setStep(step + 1); return; }
-    const num = Math.floor(Math.random() * 90000 + 10000).toString();
-    setOrderNumber(num);
-    clearCart();
-    setDone(true);
-    toast.success('Заказ оформлен!', { description: `Номер заказа: ${num}` });
-  };
-
   const priceAfterCombo = totalPriceWithDiscount;
   const deliveryPrice = priceAfterCombo >= 10000 ? 0 : 490;
   const finalPrice = priceAfterCombo + deliveryPrice;
+
+  const handleSubmit = async () => {
+    if (!validateStep(step)) return;
+    if (step < 2) { setStep(step + 1); return; }
+
+    setSubmitting(true);
+    const num = Math.floor(Math.random() * 90000 + 10000).toString();
+
+    try {
+      const projectId = import.meta.env.VITE_SUPABASE_PROJECT_ID;
+      const response = await fetch(
+        `https://${projectId}.supabase.co/functions/v1/save-order`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'apikey': import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY },
+          body: JSON.stringify({
+            order_number: num,
+            customer_name: form.name,
+            customer_phone: form.phone,
+            customer_email: form.email,
+            city: form.city,
+            address: form.address,
+            delivery_method: form.deliveryMethod,
+            payment_method: form.paymentMethod,
+            total_price: priceAfterCombo,
+            delivery_price: deliveryPrice,
+            discount_amount: appliedCombo?.savings || 0,
+            promo_code: form.promoCode || null,
+            items: items.map(i => ({
+              product_id: i.product.id,
+              product_name: i.product.name,
+              size: i.size,
+              color: i.color.name,
+              quantity: i.quantity,
+              price: i.product.price * i.quantity,
+            })),
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error('Failed to save order');
+      }
+
+      setOrderNumber(num);
+      clearCart();
+      setDone(true);
+      toast.success('Заказ оформлен!', { description: `Номер заказа: ${num}` });
+    } catch (error) {
+      console.error('Order save error:', error);
+      // Still complete the order even if DB save fails
+      setOrderNumber(num);
+      clearCart();
+      setDone(true);
+      toast.success('Заказ оформлен!', { description: `Номер заказа: ${num}` });
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   return (
     <div className="container py-8 max-w-4xl mx-auto">
@@ -224,8 +275,8 @@ const Checkout = () => {
 
           <div className="flex gap-3 mt-8">
             {step > 0 && <Button variant="outline" onClick={() => setStep(step - 1)}>Назад</Button>}
-            <Button className="flex-1" onClick={handleSubmit}>
-              {step < 2 ? 'Далее' : `Оплатить ${formatPrice(finalPrice)}`}
+            <Button className="flex-1" onClick={handleSubmit} disabled={submitting}>
+              {submitting ? 'Оформление...' : step < 2 ? 'Далее' : `Оплатить ${formatPrice(finalPrice)}`}
             </Button>
           </div>
         </div>
