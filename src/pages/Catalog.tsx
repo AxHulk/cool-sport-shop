@@ -3,7 +3,6 @@ import { useSearchParams } from 'react-router-dom';
 import { products, categories, ProductCategory } from '@/data/products';
 import ProductCard from '@/components/ProductCard';
 import { Button } from '@/components/ui/button';
-import { Slider } from '@/components/ui/slider';
 import { cn } from '@/lib/utils';
 
 const sizes = ['XS', 'S', 'M', 'L'] as const;
@@ -20,7 +19,6 @@ const Catalog = () => {
 
   const [selectedCategory, setSelectedCategory] = useState<ProductCategory | null>(categoryParam);
   const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
-  const [priceRange, setPriceRange] = useState([0, 10000]);
   const [sort, setSort] = useState('popular');
 
   const toggleSize = (s: string) => {
@@ -31,7 +29,6 @@ const Catalog = () => {
     let result = [...products];
     if (selectedCategory) result = result.filter(p => p.category === selectedCategory);
     if (selectedSizes.length) result = result.filter(p => p.sizes.some(s => selectedSizes.includes(s)));
-    result = result.filter(p => p.price >= priceRange[0] && p.price <= priceRange[1]);
 
     switch (sort) {
       case 'price-asc': result.sort((a, b) => a.price - b.price); break;
@@ -39,7 +36,7 @@ const Catalog = () => {
       case 'new': result.sort((a, b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0)); break;
     }
     return result;
-  }, [selectedCategory, selectedSizes, priceRange, sort]);
+  }, [selectedCategory, selectedSizes, sort]);
 
   return (
     <div className="container py-8">
@@ -90,20 +87,6 @@ const Catalog = () => {
             </div>
           </div>
 
-          <div>
-            <h3 className="font-sans text-sm font-semibold mb-3">Цена</h3>
-            <Slider
-              min={0}
-              max={10000}
-              step={100}
-              value={priceRange}
-              onValueChange={setPriceRange}
-            />
-            <div className="flex justify-between text-xs text-muted-foreground mt-2">
-              <span>{priceRange[0].toLocaleString('ru-RU')} ₽</span>
-              <span>{priceRange[1].toLocaleString('ru-RU')} ₽</span>
-            </div>
-          </div>
         </aside>
 
         {/* Products grid */}
