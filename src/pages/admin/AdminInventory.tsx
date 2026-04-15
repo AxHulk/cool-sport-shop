@@ -5,6 +5,10 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { Search, Save } from 'lucide-react';
+import { products } from '@/data/products';
+
+const productNameMap: Record<string, string> = {};
+products.forEach(p => { productNameMap[p.id] = p.name; });
 
 const AdminInventory = () => {
   const [inventory, setInventory] = useState<any[]>([]);
