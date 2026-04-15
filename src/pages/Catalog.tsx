@@ -24,8 +24,6 @@ const Catalog = () => {
   useEffect(() => {
     setSelectedCategory(categoryParam);
   }, [categoryParam]);
-  const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
-  const [sort, setSort] = useState('popular');
 
   const toggleSize = (s: string) => {
     setSelectedSizes(prev => prev.includes(s) ? prev.filter(x => x !== s) : [...prev, s]);
