@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { products, categories, ProductCategory } from '@/data/products';
 import ProductCard from '@/components/ProductCard';
@@ -18,6 +18,12 @@ const Catalog = () => {
   const categoryParam = searchParams.get('category') as ProductCategory | null;
 
   const [selectedCategory, setSelectedCategory] = useState<ProductCategory | null>(categoryParam);
+  const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
+  const [sort, setSort] = useState('popular');
+
+  useEffect(() => {
+    setSelectedCategory(categoryParam);
+  }, [categoryParam]);
   const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
   const [sort, setSort] = useState('popular');
 
