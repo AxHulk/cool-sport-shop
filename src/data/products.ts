@@ -11,8 +11,6 @@ import blackJacket6 from '@/assets/black_jacket_6.jpg';
 import brownJacket1 from '@/assets/brown_jacket_1.jpg';
 import brownJacket2 from '@/assets/brown_jacket_2.jpg';
 import brownJacket3 from '@/assets/brown_jacket_3.jpg';
-import brownJacket4 from '@/assets/brown_jacket_4.jpg';
-import brownJacket5 from '@/assets/brown_jacket_5.jpg';
 import ivoryJacket1 from '@/assets/ivory_jacket_1.jpg';
 import ivoryJacket2 from '@/assets/ivory_jacket_2.jpg';
 import ivoryJacket3 from '@/assets/ivory_jacket_3.jpg';
