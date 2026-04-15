@@ -11,8 +11,6 @@ import blackJacket6 from '@/assets/black_jacket_6.jpg';
 import brownJacket1 from '@/assets/brown_jacket_1.jpg';
 import brownJacket2 from '@/assets/brown_jacket_2.jpg';
 import brownJacket3 from '@/assets/brown_jacket_3.jpg';
-import brownJacket4 from '@/assets/brown_jacket_4.jpg';
-import brownJacket5 from '@/assets/brown_jacket_5.jpg';
 import ivoryJacket1 from '@/assets/ivory_jacket_1.jpg';
 import ivoryJacket2 from '@/assets/ivory_jacket_2.jpg';
 import ivoryJacket3 from '@/assets/ivory_jacket_3.jpg';
@@ -121,7 +119,7 @@ export const products: Product[] = [
     spinImages: [blackJacket1, blackJacket2, blackJacket3, blackJacket4, blackJacket5, blackJacket6],
     colorSpinImages: {
       'Чёрный': [blackJacket1, blackJacket2, blackJacket3, blackJacket4, blackJacket5, blackJacket6],
-      'Шоколад': [brownJacket1, brownJacket2, brownJacket3, brownJacket4, brownJacket5],
+      'Шоколад': [brownJacket1, brownJacket2, brownJacket3],
       'Айвори': [ivoryJacket1, ivoryJacket2, ivoryJacket3, ivoryJacket4, ivoryJacket5],
     },
     colorImages: {
