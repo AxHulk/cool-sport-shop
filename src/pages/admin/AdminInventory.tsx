@@ -89,7 +89,7 @@ const AdminInventory = () => {
               const available = item.quantity - item.reserved;
               return (
                 <TableRow key={item.id} className={available <= 0 ? 'bg-destructive/5' : ''}>
-                  <TableCell className="font-medium">{item.product_id}</TableCell>
+                  <TableCell className="font-medium">{productNameMap[item.product_id] || item.product_id}</TableCell>
                   <TableCell>{item.size}</TableCell>
                   <TableCell>{item.color}</TableCell>
                   <TableCell>
