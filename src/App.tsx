@@ -49,7 +49,8 @@ const App = () => (
         <FavoritesProvider>
           <Toaster />
           <Sonner />
-          <BrowserRouter>
+            <BrowserRouter>
+            <ScrollToTop />
             <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Загрузка...</div>}>
               <Routes>
                 {/* Admin routes - no header/footer */}
