@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Lock } from 'lucide-react';
 
-const ADMIN_LOGIN = 'А';
+const ADMIN_LOGIN = 'A';
 const ADMIN_PASSWORD = 'Strelka';
 
 interface AdminAuthProps {
