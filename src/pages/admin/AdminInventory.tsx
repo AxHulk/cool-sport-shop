@@ -51,10 +51,11 @@ const AdminInventory = () => {
     }
   };
 
-  const filtered = inventory.filter(i =>
-    i.product_id.toLowerCase().includes(search.toLowerCase()) ||
-    i.color.toLowerCase().includes(search.toLowerCase())
-  );
+  const filtered = inventory.filter(i => {
+    const name = (productNameMap[i.product_id] || i.product_id).toLowerCase();
+    const q = search.toLowerCase();
+    return name.includes(q) || i.color.toLowerCase().includes(q);
+  });
 
   return (
     <div className="space-y-4">
