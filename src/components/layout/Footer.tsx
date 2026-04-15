@@ -94,8 +94,15 @@ const Footer = () => {
         </div>
       </div>
       <div className="border-t border-primary-foreground/10 py-4">
-        <div className="container text-center text-xs opacity-60">
-          © 2026 āsana. Все права защищены.
+        <div className="container flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p className="text-xs opacity-60">© 2026 āsana. Все права защищены.</p>
+          <div className="flex items-center gap-3 opacity-60">
+            <img src={payVisa} alt="Visa" className="h-5 object-contain brightness-0 invert" />
+            <img src={payMastercard} alt="MasterCard" className="h-5 object-contain brightness-0 invert" />
+            <img src={payMir} alt="МИР" className="h-5 object-contain brightness-0 invert" />
+            <img src={paySbp} alt="СБП" className="h-5 object-contain brightness-0 invert" />
+            <img src={pay3ds} alt="3D Secure" className="h-5 object-contain brightness-0 invert" />
+          </div>
         </div>
       </div>
     </footer>
