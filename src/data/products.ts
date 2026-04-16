@@ -29,10 +29,7 @@ import ivoryLeggings1 from '@/assets/ivory_leggings_new_1.png';
 import ivoryLeggings2 from '@/assets/ivory_leggings_new_2.png';
 import bagBlueFront from '@/assets/bag_blue_new_1.png';
 import bagBlueBack from '@/assets/bag_blue_new_2.png';
-import bagBlackFront from '@/assets/bag_black_front_v3.webp';
-import bagBlackBack from '@/assets/bag_black_back_v3.webp';
-import bagBlackDetail1 from '@/assets/bag_black_detail1.webp';
-import bagBlackDetail2 from '@/assets/bag_black_detail2.webp';
+import bagBlackFront from '@/assets/bag_black_new_1.png';
 
 export type ProductCategory = 'leggings' | 'tops' | 'rashguards' | 'bags';
 export type ProductSize = 'XS' | 'S' | 'M' | 'L';
@@ -305,7 +302,7 @@ export const products: Product[] = [
     spinImages: [bagBlueFront, bagBlueBack],
     colorSpinImages: {
       'Голубой': [bagBlueFront, bagBlueBack],
-      'Чёрный': [bagBlackFront, bagBlackBack, bagBlackDetail1, bagBlackDetail2],
+      'Чёрный': [bagBlackFront],
     },
     colorImages: {
       'Голубой': bagBlueFront,
