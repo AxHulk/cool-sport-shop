@@ -27,10 +27,8 @@ import brownLeggings1 from '@/assets/brown_leggings_new_1.png';
 import brownLeggings2 from '@/assets/brown_leggings_new_2.png';
 import ivoryLeggings1 from '@/assets/ivory_leggings_new_1.png';
 import ivoryLeggings2 from '@/assets/ivory_leggings_new_2.png';
-import bagBlueFront from '@/assets/bag_blue_front_v3.webp';
-import bagBlueBack from '@/assets/bag_blue_back_v3.webp';
-import bagBlueDetail1 from '@/assets/bag_blue_detail1.webp';
-import bagBlueDetail2 from '@/assets/bag_blue_detail2.webp';
+import bagBlueFront from '@/assets/bag_blue_new_1.png';
+import bagBlueBack from '@/assets/bag_blue_new_2.png';
 import bagBlackFront from '@/assets/bag_black_front_v3.webp';
 import bagBlackBack from '@/assets/bag_black_back_v3.webp';
 import bagBlackDetail1 from '@/assets/bag_black_detail1.webp';
@@ -304,9 +302,9 @@ export const products: Product[] = [
       'Голубой': '/models/blue_bag.glb',
       'Чёрный': '/models/black_bag.glb',
     },
-    spinImages: [bagBlueFront, bagBlueBack, bagBlueDetail1, bagBlueDetail2],
+    spinImages: [bagBlueFront, bagBlueBack],
     colorSpinImages: {
-      'Голубой': [bagBlueFront, bagBlueBack, bagBlueDetail1, bagBlueDetail2],
+      'Голубой': [bagBlueFront, bagBlueBack],
       'Чёрный': [bagBlackFront, bagBlackBack, bagBlackDetail1, bagBlackDetail2],
     },
     colorImages: {
