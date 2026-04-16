@@ -22,11 +22,8 @@ import blueBraFront from '@/assets/blue_bra_3d_front.webp';
 import blueBraBack from '@/assets/blue_bra_3d_back.webp';
 import brownBraFront from '@/assets/brown_bra_3d_front.webp';
 import brownBraBack from '@/assets/brown_bra_3d_back.webp';
-import blackTopFront from '@/assets/black_top_front.webp';
-import blackTopBack from '@/assets/black_top_back.webp';
-import blackTopDetail1 from '@/assets/black_top_detail1.webp';
-import blackTopDetail2 from '@/assets/black_top_detail2.webp';
-import blackTopDetail3 from '@/assets/black_top_detail3.webp';
+import blackTopFront from '@/assets/black_top_new_1.png';
+import blackTopBack from '@/assets/black_top_new_2.png';
 import whiteTopFront from '@/assets/white_top_new_1.png';
 import whiteTopBack from '@/assets/white_top_new_2.png';
 import blackLeggings1 from '@/assets/black_leggings_new_1.png';
@@ -276,9 +273,9 @@ export const products: Product[] = [
       'Чёрный': '/models/black_top.glb',
       'Айвори': '/models/ivory_top.glb',
     },
-    spinImages: [blackTopFront, blackTopBack, blackTopDetail1, blackTopDetail2, blackTopDetail3],
+    spinImages: [blackTopFront, blackTopBack],
     colorSpinImages: {
-      'Чёрный': [blackTopFront, blackTopBack, blackTopDetail1, blackTopDetail2, blackTopDetail3],
+      'Чёрный': [blackTopFront, blackTopBack],
       'Айвори': [whiteTopFront, whiteTopBack],
     },
     colorImages: {
