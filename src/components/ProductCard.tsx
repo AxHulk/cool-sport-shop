@@ -13,16 +13,19 @@ const ProductCard = ({ product }: { product: Product }) => {
   const { toggleFavorite, isFavorite } = useFavorites();
   const fav = isFavorite(product.id);
   const [imgLoaded, setImgLoaded] = useState(false);
+  const [selectedColor, setSelectedColor] = useState(product.colors[0]);
 
   const formatPrice = (p: number) => p.toLocaleString('ru-RU') + ' ₽';
+
+  const currentImage = product.colorImages?.[selectedColor.name] || product.images[0];
 
   return (
     <div className="group relative">
       <Link to={`/product/${product.id}`} className="block">
-        <div className="aspect-square overflow-hidden rounded-lg bg-muted relative">
+        <div className="aspect-[3/4] overflow-hidden rounded-lg bg-muted relative">
           {!imgLoaded && <Skeleton className="absolute inset-0 rounded-lg" />}
           <img
-            src={product.images[0]}
+            src={currentImage}
             alt={product.name}
             loading="lazy"
             decoding="async"
@@ -60,7 +63,20 @@ const ProductCard = ({ product }: { product: Product }) => {
         </div>
         <div className="flex gap-1 mt-2">
           {product.colors.map(c => (
-            <span key={c.name} className="w-4 h-4 rounded-full border" style={{ backgroundColor: c.hex }} title={c.name} />
+            <button
+              key={c.name}
+              className={cn(
+                "w-4 h-4 rounded-full border cursor-pointer transition-all",
+                selectedColor.name === c.name && "ring-2 ring-offset-1 ring-foreground"
+              )}
+              style={{ backgroundColor: c.hex }}
+              title={c.name}
+              onClick={(e) => {
+                e.preventDefault();
+                setSelectedColor(c);
+                setImgLoaded(false);
+              }}
+            />
           ))}
         </div>
       </div>
@@ -68,7 +84,7 @@ const ProductCard = ({ product }: { product: Product }) => {
         variant="outline"
         size="sm"
         className="w-full mt-3 opacity-0 group-hover:opacity-100 transition-opacity"
-        onClick={() => addItem(product, product.sizes[1] || product.sizes[0], product.colors[0])}
+        onClick={() => addItem(product, product.sizes[1] || product.sizes[0], selectedColor)}
       >
         <ShoppingBag className="h-4 w-4 mr-1" /> В корзину
       </Button>
