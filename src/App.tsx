@@ -22,6 +22,7 @@ import Offer from "./pages/Offer";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import PaymentSecurity from "./pages/PaymentSecurity";
+import Unsubscribe from "./pages/Unsubscribe";
 import NotFound from "./pages/NotFound";
 import CookieBanner from "./components/CookieBanner";
 import { lazy, Suspense } from "react";
@@ -81,6 +82,7 @@ const App = () => (
                         <Route path="/privacy" element={<Privacy />} />
                         <Route path="/terms" element={<Terms />} />
                         <Route path="/payment-security" element={<PaymentSecurity />} />
+                        <Route path="/unsubscribe" element={<Unsubscribe />} />
                         <Route path="/favorites" element={<Favorites />} />
                         <Route path="/profile" element={<Profile />} />
                         <Route path="*" element={<NotFound />} />
