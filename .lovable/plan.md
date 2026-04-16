@@ -1,104 +1,24 @@
 
 
-## Админка-CRM: план реализации
+## Problem
 
-### Архитектура
+All product images are forced into `aspect-[3/4]` with `object-cover`, which crops them to fill the box. This works for some products but ruins others:
+- **Tops/bras** -- cropped to show only the center, losing the neckline and bottom
+- **Bags** -- zoomed into fabric detail, losing the full silhouette
+- **Leggings** -- cut at top/bottom
 
-Админка будет доступна по `/admin` с простой авторизацией (логин/пароль, хранится в коде, без Supabase Auth). Все данные хранятся в базе данных Lovable Cloud. Текущий чекаут будет доработан — при оформлении заказа данные сохраняются в БД.
+## Solution
 
-### База данных (миграции)
+Switch from `object-cover` to `object-contain` so every product is shown in full within the frame, with the muted background filling empty space. This is the standard approach for premium fashion e-commerce (Lululemon, Nike, COS).
 
-Создаём следующие таблицы:
+## Changes
 
-1. **products_inventory** — складские остатки по SKU (product_id + size + color)
-   - `quantity`, `reserved` (забронировано заказами)
+**`src/components/ProductCard.tsx`**:
 
-2. **orders** — заказы
-   - `order_number`, `status` (new/assembling/shipped/returned), `customer_name`, `customer_phone`, `customer_email`, `city`, `address`, `delivery_method`, `payment_method`, `total_price`, `delivery_price`, `promo_code`, `created_at`
+1. Change `object-cover` to `object-contain` on the `<img>` tag -- this ensures the full product is always visible regardless of image proportions
+2. Add subtle padding (`p-2` or `p-4`) to the image container so products don't touch the edges
+3. Keep the `aspect-[3/4]` ratio for consistent grid alignment
+4. Keep the hover scale effect
 
-3. **order_items** — позиции заказа
-   - `order_id`, `product_id`, `product_name`, `size`, `color`, `quantity`, `price`
-
-4. **order_history** — история изменений
-   - `order_id`, `field_changed`, `old_value`, `new_value`, `changed_by`, `changed_at`
-
-5. **returns** — возвраты
-   - `order_id`, `order_item_id`, `reason` (enum: wrong_size/wrong_style/quality/other), `comment`, `status` (pending/approved/completed), `refund_amount`, `created_at`
-
-6. **customers** — клиентская база (агрегация)
-   - `email`, `name`, `phone`, `total_orders`, `total_spent`, `last_order_at`
-
-RLS: таблицы без RLS (данные доступны только через админку, авторизация на уровне приложения). Или RLS с service_role через edge function для записи заказов.
-
-### Страницы админки
-
-#### Авторизация (`/admin`)
-- Форма логин/пароль, проверка в коде (логин: "А", пароль: "Strelka")
-- Состояние авторизации в localStorage
-- При неверных данных — ошибка
-
-#### Дашборд (`/admin/dashboard`)
-- Карточки: заказы за сегодня, выручка за неделю/месяц, возвраты
-- Список последних заказов
-- Товары с низким остатком (< 3 шт)
-
-#### Заказы (`/admin/orders`)
-- Таблица всех заказов с фильтрами по статусу, дате, поиском по номеру/имени
-- Смена статуса прямо из таблицы
-- Детальная карточка заказа: все данные клиента, состав, история изменений
-- Кнопка "Оформить возврат"
-
-#### Складской учёт (`/admin/inventory`)
-- Таблица остатков по каждому SKU (товар × размер × цвет)
-- Редактирование количества
-- Подсветка нулевых остатков
-- При оформлении заказа — автоматическое резервирование
-
-#### Клиенты (`/admin/customers`)
-- Таблица клиентов с сортировкой по дате последней покупки, сумме
-- Сегментация: "давно не покупали" (> 90 дней)
-- Переход к заказам клиента
-
-#### Возвраты (`/admin/returns`)
-- Список возвратов с причинами
-- Смена статуса возврата
-- Аналитика причин (круговая диаграмма)
-
-#### Аналитика (`/admin/analytics`)
-- Продажи по товарам, размерам, цветам (bar-charts)
-- Выручка по дням/неделям (line chart)
-- Конверсия заказов по статусам
-- Топ-5 товаров
-
-### Доработка фронтенда магазина
-
-- **Checkout**: при оформлении заказа — вызов edge function для сохранения заказа в БД, резервирования остатков, создания/обновления клиента
-- **Каталог/карточки**: проверка остатков — если товара нет, показывать "Нет в наличии"
-
-### Логистика (СДЭК, Почта России)
-
-Потребуется API-ключ СДЭК для интеграции. На первом этапе:
-- Поле ввода трек-номера вручную в карточке заказа
-- Генерация простой накладной (PDF) из данных заказа
-- Интеграцию с API СДЭК можно добавить позже при наличии ключей
-
-### Технические детали
-
-- Навигация админки: боковое меню (Sidebar) с иконками
-- Графики: recharts (уже в зависимостях через shadcn chart)
-- Edge function `save-order` для безопасной записи заказа (service_role)
-- Все страницы админки — lazy-loaded
-- Защита роутов: обёртка `AdminRoute` проверяет localStorage
-
-### Порядок реализации
-
-1. Миграции БД (все таблицы)
-2. Edge function для сохранения заказов
-3. Авторизация админки + layout с сайдбаром
-4. Страница заказов (основная)
-5. Складской учёт
-6. Доработка Checkout (запись в БД)
-7. Клиенты и возвраты
-8. Дашборд и аналитика
-9. Логистика (трек-номер, накладная)
+That's it -- one small but critical CSS change. The grid stays clean and aligned, but every product is fully visible.
 
