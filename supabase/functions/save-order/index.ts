@@ -144,6 +144,34 @@ Deno.serve(async (req) => {
       changed_by: "system",
     });
 
+    // 6. Send Telegram notification (fire-and-forget)
+    try {
+      const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
+      const TELEGRAM_API_KEY = Deno.env.get('TELEGRAM_API_KEY');
+      if (LOVABLE_API_KEY && TELEGRAM_API_KEY) {
+        const items = payload.items.map(i => ({
+          product_name: i.product_name,
+          size: i.size,
+          color: i.color,
+          quantity: i.quantity,
+          price: i.price,
+        }));
+        const tgText = `🛒 <b>Новый заказ №${payload.order_number}</b>\n\n👤 <b>Клиент:</b> ${payload.customer_name}\n📞 ${payload.customer_phone}\n📧 ${payload.customer_email}\n\n📦 <b>Доставка:</b> ${payload.delivery_method === 'courier' ? 'Курьер' : 'Пункт выдачи'}\n🏙 ${payload.city}${payload.address ? ', ' + payload.address : ''}\n\n💳 <b>Оплата:</b> ${payload.payment_method === 'card' ? 'Карта' : 'СБП'}\n\n<b>Товары:</b>\n${items.map((i, idx) => `  ${idx + 1}. ${i.product_name} (${i.size}, ${i.color}) ×${i.quantity} — ${i.price} ₽`).join('\n')}\n\n${payload.discount_amount > 0 ? `🏷 Скидка: -${payload.discount_amount} ₽\n` : ''}🚚 Доставка: ${payload.delivery_price === 0 ? 'Бесплатно' : payload.delivery_price + ' ₽'}\n💰 <b>Итого: ${payload.total_price} ₽</b>`;
+
+        await fetch('https://connector-gateway.lovable.dev/telegram/sendMessage', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${LOVABLE_API_KEY}`,
+            'X-Connection-Api-Key': TELEGRAM_API_KEY,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ chat_id: '8156387469', text: tgText, parse_mode: 'HTML' }),
+        });
+      }
+    } catch (tgErr) {
+      console.error('Telegram notification error:', tgErr);
+    }
+
     return new Response(JSON.stringify({ success: true, order_id: order.id, order_number: payload.order_number }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
