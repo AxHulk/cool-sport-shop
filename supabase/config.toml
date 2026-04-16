@@ -20,3 +20,6 @@ verify_jwt = false
 
 [functions.save-order]
 verify_jwt = false
+
+[functions.telegram-poll]
+verify_jwt = false
