@@ -40,13 +40,8 @@ import blackLeggings1 from '@/assets/black_leggings_new_1.png';
 import blackLeggings2 from '@/assets/black_leggings_new_2.png';
 import blueLeggings1 from '@/assets/blue_leggings_new_1.png';
 import blueLeggings2 from '@/assets/blue_leggings_new_2.png';
-import brownLeggingsFront from '@/assets/brown_leggings_front.webp';
-import brownLeggingsBack from '@/assets/brown_leggings_back.webp';
-import brownLeggingsDetail1 from '@/assets/brown_leggings_detail1.webp';
-import brownLeggingsDetail2 from '@/assets/brown_leggings_detail2.webp';
-import brownLeggingsDetail3 from '@/assets/brown_leggings_detail3.webp';
-import brownLeggingsDetail4 from '@/assets/brown_leggings_detail4.webp';
-import brownLeggingsDetail5 from '@/assets/brown_leggings_detail5.webp';
+import brownLeggings1 from '@/assets/brown_leggings_new_1.png';
+import brownLeggings2 from '@/assets/brown_leggings_new_2.png';
 import ivoryLeggings1 from '@/assets/ivory_leggings_new_1.png';
 import ivoryLeggings2 from '@/assets/ivory_leggings_new_2.png';
 import bagBlueFront from '@/assets/bag_blue_front_v3.webp';
@@ -175,9 +170,9 @@ export const products: Product[] = [
     name: 'Леггинсы в шоколадном цвете',
     category: 'leggings',
     price: 6500,
-    images: [brownLeggingsFront, brownLeggingsBack, brownLeggingsDetail1, brownLeggingsDetail2, brownLeggingsDetail3, brownLeggingsDetail4, brownLeggingsDetail5],
+    images: [brownLeggings1, brownLeggings2],
     modelUrl: '/models/brown_leggings.glb',
-    spinImages: [brownLeggingsFront, brownLeggingsBack, brownLeggingsDetail1, brownLeggingsDetail2, brownLeggingsDetail3, brownLeggingsDetail4, brownLeggingsDetail5],
+    spinImages: [brownLeggings1, brownLeggings2],
     colors: [
       { name: 'Шоколад', hex: '#5a3b32' },
     ],
