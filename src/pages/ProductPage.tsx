@@ -18,6 +18,7 @@ const ProductViewer3D = lazy(() => import('@/components/ProductViewer3D'));
 const categoryNames: Record<string, string> = {
   leggings: 'Леггинсы',
   tops: 'Топы',
+  tanks: 'Майки',
   rashguards: 'Рашгарды',
   bags: 'Сумки',
   longsleeves: 'Лонгсливы',

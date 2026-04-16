@@ -43,7 +43,7 @@ const Index = () => {
       {/* Categories */}
       <section className="container py-16">
         <h2 className="text-3xl font-serif text-center mb-10">Категории</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {categories.map(cat => (
             <Link key={cat.slug} to={`/catalog?category=${cat.slug}`} className="group relative aspect-square rounded-lg overflow-hidden">
               <img src={cat.image} alt={cat.name} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
