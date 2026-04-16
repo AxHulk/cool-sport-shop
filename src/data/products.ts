@@ -17,7 +17,6 @@ import blueBraFront from '@/assets/blue_bra_new_1.png';
 import blueBraBack from '@/assets/blue_bra_new_2.png';
 import brownBraDetail1 from '@/assets/brown_bra_detail1.webp';
 import brownBraDetail2 from '@/assets/brown_bra_detail2.webp';
-import blueBraBack from '@/assets/blue_bra_new_2.png';
 import brownBraFront from '@/assets/brown_bra_3d_front.webp';
 import brownBraBack from '@/assets/brown_bra_3d_back.webp';
 import blackTopFront from '@/assets/black_top_new_1.png';
