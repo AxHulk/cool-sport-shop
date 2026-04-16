@@ -302,7 +302,7 @@ export const products: Product[] = [
     spinImages: [bagBlueFront, bagBlueBack],
     colorSpinImages: {
       'Голубой': [bagBlueFront, bagBlueBack],
-      'Чёрный': [bagBlackFront, bagBlackBack, bagBlackDetail1, bagBlackDetail2],
+      'Чёрный': [bagBlackFront],
     },
     colorImages: {
       'Голубой': bagBlueFront,
