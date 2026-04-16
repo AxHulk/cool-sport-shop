@@ -95,9 +95,9 @@ export const products: Product[] = [
       'Шоколад': '/models/brown_rashguard.glb',
       'Айвори': '/models/ivory_rashguard.glb',
     },
-    spinImages: [blackJacket1, blackJacket2, blackJacket3, blackJacket4, blackJacket5, blackJacket6],
+    spinImages: [blackJacket1, blackJacket2],
     colorSpinImages: {
-      'Чёрный': [blackJacket1, blackJacket2, blackJacket3, blackJacket4, blackJacket5, blackJacket6],
+      'Чёрный': [blackJacket1, blackJacket2],
       'Шоколад': [brownJacket1, brownJacket2, brownJacket3],
       'Айвори': [ivoryJacket1, ivoryJacket2],
     },
