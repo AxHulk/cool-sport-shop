@@ -53,11 +53,8 @@ import brownLeggingsDetail2 from '@/assets/brown_leggings_detail2.webp';
 import brownLeggingsDetail3 from '@/assets/brown_leggings_detail3.webp';
 import brownLeggingsDetail4 from '@/assets/brown_leggings_detail4.webp';
 import brownLeggingsDetail5 from '@/assets/brown_leggings_detail5.webp';
-import ivoryLeggings1 from '@/assets/ivory_leggings_1.webp';
-import ivoryLeggings2 from '@/assets/ivory_leggings_2.webp';
-import ivoryLeggings3 from '@/assets/ivory_leggings_3.webp';
-import ivoryLeggings4 from '@/assets/ivory_leggings_4.webp';
-import ivoryLeggings5 from '@/assets/ivory_leggings_5.webp';
+import ivoryLeggings1 from '@/assets/ivory_leggings_new_1.png';
+import ivoryLeggings2 from '@/assets/ivory_leggings_new_2.png';
 import bagBlueFront from '@/assets/bag_blue_front_v3.webp';
 import bagBlueBack from '@/assets/bag_blue_back_v3.webp';
 import bagBlueDetail1 from '@/assets/bag_blue_detail1.webp';
@@ -207,9 +204,9 @@ export const products: Product[] = [
     name: 'Леггинсы в цвете айвори',
     category: 'leggings',
     price: 6500,
-    images: [ivoryLeggings1],
+    images: [ivoryLeggings1, ivoryLeggings2],
     modelUrl: '/models/ivory_leggings.glb',
-    spinImages: [ivoryLeggings1, ivoryLeggings2, ivoryLeggings3, ivoryLeggings4, ivoryLeggings5],
+    spinImages: [ivoryLeggings1, ivoryLeggings2],
     colors: [
       { name: 'Айвори', hex: '#f0ede4' },
     ],
