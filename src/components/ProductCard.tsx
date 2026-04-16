@@ -22,7 +22,7 @@ const ProductCard = ({ product }: { product: Product }) => {
   return (
     <div className="group relative">
       <Link to={`/product/${product.id}`} className="block">
-        <div className="aspect-[3/4] overflow-hidden rounded-lg bg-muted relative">
+        <div className="aspect-[3/4] overflow-hidden rounded-lg bg-muted relative p-3">
           {!imgLoaded && <Skeleton className="absolute inset-0 rounded-lg" />}
           <img
             src={currentImage}
@@ -31,7 +31,7 @@ const ProductCard = ({ product }: { product: Product }) => {
             decoding="async"
             onLoad={() => setImgLoaded(true)}
             className={cn(
-              "w-full h-full object-cover group-hover:scale-105 transition-transform duration-500",
+              "w-full h-full object-contain group-hover:scale-105 transition-transform duration-500",
               !imgLoaded && "opacity-0"
             )}
           />
