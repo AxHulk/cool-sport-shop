@@ -36,11 +36,8 @@ import whiteTopBack from '@/assets/white_top_back.webp';
 import whiteTopDetail1 from '@/assets/white_top_detail1.webp';
 import whiteTopDetail2 from '@/assets/white_top_detail2.webp';
 import whiteTopDetail3 from '@/assets/white_top_detail3.webp';
-import blackLeggings1 from '@/assets/black_leggings_1.webp';
-import blackLeggings2 from '@/assets/black_leggings_2.webp';
-import blackLeggings3 from '@/assets/black_leggings_3.webp';
-import blackLeggings4 from '@/assets/black_leggings_4.webp';
-import blackLeggings5 from '@/assets/black_leggings_5.webp';
+import blackLeggings1 from '@/assets/black_leggings_new_1.png';
+import blackLeggings2 from '@/assets/black_leggings_new_2.png';
 import blueLeggings1 from '@/assets/blue_leggings_new_1.png';
 import blueLeggings2 from '@/assets/blue_leggings_new_2.png';
 import brownLeggingsFront from '@/assets/brown_leggings_front.webp';
@@ -148,9 +145,9 @@ export const products: Product[] = [
       'Чёрный': '/models/black_leggings.glb',
       'Голубой': '/models/blue_leggings.glb',
     },
-    spinImages: [blackLeggings1, blackLeggings2, blackLeggings3, blackLeggings4, blackLeggings5],
+    spinImages: [blackLeggings1, blackLeggings2],
     colorSpinImages: {
-      'Чёрный': [blackLeggings1, blackLeggings2, blackLeggings3, blackLeggings4, blackLeggings5],
+      'Чёрный': [blackLeggings1, blackLeggings2],
       'Голубой': [blueLeggings1, blueLeggings2],
     },
     colorImages: {
