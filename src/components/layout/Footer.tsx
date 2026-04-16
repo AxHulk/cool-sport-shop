@@ -4,12 +4,12 @@ import { Button } from '@/components/ui/button';
 import { Send } from 'lucide-react';
 import { useState } from 'react';
 import { Checkbox } from '@/components/ui/checkbox';
-import logo from '@/assets/logo.png';
-import payVisa from '@/assets/pay-visa.png';
-import payMastercard from '@/assets/pay-mastercard.png';
-import payMir from '@/assets/pay-mir.png';
-import paySbp from '@/assets/pay-sbp.png';
-import pay3ds from '@/assets/pay-3dsecure.png';
+import logo from '@/assets/logo.webp';
+import payVisa from '@/assets/pay-visa.webp';
+import payMastercard from '@/assets/pay-mastercard.webp';
+import payMir from '@/assets/pay-mir.webp';
+import paySbp from '@/assets/pay-sbp.webp';
+import pay3ds from '@/assets/pay-3dsecure.webp';
 
 const Footer = () => {
   const [email, setEmail] = useState('');

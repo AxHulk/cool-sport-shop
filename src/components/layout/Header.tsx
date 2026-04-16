@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Heart, ShoppingBag, Menu, X } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
-import logo from '@/assets/logo.png';
+import logo from '@/assets/logo.webp';
 import { useFavorites } from '@/context/FavoritesContext';
 import { Button } from '@/components/ui/button';
 
