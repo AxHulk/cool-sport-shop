@@ -2,6 +2,7 @@ import catLeggings from '@/assets/cat-leggings.webp';
 import catTops from '@/assets/cat-tops.webp';
 import catRashguards from '@/assets/cat-rashguards.webp';
 import catBags from '@/assets/cat-bags.webp';
+import catLongsleeves from '@/assets/longsleeve_ivory_1.webp';
 import blackJacket1 from '@/assets/black_jacket_new_1.webp';
 import blackJacket2 from '@/assets/black_jacket_new_2.webp';
 import brownJacket1 from '@/assets/brown_jacket_new_1.webp';
@@ -30,8 +31,12 @@ import ivoryLeggings2 from '@/assets/ivory_leggings_new_2.webp';
 import bagBlueFront from '@/assets/bag_blue_new_1.webp';
 import bagBlueBack from '@/assets/bag_blue_new_2.webp';
 import bagBlackFront from '@/assets/bag_black_new_1.webp';
+import longsleeveJoy1 from '@/assets/longsleeve_ivory_1.webp';
+import longsleeveJoy2 from '@/assets/longsleeve_ivory_2.webp';
+import longsleeveEnergy1 from '@/assets/longsleeve_energy_1.webp';
+import longsleeveEnergy2 from '@/assets/longsleeve_energy_2.webp';
 
-export type ProductCategory = 'leggings' | 'tops' | 'rashguards' | 'bags';
+export type ProductCategory = 'leggings' | 'tops' | 'rashguards' | 'bags' | 'longsleeves';
 export type ProductSize = 'XS' | 'S' | 'M' | 'L';
 export type ProductColor = { name: string; hex: string };
 
@@ -61,6 +66,7 @@ export const categories = [
   { slug: 'tops' as const, name: 'Топы', image: catTops },
   { slug: 'rashguards' as const, name: 'Рашгарды', image: catRashguards },
   { slug: 'bags' as const, name: 'Сумки', image: catBags },
+  { slug: 'longsleeves' as const, name: 'Лонгсливы', image: catLongsleeves },
 ];
 
 export const products: Product[] = [
@@ -319,6 +325,54 @@ export const products: Product[] = [
       'Формат': 'Средний',
       'Ремень': 'Съёмный, регулируемый',
       'Уход': 'Сухая чистка',
+    },
+    isNew: true,
+  },
+
+  // --- ЛОНГСЛИВЫ ---
+  {
+    id: '17',
+    name: 'Лонгслив «Радость жизни»',
+    category: 'longsleeves',
+    price: 7600,
+    images: [longsleeveJoy1],
+    modelUrl: '/models/longsleeve.glb',
+    spinImages: [longsleeveJoy1, longsleeveJoy2],
+    colors: [
+      { name: 'Айвори', hex: '#f0e6d3' },
+    ],
+    sizes: ['XS', 'S', 'M', 'L'],
+    description: 'Лонгслив свободного кроя из мягкого хлопкового трикотажа. Надпись-аффирмация на предплечье. Круглый вырез, длинные рукава с манжетами. Подходит для тренировок и повседневной носки.',
+    specs: {
+      'Крой': 'Свободный',
+      'Вырез': 'Круглый',
+      'Рукава': 'Длинные, с манжетами',
+      'Материал': 'Хлопковый трикотаж',
+      'Особенности': 'Надпись на предплечье',
+      'Уход': 'Машинная стирка при 30°C',
+    },
+    isNew: true,
+  },
+  {
+    id: '18',
+    name: 'Лонгслив «Ты — энергия!»',
+    category: 'longsleeves',
+    price: 7600,
+    images: [longsleeveEnergy1],
+    modelUrl: '/models/longsleeve.glb',
+    spinImages: [longsleeveEnergy1, longsleeveEnergy2],
+    colors: [
+      { name: 'Айвори', hex: '#f0e6d3' },
+    ],
+    sizes: ['XS', 'S', 'M', 'L'],
+    description: 'Лонгслив свободного кроя из мягкого хлопкового трикотажа. Надпись-аффирмация на предплечье. Круглый вырез, длинные рукава с манжетами. Подходит для тренировок и повседневной носки.',
+    specs: {
+      'Крой': 'Свободный',
+      'Вырез': 'Круглый',
+      'Рукава': 'Длинные, с манжетами',
+      'Материал': 'Хлопковый трикотаж',
+      'Особенности': 'Надпись на предплечье',
+      'Уход': 'Машинная стирка при 30°C',
     },
     isNew: true,
   },

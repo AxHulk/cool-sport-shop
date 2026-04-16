@@ -20,6 +20,7 @@ const categoryNames: Record<string, string> = {
   tops: 'Топы',
   rashguards: 'Рашгарды',
   bags: 'Сумки',
+  longsleeves: 'Лонгсливы',
 };
 
 const ProductPage = () => {
