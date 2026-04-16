@@ -13,10 +13,8 @@ import braFront from '@/assets/black_bra_new_1.png';
 import braBack from '@/assets/black_bra_new_2.png';
 import blueBraFront from '@/assets/blue_bra_new_1.png';
 import blueBraBack from '@/assets/blue_bra_new_2.png';
-import brownBraDetail1 from '@/assets/brown_bra_detail1.webp';
-import brownBraDetail2 from '@/assets/brown_bra_detail2.webp';
-import brownBraFront from '@/assets/brown_bra_3d_front.webp';
-import brownBraBack from '@/assets/brown_bra_3d_back.webp';
+import brownBraFront from '@/assets/brown_bra_new_1.png';
+import brownBraBack from '@/assets/brown_bra_new_2.png';
 import blackTopFront from '@/assets/black_top_new_1.png';
 import blackTopBack from '@/assets/black_top_new_2.png';
 import whiteTopFront from '@/assets/white_top_new_1.png';
@@ -241,7 +239,7 @@ export const products: Product[] = [
     price: 5500,
     images: [brownBraFront],
     modelUrl: '/models/brown_bra.glb',
-    spinImages: [brownBraFront, brownBraBack, brownBraDetail1, brownBraDetail2],
+    spinImages: [brownBraFront, brownBraBack],
     colors: [
       { name: 'Шоколад', hex: '#3e2723' },
     ],
