@@ -170,9 +170,9 @@ export const products: Product[] = [
     name: 'Леггинсы в шоколадном цвете',
     category: 'leggings',
     price: 6500,
-    images: [brownLeggingsFront, brownLeggingsBack, brownLeggingsDetail1, brownLeggingsDetail2, brownLeggingsDetail3, brownLeggingsDetail4, brownLeggingsDetail5],
+    images: [brownLeggings1, brownLeggings2],
     modelUrl: '/models/brown_leggings.glb',
-    spinImages: [brownLeggingsFront, brownLeggingsBack, brownLeggingsDetail1, brownLeggingsDetail2, brownLeggingsDetail3, brownLeggingsDetail4, brownLeggingsDetail5],
+    spinImages: [brownLeggings1, brownLeggings2],
     colors: [
       { name: 'Шоколад', hex: '#5a3b32' },
     ],
