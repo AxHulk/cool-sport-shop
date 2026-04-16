@@ -9,10 +9,8 @@ import brownJacket2 from '@/assets/brown_jacket_new_2.png';
 import brownJacket3 from '@/assets/brown_jacket_new_3.png';
 import ivoryJacket1 from '@/assets/ivory_jacket_new_1.png';
 import ivoryJacket2 from '@/assets/ivory_jacket_new_2.png';
-import braFront from '@/assets/black_bra_3d_front.webp';
-import braBack from '@/assets/black_bra_3d_back.webp';
-import braDetail1 from '@/assets/black_bra_detail1.webp';
-import braDetail2 from '@/assets/black_bra_detail2.webp';
+import braFront from '@/assets/black_bra_new_1.png';
+import braBack from '@/assets/black_bra_new_2.png';
 import blueBraFront from '@/assets/blue_bra_new_1.png';
 import blueBraBack from '@/assets/blue_bra_new_2.png';
 import brownBraDetail1 from '@/assets/brown_bra_detail1.webp';
@@ -211,9 +209,9 @@ export const products: Product[] = [
       'Чёрный': '/models/black_bra.glb',
       'Голубой': '/models/blue_bra.glb',
     },
-    spinImages: [braFront, braBack, braDetail1, braDetail2],
+    spinImages: [braFront, braBack],
     colorSpinImages: {
-      'Чёрный': [braFront, braBack, braDetail1, braDetail2],
+      'Чёрный': [braFront, braBack],
       'Голубой': [blueBraFront, blueBraBack],
     },
     colorImages: {
