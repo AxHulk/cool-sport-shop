@@ -145,9 +145,9 @@ export const products: Product[] = [
       'Чёрный': '/models/black_leggings.glb',
       'Голубой': '/models/blue_leggings.glb',
     },
-    spinImages: [blackLeggings1, blackLeggings2, blackLeggings3, blackLeggings4, blackLeggings5],
+    spinImages: [blackLeggings1, blackLeggings2],
     colorSpinImages: {
-      'Чёрный': [blackLeggings1, blackLeggings2, blackLeggings3, blackLeggings4, blackLeggings5],
+      'Чёрный': [blackLeggings1, blackLeggings2],
       'Голубой': [blueLeggings1, blueLeggings2],
     },
     colorImages: {
