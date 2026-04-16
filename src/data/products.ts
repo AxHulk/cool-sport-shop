@@ -36,7 +36,7 @@ import longsleeveJoy2 from '@/assets/longsleeve_ivory_2.webp';
 import longsleeveEnergy1 from '@/assets/longsleeve_energy_1.webp';
 import longsleeveEnergy2 from '@/assets/longsleeve_energy_2.webp';
 
-export type ProductCategory = 'leggings' | 'tops' | 'rashguards' | 'bags' | 'longsleeves';
+export type ProductCategory = 'leggings' | 'tops' | 'tanks' | 'rashguards' | 'bags' | 'longsleeves';
 export type ProductSize = 'XS' | 'S' | 'M' | 'L';
 export type ProductColor = { name: string; hex: string };
 
@@ -64,6 +64,7 @@ export interface Product {
 export const categories = [
   { slug: 'leggings' as const, name: 'Леггинсы', image: catLeggings },
   { slug: 'tops' as const, name: 'Топы', image: catTops },
+  { slug: 'tanks' as const, name: 'Майки', image: blackTopFront },
   { slug: 'rashguards' as const, name: 'Рашгарды', image: catRashguards },
   { slug: 'bags' as const, name: 'Сумки', image: catBags },
   { slug: 'longsleeves' as const, name: 'Лонгсливы', image: catLongsleeves },
@@ -259,7 +260,7 @@ export const products: Product[] = [
   {
     id: '12',
     name: 'Майка моделирующая на тонких бретелях',
-    category: 'tops',
+    category: 'tanks',
     price: 5500,
     images: [blackTopFront],
     modelUrl: '/models/black_top.glb',
