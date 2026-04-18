@@ -4,6 +4,17 @@ import { products, categories, ProductCategory } from '@/data/products';
 import ProductCard from '@/components/ProductCard';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import SEO, { SITE_URL } from '@/components/SEO';
+import { breadcrumbLd } from '@/lib/seo';
+
+const categoryMeta: Record<string, { title: string; description: string }> = {
+  leggings: { title: 'Леггинсы для спорта и йоги', description: 'Премиальные женские леггинсы из итальянского нейлона. Высокая посадка, бесшовный крой, идеальная посадка.' },
+  tops: { title: 'Спортивные топы и бра', description: 'Поддерживающие спортивные топы для йоги, фитнеса и тренировок. Премиальные ткани, эргономичный крой.' },
+  tanks: { title: 'Спортивные майки', description: 'Лёгкие спортивные майки для тренировок. Дышащие ткани, свободный или приталенный силуэт.' },
+  rashguards: { title: 'Рашгарды женские', description: 'Стильные рашгарды на молнии для йоги, серфинга и фитнеса. Защита от ультрафиолета и натирания.' },
+  bags: { title: 'Спортивные сумки', description: 'Стильные сумки для спортзала и йога-студии. Вместительные, износостойкие, премиум-материалы.' },
+  longsleeves: { title: 'Лонгсливы', description: 'Спортивные лонгсливы из мягких премиальных тканей для тренировок и повседневной носки.' },
+};
 
 const sizes = ['XS', 'S', 'M', 'L'] as const;
 const sortOptions = [
