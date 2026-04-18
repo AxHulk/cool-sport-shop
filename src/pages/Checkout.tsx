@@ -86,6 +86,7 @@ const Checkout = () => {
   if (items.length === 0 && !done) {
     return (
       <div className="container py-20 text-center">
+        <SEO title="Корзина" description="Оформление заказа в āsana." noindex />
         <p className="text-muted-foreground mb-4">Корзина пуста</p>
         <Button asChild><Link to="/catalog">К покупкам</Link></Button>
       </div>
