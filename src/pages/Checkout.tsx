@@ -200,6 +200,7 @@ const Checkout = () => {
       <Button variant="ghost" size="sm" className="mb-4" onClick={() => navigate(-1)}>
         <ChevronLeft className="h-4 w-4 mr-1" /> Назад
       </Button>
+      <SEO title="Оформление заказа" description="Оформление заказа в āsana." noindex />
       <h1 className="text-3xl font-serif mb-8">Оформление заказа</h1>
 
       {/* Steps */}

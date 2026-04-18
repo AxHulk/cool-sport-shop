@@ -43,6 +43,7 @@ const Unsubscribe = () => {
 
   return (
     <div className="container py-20 text-center max-w-md mx-auto">
+      <SEO title="Отписка от рассылки" description="Управление подпиской на письма āsana." noindex />
       {status === 'loading' && <p className="text-muted-foreground">Загрузка...</p>}
       {status === 'valid' && (
         <>
