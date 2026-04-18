@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import SEO, { SITE_URL } from '@/components/SEO';
 import { breadcrumbLd } from '@/lib/seo';
+import Breadcrumbs from '@/components/Breadcrumbs';
 
 const categoryMeta: Record<string, { title: string; description: string }> = {
   leggings: { title: 'Леггинсы для спорта и йоги', description: 'Премиальные женские леггинсы из итальянского нейлона. Высокая посадка, бесшовный крой, идеальная посадка.' },
@@ -63,6 +64,7 @@ const Catalog = () => {
   return (
     <div className="container py-8">
       <SEO title={seoTitle} description={seoDesc} canonical={canonical} jsonLd={breadcrumbLd(crumbs)} />
+      <Breadcrumbs items={crumbs} className="mb-4" />
       <h1 className="text-3xl font-serif mb-8">{meta?.title || 'Каталог'}</h1>
 
       <div className="flex flex-col lg:flex-row gap-8">

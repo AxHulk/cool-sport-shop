@@ -27,6 +27,8 @@ const SEO = ({ title, description, image, type = 'website', noindex, canonical, 
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
       <link rel="canonical" href={url} />
+      <link rel="alternate" hrefLang="ru-RU" href={url} />
+      <link rel="alternate" hrefLang="x-default" href={url} />
       {noindex && <meta name="robots" content="noindex, nofollow" />}
 
       <meta property="og:type" content={type} />
