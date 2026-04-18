@@ -3,6 +3,8 @@ import { ArrowRight, Truck, RefreshCw, Shield, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { products, categories } from '@/data/products';
 import ProductCard from '@/components/ProductCard';
+import SEO from '@/components/SEO';
+import { organizationLd, websiteLd } from '@/lib/seo';
 import heroImg from '@/assets/hero.webp';
 import look1 from '@/assets/look1.webp';
 import look2 from '@/assets/look2.webp';
@@ -23,6 +25,11 @@ const Index = () => {
 
   return (
     <div>
+      <SEO
+        title="āsana — премиальная спортивная одежда для женщин"
+        description="Стильные леггинсы, топы, рашгарды, лонгсливы и сумки из итальянских тканей. Бесшовные технологии, доставка по России за 2–5 дней."
+        jsonLd={[organizationLd, websiteLd]}
+      />
       {/* Hero */}
       <section className="relative h-[80vh] min-h-[500px] overflow-hidden">
         <img src={heroImg} alt="āsana спортивная одежда" width={1920} height={1080} className="absolute inset-0 w-full h-full object-cover" />
