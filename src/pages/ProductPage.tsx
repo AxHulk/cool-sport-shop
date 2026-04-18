@@ -14,6 +14,7 @@ import { toast } from 'sonner';
 import { Skeleton } from '@/components/ui/skeleton';
 import SEO from '@/components/SEO';
 import { productLd, breadcrumbLd } from '@/lib/seo';
+import Breadcrumbs from '@/components/Breadcrumbs';
 
 const ProductViewer3D = lazy(() => import('@/components/ProductViewer3D'));
 
@@ -51,12 +52,13 @@ const ProductPage = () => {
     image: product.images[0],
     category: categoryName,
   });
-  const ldCrumbs = breadcrumbLd([
+  const crumbs = [
     { name: 'Главная', url: '/' },
     { name: 'Каталог', url: '/catalog' },
     { name: categoryName, url: `/catalog?category=${product.category}` },
     { name: product.name, url: `/product/${product.id}` },
-  ]);
+  ];
+  const ldCrumbs = breadcrumbLd(crumbs);
 
   return (
     <div className="container py-8">
@@ -67,6 +69,7 @@ const ProductPage = () => {
         image={product.images[0]}
         jsonLd={[ldProduct, ldCrumbs]}
       />
+      <Breadcrumbs items={crumbs} className="mb-6" />
       <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
         {/* Gallery / 3D Viewer */}
         <div>
