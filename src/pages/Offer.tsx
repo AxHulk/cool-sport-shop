@@ -1,5 +1,11 @@
+import SEO from '@/components/SEO';
+
 const Offer = () => (
   <div className="container py-12 max-w-3xl mx-auto">
+    <SEO
+      title="Публичная оферта"
+      description="Публичный договор розничной купли-продажи интернет-магазина āsana."
+    />
     <h1 className="text-4xl font-serif mb-8 text-center">Публичная оферта</h1>
 
     <div className="prose prose-sm max-w-none text-muted-foreground space-y-8">

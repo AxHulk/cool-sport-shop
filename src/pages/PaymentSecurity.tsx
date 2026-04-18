@@ -1,5 +1,11 @@
+import SEO from '@/components/SEO';
+
 const PaymentSecurity = () => (
   <div className="container py-12 max-w-3xl mx-auto">
+    <SEO
+      title="Безопасность платежей"
+      description="Платежи защищены протоколом TLS, 3D Secure и стандартом PCI DSS. Карты Мир, Visa, MasterCard, СБП."
+    />
     <h1 className="text-4xl font-serif mb-8 text-center">Безопасность платежей</h1>
 
     <div className="prose prose-sm max-w-none text-muted-foreground space-y-8">

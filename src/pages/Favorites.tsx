@@ -3,6 +3,7 @@ import { products } from '@/data/products';
 import { useFavorites } from '@/context/FavoritesContext';
 import ProductCard from '@/components/ProductCard';
 import { Button } from '@/components/ui/button';
+import SEO from '@/components/SEO';
 
 const Favorites = () => {
   const { favorites } = useFavorites();
@@ -10,6 +11,7 @@ const Favorites = () => {
 
   return (
     <div className="container py-12">
+      <SEO title="Избранное" description="Ваши избранные товары āsana." noindex />
       <h1 className="text-3xl font-serif mb-8">Избранное</h1>
       {favProducts.length === 0 ? (
         <div className="text-center py-20">

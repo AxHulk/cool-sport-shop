@@ -9,6 +9,7 @@ import { toast } from 'sonner';
 import { Minus, Plus, Trash2, ChevronLeft } from 'lucide-react';
 import ConsentCheckbox from '@/components/ConsentCheckbox';
 import { supabase } from '@/integrations/supabase/client';
+import SEO from '@/components/SEO';
 
 const steps = ['Контакты', 'Доставка', 'Оплата'];
 

@@ -10,9 +10,16 @@ import iconEcoEthics from '@/assets/icon_eco_ethics.png';
 import iconNoTransparency from '@/assets/icon_no_transparency.png';
 import iconShapeRetention from '@/assets/icon_shape_retention.png';
 import iconColorRetention from '@/assets/icon_color_retention.png';
+import SEO from '@/components/SEO';
+import { organizationLd } from '@/lib/seo';
 
 const About = () => (
   <div className="bg-background">
+    <SEO
+      title="О бренде āsana — премиальная спортивная одежда"
+      description="История бренда āsana: итальянские ткани, эргономичный крой, капсульные коллекции и эко-этика. Узнайте философию марки."
+      jsonLd={organizationLd}
+    />
     {/* Блок 1 — Hero */}
     <section className="relative w-full min-h-[70vh] flex items-center overflow-hidden">
       <div className="container grid md:grid-cols-2 gap-0 items-center">

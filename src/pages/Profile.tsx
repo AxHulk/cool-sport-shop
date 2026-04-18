@@ -1,9 +1,11 @@
 import { User, Package, Heart, LogOut } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import SEO from '@/components/SEO';
 
 const Profile = () => (
   <div className="container py-12 max-w-2xl mx-auto">
+    <SEO title="Личный кабинет" description="Личный кабинет покупателя āsana." noindex />
     <h1 className="text-3xl font-serif mb-8">Личный кабинет</h1>
 
     <div className="bg-secondary rounded-lg p-6 mb-6 flex items-center gap-4">

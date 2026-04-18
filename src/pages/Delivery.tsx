@@ -1,7 +1,12 @@
 import { Truck, CreditCard, RefreshCw, MapPin } from 'lucide-react';
+import SEO from '@/components/SEO';
 
 const Delivery = () => (
   <div className="container py-12 max-w-3xl mx-auto">
+    <SEO
+      title="Доставка и оплата"
+      description="Курьерская доставка по Москве за 1–2 дня и по России за 3–7 дней. Оплата картой, СБП. Бесплатная доставка от 5000 ₽."
+    />
     <h1 className="text-4xl font-serif mb-8 text-center">Доставка и оплата</h1>
 
     <div className="space-y-8">
