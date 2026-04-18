@@ -1,0 +1,19 @@
+{
+  "name": "āsana — премиальная спортивная одежда",
+  "short_name": "āsana",
+  "description": "Премиальная спортивная одежда для женщин: леггинсы, топы, рашгарды, лонгсливы и сумки.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "browser",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "lang": "ru-RU",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    }
+  ]
+}
