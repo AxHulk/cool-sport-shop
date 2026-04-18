@@ -27,6 +27,8 @@ const ProductCard = ({ product }: { product: Product }) => {
           <img
             src={currentImage}
             alt={product.name}
+            width={600}
+            height={800}
             loading="lazy"
             decoding="async"
             onLoad={() => setImgLoaded(true)}

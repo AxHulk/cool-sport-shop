@@ -62,7 +62,7 @@ const Index = () => {
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {categories.map(cat => (
             <Link key={cat.slug} to={`/catalog?category=${cat.slug}`} className="group relative aspect-square rounded-lg overflow-hidden">
-              <img src={cat.image} alt={cat.name} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <img src={cat.image} alt={cat.name} width={600} height={600} loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
               <div className="absolute inset-0 bg-foreground/30 group-hover:bg-foreground/40 transition-colors" />
               <span className="absolute bottom-4 left-4 text-background font-serif text-xl font-semibold">
                 {cat.name}
@@ -107,7 +107,7 @@ const Index = () => {
         <div className="grid md:grid-cols-2 gap-6">
           {[look1, look2].map((img, i) => (
             <Link key={i} to="/catalog" className="group relative aspect-[4/5] rounded-lg overflow-hidden">
-              <img src={img} alt={`Образ ${i + 1}`} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <img src={img} alt={`Образ ${i + 1}`} width={800} height={1000} loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
               <div className="absolute inset-0 bg-gradient-to-t from-foreground/50 to-transparent" />
               <div className="absolute bottom-6 left-6">
                 <p className="text-background font-serif text-2xl mb-2">Образ {i + 1}</p>
