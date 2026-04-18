@@ -1,14 +1,30 @@
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: Twitterbot
-Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
-
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /checkout
+Disallow: /profile
+Disallow: /favorites
+Disallow: /unsubscribe
+
+User-agent: Googlebot
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /checkout
+Disallow: /profile
+Disallow: /favorites
+Disallow: /unsubscribe
+
+User-agent: Yandex
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /checkout
+Disallow: /profile
+Disallow: /favorites
+Disallow: /unsubscribe
+Clean-param: utm_source&utm_medium&utm_campaign&utm_term&utm_content&yclid&gclid&fbclid
+
+Host: https://xn--80aaa5cs.su
+Sitemap: https://xn--80aaa5cs.su/sitemap.xml

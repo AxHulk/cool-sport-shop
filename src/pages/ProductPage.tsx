@@ -12,6 +12,8 @@ import ComboRecommendation from '@/components/ComboRecommendation';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { Skeleton } from '@/components/ui/skeleton';
+import SEO from '@/components/SEO';
+import { productLd, breadcrumbLd } from '@/lib/seo';
 
 const ProductViewer3D = lazy(() => import('@/components/ProductViewer3D'));
 
@@ -40,8 +42,31 @@ const ProductPage = () => {
   const formatPrice = (p: number) => p.toLocaleString('ru-RU') + ' ₽';
   const fav = isFavorite(product.id);
 
+  const categoryName = categoryNames[product.category] || 'Каталог';
+  const ldProduct = productLd({
+    id: product.id,
+    name: product.name,
+    description: product.description,
+    price: product.price,
+    image: product.images[0],
+    category: categoryName,
+  });
+  const ldCrumbs = breadcrumbLd([
+    { name: 'Главная', url: '/' },
+    { name: 'Каталог', url: '/catalog' },
+    { name: categoryName, url: `/catalog?category=${product.category}` },
+    { name: product.name, url: `/product/${product.id}` },
+  ]);
+
   return (
     <div className="container py-8">
+      <SEO
+        title={`${product.name} — купить за ${product.price.toLocaleString('ru-RU')} ₽`}
+        description={`${product.name}. ${product.description.slice(0, 140)}`}
+        type="product"
+        image={product.images[0]}
+        jsonLd={[ldProduct, ldCrumbs]}
+      />
       <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
         {/* Gallery / 3D Viewer */}
         <div>

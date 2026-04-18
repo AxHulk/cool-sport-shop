@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
+import SEO from '@/components/SEO';
 
 type Status = 'loading' | 'valid' | 'already' | 'invalid' | 'success' | 'error';
 
@@ -42,6 +43,7 @@ const Unsubscribe = () => {
 
   return (
     <div className="container py-20 text-center max-w-md mx-auto">
+      <SEO title="Отписка от рассылки" description="Управление подпиской на письма āsana." noindex />
       {status === 'loading' && <p className="text-muted-foreground">Загрузка...</p>}
       {status === 'valid' && (
         <>

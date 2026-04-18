@@ -9,6 +9,7 @@ import { toast } from 'sonner';
 import { Minus, Plus, Trash2, ChevronLeft } from 'lucide-react';
 import ConsentCheckbox from '@/components/ConsentCheckbox';
 import { supabase } from '@/integrations/supabase/client';
+import SEO from '@/components/SEO';
 
 const steps = ['Контакты', 'Доставка', 'Оплата'];
 
@@ -85,6 +86,7 @@ const Checkout = () => {
   if (items.length === 0 && !done) {
     return (
       <div className="container py-20 text-center">
+        <SEO title="Корзина" description="Оформление заказа в āsana." noindex />
         <p className="text-muted-foreground mb-4">Корзина пуста</p>
         <Button asChild><Link to="/catalog">К покупкам</Link></Button>
       </div>
@@ -198,6 +200,7 @@ const Checkout = () => {
       <Button variant="ghost" size="sm" className="mb-4" onClick={() => navigate(-1)}>
         <ChevronLeft className="h-4 w-4 mr-1" /> Назад
       </Button>
+      <SEO title="Оформление заказа" description="Оформление заказа в āsana." noindex />
       <h1 className="text-3xl font-serif mb-8">Оформление заказа</h1>
 
       {/* Steps */}

@@ -1,7 +1,14 @@
 import { Phone, Mail } from 'lucide-react';
+import SEO from '@/components/SEO';
+import { organizationLd } from '@/lib/seo';
 
 const Contacts = () => (
   <div className="container py-12 max-w-3xl mx-auto">
+    <SEO
+      title="Контакты āsana"
+      description="Телефон +7 (978) 77-69-299, email asana.wear@yandex.ru. Симферополь, ул. Студенческая, 25. Ежедневно с 9:00 до 21:00."
+      jsonLd={organizationLd}
+    />
     <h1 className="text-4xl font-serif mb-8 text-center">Контакты</h1>
     <p className="text-center text-muted-foreground mb-10">Мы всегда на связи и рады помочь!</p>
 

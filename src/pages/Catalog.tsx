@@ -4,6 +4,17 @@ import { products, categories, ProductCategory } from '@/data/products';
 import ProductCard from '@/components/ProductCard';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import SEO, { SITE_URL } from '@/components/SEO';
+import { breadcrumbLd } from '@/lib/seo';
+
+const categoryMeta: Record<string, { title: string; description: string }> = {
+  leggings: { title: 'Леггинсы для спорта и йоги', description: 'Премиальные женские леггинсы из итальянского нейлона. Высокая посадка, бесшовный крой, идеальная посадка.' },
+  tops: { title: 'Спортивные топы и бра', description: 'Поддерживающие спортивные топы для йоги, фитнеса и тренировок. Премиальные ткани, эргономичный крой.' },
+  tanks: { title: 'Спортивные майки', description: 'Лёгкие спортивные майки для тренировок. Дышащие ткани, свободный или приталенный силуэт.' },
+  rashguards: { title: 'Рашгарды женские', description: 'Стильные рашгарды на молнии для йоги, серфинга и фитнеса. Защита от ультрафиолета и натирания.' },
+  bags: { title: 'Спортивные сумки', description: 'Стильные сумки для спортзала и йога-студии. Вместительные, износостойкие, премиум-материалы.' },
+  longsleeves: { title: 'Лонгсливы', description: 'Спортивные лонгсливы из мягких премиальных тканей для тренировок и повседневной носки.' },
+};
 
 const sizes = ['XS', 'S', 'M', 'L'] as const;
 const sortOptions = [
@@ -42,9 +53,17 @@ const Catalog = () => {
     return result;
   }, [selectedCategory, selectedSizes, sort]);
 
+  const meta = selectedCategory ? categoryMeta[selectedCategory] : null;
+  const seoTitle = meta?.title || 'Каталог спортивной одежды';
+  const seoDesc = meta?.description || 'Премиальная женская спортивная одежда: леггинсы, топы, рашгарды, лонгсливы и сумки. Итальянские ткани, бесшовные технологии.';
+  const canonical = selectedCategory ? `${SITE_URL}/catalog?category=${selectedCategory}` : `${SITE_URL}/catalog`;
+  const crumbs = [{ name: 'Главная', url: '/' }, { name: 'Каталог', url: '/catalog' }];
+  if (selectedCategory) crumbs.push({ name: meta?.title || selectedCategory, url: `/catalog?category=${selectedCategory}` });
+
   return (
     <div className="container py-8">
-      <h1 className="text-3xl font-serif mb-8">Каталог</h1>
+      <SEO title={seoTitle} description={seoDesc} canonical={canonical} jsonLd={breadcrumbLd(crumbs)} />
+      <h1 className="text-3xl font-serif mb-8">{meta?.title || 'Каталог'}</h1>
 
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Filters */}

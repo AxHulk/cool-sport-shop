@@ -1,5 +1,11 @@
+import SEO from '@/components/SEO';
+
 const Privacy = () => (
   <div className="container py-12 max-w-3xl mx-auto">
+    <SEO
+      title="Политика конфиденциальности"
+      description="Политика обработки персональных данных āsana в соответствии с ФЗ-152."
+    />
     <h1 className="text-4xl font-serif mb-8 text-center">Политика конфиденциальности</h1>
 
     <div className="prose prose-sm max-w-none text-muted-foreground space-y-8">

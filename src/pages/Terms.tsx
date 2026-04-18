@@ -1,5 +1,11 @@
+import SEO from '@/components/SEO';
+
 const Terms = () => (
   <div className="container py-12 max-w-3xl mx-auto">
+    <SEO
+      title="Пользовательское соглашение"
+      description="Условия использования сайта āsana, правила оформления заказов и разрешения споров."
+    />
     <h1 className="text-4xl font-serif mb-8 text-center">Пользовательское соглашение</h1>
 
     <div className="prose prose-sm max-w-none text-muted-foreground space-y-8">
