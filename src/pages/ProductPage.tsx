@@ -1,5 +1,5 @@
 import { useState, lazy, Suspense } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Heart, ShoppingBag, Ruler, RotateCcw, Image } from 'lucide-react';
 import { products } from '@/data/products';
 import { useCart } from '@/context/CartContext';
@@ -33,13 +33,21 @@ const ProductPage = () => {
   const { addItem } = useCart();
   const { toggleFavorite, isFavorite } = useFavorites();
 
-  const [selectedColor, setSelectedColor] = useState(product?.colors[0]);
   const [selectedSize, setSelectedSize] = useState(product?.sizes[1] || product?.sizes[0]);
   const [view3D, setView3D] = useState(false);
 
   if (!product) return <div className="container py-20 text-center">Товар не найден</div>;
 
-  const related = products.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4);
+  const productColor = product.colors[0];
+
+  // Find other color variants of the same colorGroup
+  const otherColors = product.colorGroup
+    ? products.filter(p => p.colorGroup === product.colorGroup && p.id !== product.id)
+    : [];
+
+  const related = products
+    .filter(p => p.category === product.category && p.id !== product.id && p.colorGroup !== product.colorGroup)
+    .slice(0, 4);
   const formatPrice = (p: number) => p.toLocaleString('ru-RU') + ' ₽';
   const fav = isFavorite(product.id);
 
@@ -74,18 +82,18 @@ const ProductPage = () => {
         {/* Gallery / 3D Viewer */}
         <div>
           {(() => {
-            const spinImgs = (selectedColor && product.colorSpinImages?.[selectedColor.name]) || product.spinImages;
-            const mainImg = (selectedColor && product.colorImages?.[selectedColor.name]) || product.images[0];
-            const currentModelUrl = (selectedColor && product.colorModelUrls?.[selectedColor.name]) || product.modelUrl;
+            const spinImgs = product.spinImages;
+            const mainImg = product.images[0];
+            const currentModelUrl = product.modelUrl;
             if (currentModelUrl && view3D) {
               const isRashguard = product.category === 'rashguards';
               return (
                 <Suspense fallback={<Skeleton className="w-full aspect-square rounded-lg" />}>
-                  <ProductViewer3D key={selectedColor?.name} modelUrl={currentModelUrl} autoRotate={!isRashguard} cameraPosition={isRashguard ? [0, 0.2, 3] : [0, 0, 3]} />
+                  <ProductViewer3D modelUrl={currentModelUrl} autoRotate={!isRashguard} cameraPosition={isRashguard ? [0, 0.2, 3] : [0, 0, 3]} />
                 </Suspense>
               );
             } else if (spinImgs) {
-              return <ProductImageSpin key={selectedColor?.name} images={spinImgs} />;
+              return <ProductImageSpin images={spinImgs} />;
             } else {
               return (
                 <div className="aspect-square rounded-lg overflow-hidden bg-muted">
@@ -94,7 +102,7 @@ const ProductPage = () => {
               );
             }
           })()}
-          {(product.modelUrl || product.colorModelUrls) && (
+          {product.modelUrl && (
             <div className="flex gap-2 mt-3 justify-center">
               <Button variant={view3D ? 'default' : 'outline'} size="sm" onClick={() => setView3D(true)}>
                 <RotateCcw className="h-4 w-4 mr-1" /> 3D
@@ -117,20 +125,28 @@ const ProductPage = () => {
 
           <p className="text-muted-foreground mb-6">{product.description}</p>
 
-          {/* Color */}
-          <div className="mb-6">
-            <p className="text-sm font-medium mb-2">Цвет: {selectedColor?.name}</p>
-            <div className="flex gap-2">
-              {product.colors.map(c => (
-                <button
-                  key={c.name}
-                  className={cn("w-8 h-8 rounded-full border-2 transition-all", selectedColor?.name === c.name ? 'border-foreground scale-110' : 'border-transparent')}
-                  style={{ backgroundColor: c.hex }}
-                  onClick={() => setSelectedColor(c)}
+          {/* Color (current + other variants as links) */}
+          {(otherColors.length > 0 || productColor) && (
+            <div className="mb-6">
+              <p className="text-sm font-medium mb-2">Цвет: {productColor.name}</p>
+              <div className="flex gap-2">
+                <span
+                  className="w-8 h-8 rounded-full border-2 border-foreground scale-110"
+                  style={{ backgroundColor: productColor.hex }}
+                  title={productColor.name}
                 />
-              ))}
+                {otherColors.map(p => (
+                  <a
+                    key={p.id}
+                    href={`/product/${p.id}`}
+                    className="w-8 h-8 rounded-full border-2 border-transparent hover:border-foreground/40 transition-colors"
+                    style={{ backgroundColor: p.colors[0].hex }}
+                    title={p.colors[0].name}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Size */}
           <div className="mb-6">
@@ -165,10 +181,10 @@ const ProductPage = () => {
           {/* Actions */}
           <div className="flex gap-3 mb-8">
             <Button size="lg" className="flex-1" onClick={() => {
-              if (selectedColor && selectedSize) {
-                addItem(product, selectedSize, selectedColor);
+              if (selectedSize) {
+                addItem(product, selectedSize, productColor);
                 toast.success(`${product.name} добавлен в корзину`, {
-                  description: `${selectedColor.name}, ${selectedSize}`,
+                  description: `${productColor.name}, ${selectedSize}`,
                 });
               }
             }}>

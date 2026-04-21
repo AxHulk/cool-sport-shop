@@ -26,7 +26,7 @@ const CartDrawer = () => {
               {items.map((item, idx) => (
                 <div key={idx} className="flex gap-3 border-b pb-4">
                   <img
-                    src={(item.product.colorImages?.[item.color.name]) || item.product.images[0]}
+                    src={item.product.images[0]}
                     alt={item.product.name}
                     className="w-20 h-20 object-cover rounded"
                   />
