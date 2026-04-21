@@ -57,7 +57,7 @@ function getCategoryVariants(category: string): SlotSelection[] {
 
 /** Get the display image for a product+color */
 function getVariantImage(sel: SlotSelection): string {
-  return sel.product.colorImages?.[sel.color.name] || sel.product.images[0];
+  return sel.product.images[0];
 }
 
 /** Derive a short product type name from the product name */

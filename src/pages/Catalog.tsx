@@ -2,11 +2,11 @@ import { useState, useMemo, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { products, categories, ProductCategory } from '@/data/products';
 import ProductCard from '@/components/ProductCard';
-import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import SEO, { SITE_URL } from '@/components/SEO';
 import { breadcrumbLd } from '@/lib/seo';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 const categoryMeta: Record<string, { title: string; description: string }> = {
   leggings: { title: 'Леггинсы для спорта и йоги', description: 'Премиальные женские леггинсы из итальянского нейлона. Высокая посадка, бесшовный крой, идеальная посадка.' },
@@ -17,7 +17,6 @@ const categoryMeta: Record<string, { title: string; description: string }> = {
   longsleeves: { title: 'Лонгсливы', description: 'Спортивные лонгсливы из мягких премиальных тканей для тренировок и повседневной носки.' },
 };
 
-const sizes = ['XS', 'S', 'M', 'L'] as const;
 const sortOptions = [
   { value: 'popular', label: 'По популярности' },
   { value: 'price-asc', label: 'Цена ↑' },
@@ -26,25 +25,19 @@ const sortOptions = [
 ];
 
 const Catalog = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const categoryParam = searchParams.get('category') as ProductCategory | null;
 
   const [selectedCategory, setSelectedCategory] = useState<ProductCategory | null>(categoryParam);
-  const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
   const [sort, setSort] = useState('popular');
 
   useEffect(() => {
     setSelectedCategory(categoryParam);
   }, [categoryParam]);
 
-  const toggleSize = (s: string) => {
-    setSelectedSizes(prev => prev.includes(s) ? prev.filter(x => x !== s) : [...prev, s]);
-  };
-
   const filtered = useMemo(() => {
     let result = [...products];
     if (selectedCategory) result = result.filter(p => p.category === selectedCategory);
-    if (selectedSizes.length) result = result.filter(p => p.sizes.some(s => selectedSizes.includes(s)));
 
     switch (sort) {
       case 'price-asc': result.sort((a, b) => a.price - b.price); break;
@@ -52,7 +45,7 @@ const Catalog = () => {
       case 'new': result.sort((a, b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0)); break;
     }
     return result;
-  }, [selectedCategory, selectedSizes, sort]);
+  }, [selectedCategory, sort]);
 
   const meta = selectedCategory ? categoryMeta[selectedCategory] : null;
   const seoTitle = meta?.title || 'Каталог спортивной одежды';
@@ -65,81 +58,63 @@ const Catalog = () => {
     <div className="container py-8">
       <SEO title={seoTitle} description={seoDesc} canonical={canonical} jsonLd={breadcrumbLd(crumbs)} />
       <Breadcrumbs items={crumbs} className="mb-4" />
-      <h1 className="text-3xl font-serif mb-8">{meta?.title || 'Каталог'}</h1>
+      <h1 className="text-3xl md:text-4xl font-serif mb-8">{meta?.title || 'Каталог'}</h1>
 
-      <div className="flex flex-col lg:flex-row gap-8">
-        {/* Filters */}
-        <aside className="lg:w-60 shrink-0 space-y-6">
-          <div>
-            <h3 className="font-sans text-sm font-semibold mb-3">Категория</h3>
-            <div className="space-y-1">
-              <Button
-                variant={!selectedCategory ? 'secondary' : 'ghost'}
-                size="sm"
-                className="w-full justify-start"
-                onClick={() => setSelectedCategory(null)}
-              >
-                Все товары
-              </Button>
-              {categories.map(c => (
-                <Button
-                  key={c.slug}
-                  variant={selectedCategory === c.slug ? 'secondary' : 'ghost'}
-                  size="sm"
-                  className="w-full justify-start"
-                  onClick={() => setSelectedCategory(c.slug)}
-                >
-                  {c.name}
-                </Button>
-              ))}
-            </div>
-          </div>
+      {/* Category tabs + sort */}
+      <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10 border-b border-border">
+        <nav className="flex flex-wrap gap-x-6 gap-y-2 -mb-px">
+          <button
+            onClick={() => setSelectedCategory(null)}
+            className={cn(
+              'pb-3 text-sm uppercase tracking-wider transition-colors border-b-2',
+              !selectedCategory
+                ? 'border-foreground text-foreground'
+                : 'border-transparent text-muted-foreground hover:text-foreground'
+            )}
+          >
+            Все
+          </button>
+          {categories.map(c => (
+            <button
+              key={c.slug}
+              onClick={() => setSelectedCategory(c.slug)}
+              className={cn(
+                'pb-3 text-sm uppercase tracking-wider transition-colors border-b-2',
+                selectedCategory === c.slug
+                  ? 'border-foreground text-foreground'
+                  : 'border-transparent text-muted-foreground hover:text-foreground'
+              )}
+            >
+              {c.name}
+            </button>
+          ))}
+        </nav>
 
-          <div>
-            <h3 className="font-sans text-sm font-semibold mb-3">Размер</h3>
-            <div className="flex flex-wrap gap-2">
-              {sizes.map(s => (
-                <Button
-                  key={s}
-                  variant={selectedSizes.includes(s) ? 'default' : 'outline'}
-                  size="sm"
-                  className="h-8 w-10"
-                  onClick={() => toggleSize(s)}
-                >
-                  {s}
-                </Button>
-              ))}
-            </div>
-          </div>
-
-        </aside>
-
-        {/* Products grid */}
-        <div className="flex-1">
-          <div className="flex items-center justify-between mb-6">
-            <p className="text-sm text-muted-foreground">{filtered.length} товаров</p>
-            <div className="flex gap-2">
+        <div className="flex items-center gap-3 pb-3">
+          <span className="text-xs text-muted-foreground">{filtered.length} товаров</span>
+          <Select value={sort} onValueChange={setSort}>
+            <SelectTrigger className="w-[180px] h-9 text-xs uppercase tracking-wider">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
               {sortOptions.map(o => (
-                <Button
-                  key={o.value}
-                  variant={sort === o.value ? 'secondary' : 'ghost'}
-                  size="sm"
-                  onClick={() => setSort(o.value)}
-                >
+                <SelectItem key={o.value} value={o.value} className="text-xs uppercase tracking-wider">
                   {o.label}
-                </Button>
+                </SelectItem>
               ))}
-            </div>
-          </div>
-          {filtered.length === 0 ? (
-            <p className="text-center text-muted-foreground py-20">Товары не найдены</p>
-          ) : (
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-              {filtered.map(p => <ProductCard key={p.id} product={p} />)}
-            </div>
-          )}
+            </SelectContent>
+          </Select>
         </div>
       </div>
+
+      {/* Products grid */}
+      {filtered.length === 0 ? (
+        <p className="text-center text-muted-foreground py-20">Товары не найдены</p>
+      ) : (
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-10">
+          {filtered.map(p => <ProductCard key={p.id} product={p} />)}
+        </div>
+      )}
     </div>
   );
 };
