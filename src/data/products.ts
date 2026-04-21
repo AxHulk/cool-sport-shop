@@ -48,10 +48,7 @@ export interface Product {
   oldPrice?: number;
   images: string[];
   modelUrl?: string;
-  colorModelUrls?: Record<string, string>;
   spinImages?: string[];
-  colorSpinImages?: Record<string, string[]>;
-  colorImages?: Record<string, string>;
   colors: ProductColor[];
   sizes: ProductSize[];
   description: string;
@@ -59,6 +56,8 @@ export interface Product {
   isNew?: boolean;
   isBestseller?: boolean;
   tags?: string[];
+  /** Identifies a group of color variants for the same base product */
+  colorGroup?: string;
 }
 
 export const categories = [
@@ -70,182 +69,218 @@ export const categories = [
   { slug: 'longsleeves' as const, name: 'Лонгсливы', image: catLongsleeves },
 ];
 
+// Shared specs/descriptions
+const rashguardSpecs = {
+  'Силуэт': 'Приталенный',
+  'Застёжка': 'Молния',
+  'Карманы': 'На молнии',
+  'Материал': 'Плотный эластичный',
+  'Уход': 'Машинная стирка при 30°C',
+};
+const rashguardDesc = 'Приталенный силуэт с моделирующим эффектом. Карманы на молнии. Плотный эластичный материал.';
+
+const leggingsSpecs = {
+  'Силуэт': 'Облегающий',
+  'Посадка': 'На талии',
+  'Компрессия': 'С утягивающей вставкой',
+  'Карман': 'Потайной на поясе',
+  'Ткань': 'Дышащая, непросвечивающая',
+  'Уход': 'Машинная стирка при 30°C',
+};
+const leggingsDesc = 'Облегающий силуэт с посадкой на талии. Компрессионный эффект с утягивающей вставкой в области живота. Потайной карман на поясе сзади. Плоские фигурные швы. Дышащий материал высокой эластичности. Непросвечивающая ткань.';
+
+const braSpecs = {
+  'Фасон': 'Укороченный',
+  'Вырез': 'Квадратный',
+  'Бретели': 'Тонкие',
+  'Чашки': 'Съёмные',
+  'Материал': 'Эластичный, непросвечивающий',
+  'Уход': 'Ручная стирка',
+};
+const braDesc = 'Укороченный фасон с квадратным вырезом. Тонкие бретели, надёжная фиксация груди, съёмные чашки. Эластичный непросвечивающий материал. Силиконовый логотип на спинке.';
+
+const tankSpecs = {
+  'Фасон': 'Удлинённый',
+  'Вырез': 'V-образный',
+  'Лямки': 'Тонкие, регулируемые',
+  'Чашки': 'Съёмные',
+  'Материал': 'Быстросохнущий',
+  'Уход': 'Машинная стирка при 30°C',
+};
+const tankDesc = 'Удлинённый фасон с приталенным силуэтом. V-образный вырез, тонкие лямки с регулировкой. Быстросохнущий материал. Поддержка груди, съёмные чашки.';
+
+const bagSpecs = {
+  'Материал': 'Плотный текстиль',
+  'Формат': 'Средний',
+  'Ремень': 'Съёмный, регулируемый',
+  'Уход': 'Сухая чистка',
+};
+const bagDesc = 'Мягкая текстильная сумка с верхними ручками и съёмным плечевым ремнём. Подходит для города и тренировок.';
+
+const longsleeveSpecs = {
+  'Крой': 'Свободный',
+  'Вырез': 'Круглый',
+  'Рукава': 'Длинные, с манжетами',
+  'Материал': 'Хлопковый трикотаж',
+  'Особенности': 'Надпись на предплечье',
+  'Уход': 'Машинная стирка при 30°C',
+};
+const longsleeveDesc = 'Лонгслив свободного кроя из мягкого хлопкового трикотажа. Надпись-аффирмация на предплечье. Круглый вырез, длинные рукава с манжетами. Подходит для тренировок и повседневной носки.';
+
+const allSizes: ProductSize[] = ['XS', 'S', 'M', 'L'];
+
 export const products: Product[] = [
   // --- РАШГАРДЫ ---
   {
-    id: '9',
+    id: '9-black',
     name: 'Рашгард на молнии',
     category: 'rashguards',
     price: 7600,
-    images: [blackJacket1],
-    modelUrl: '/models/black_rashguard.glb',
-    colorModelUrls: {
-      'Чёрный': '/models/black_rashguard.glb',
-      'Шоколад': '/models/brown_rashguard.glb',
-      'Айвори': '/models/ivory_rashguard.glb',
-    },
+    images: [blackJacket1, blackJacket2],
     spinImages: [blackJacket1, blackJacket2],
-    colorSpinImages: {
-      'Чёрный': [blackJacket1, blackJacket2],
-      'Шоколад': [brownJacket1, brownJacket2, brownJacket3],
-      'Айвори': [ivoryJacket1, ivoryJacket2],
-    },
-    colorImages: {
-      'Чёрный': blackJacket1,
-      'Шоколад': brownJacket1,
-      'Айвори': ivoryJacket1,
-    },
-    colors: [
-      { name: 'Чёрный', hex: '#1a1a1a' },
-      { name: 'Шоколад', hex: '#3e2723' },
-      { name: 'Айвори', hex: '#f0e6d3' },
-    ],
-    sizes: ['XS', 'S', 'M', 'L'],
-    description: 'Приталенный силуэт с моделирующим эффектом. Карманы на молнии. Плотный эластичный материал.',
-    specs: {
-      'Силуэт': 'Приталенный',
-      'Застёжка': 'Молния',
-      'Карманы': 'На молнии',
-      'Материал': 'Плотный эластичный',
-      'Уход': 'Машинная стирка при 30°C',
-    },
+    modelUrl: '/models/black_rashguard.glb',
+    colors: [{ name: 'Чёрный', hex: '#1a1a1a' }],
+    sizes: allSizes,
+    description: rashguardDesc,
+    specs: rashguardSpecs,
     isNew: true,
     isBestseller: true,
+    colorGroup: 'rashguard-zip',
+  },
+  {
+    id: '9-brown',
+    name: 'Рашгард на молнии',
+    category: 'rashguards',
+    price: 7600,
+    images: [brownJacket1, brownJacket2, brownJacket3],
+    spinImages: [brownJacket1, brownJacket2, brownJacket3],
+    modelUrl: '/models/brown_rashguard.glb',
+    colors: [{ name: 'Шоколад', hex: '#3e2723' }],
+    sizes: allSizes,
+    description: rashguardDesc,
+    specs: rashguardSpecs,
+    isNew: true,
+    colorGroup: 'rashguard-zip',
+  },
+  {
+    id: '9-ivory',
+    name: 'Рашгард на молнии',
+    category: 'rashguards',
+    price: 7600,
+    images: [ivoryJacket1, ivoryJacket2],
+    spinImages: [ivoryJacket1, ivoryJacket2],
+    modelUrl: '/models/ivory_rashguard.glb',
+    colors: [{ name: 'Айвори', hex: '#f0e6d3' }],
+    sizes: allSizes,
+    description: rashguardDesc,
+    specs: rashguardSpecs,
+    isNew: true,
+    colorGroup: 'rashguard-zip',
   },
 
   // --- ЛЕГГИНСЫ ---
   {
-    id: '13',
+    id: '13-black',
     name: 'Леггинсы компрессионные',
     category: 'leggings',
     price: 6500,
-    images: [blackLeggings1],
-    modelUrl: '/models/black_leggings.glb',
-    colorModelUrls: {
-      'Чёрный': '/models/black_leggings.glb',
-      'Голубой': '/models/blue_leggings.glb',
-    },
+    images: [blackLeggings1, blackLeggings2],
     spinImages: [blackLeggings1, blackLeggings2],
-    colorSpinImages: {
-      'Чёрный': [blackLeggings1, blackLeggings2],
-      'Голубой': [blueLeggings1, blueLeggings2],
-    },
-    colorImages: {
-      'Чёрный': blackLeggings1,
-      'Голубой': blueLeggings1,
-    },
-    colors: [
-      { name: 'Чёрный', hex: '#1a1a1a' },
-      { name: 'Голубой', hex: '#c7dcf7' },
-    ],
-    sizes: ['XS', 'S', 'M', 'L'],
-    description: 'Облегающий силуэт с посадкой на талии. Компрессионный эффект с утягивающей вставкой в области живота. Потайной карман на поясе сзади. Плоские фигурные швы. Дышащий материал высокой эластичности. Непросвечивающая ткань.',
-    specs: {
-      'Силуэт': 'Облегающий',
-      'Посадка': 'На талии',
-      'Компрессия': 'С утягивающей вставкой',
-      'Карман': 'Потайной на поясе',
-      'Ткань': 'Дышащая, непросвечивающая',
-      'Уход': 'Машинная стирка при 30°C',
-    },
+    modelUrl: '/models/black_leggings.glb',
+    colors: [{ name: 'Чёрный', hex: '#1a1a1a' }],
+    sizes: allSizes,
+    description: leggingsDesc,
+    specs: leggingsSpecs,
     isNew: true,
+    colorGroup: 'leggings-compression',
+  },
+  {
+    id: '13-blue',
+    name: 'Леггинсы компрессионные',
+    category: 'leggings',
+    price: 6500,
+    images: [blueLeggings1, blueLeggings2],
+    spinImages: [blueLeggings1, blueLeggings2],
+    modelUrl: '/models/blue_leggings.glb',
+    colors: [{ name: 'Голубой', hex: '#c7dcf7' }],
+    sizes: allSizes,
+    description: leggingsDesc,
+    specs: leggingsSpecs,
+    isNew: true,
+    colorGroup: 'leggings-compression',
   },
   {
     id: '14',
-    name: 'Леггинсы в шоколадном цвете',
+    name: 'Леггинсы компрессионные',
     category: 'leggings',
     price: 6500,
     images: [brownLeggings1, brownLeggings2],
-    modelUrl: '/models/brown_leggings.glb',
     spinImages: [brownLeggings1, brownLeggings2],
-    colors: [
-      { name: 'Шоколад', hex: '#5a3b32' },
-    ],
-    sizes: ['XS', 'S', 'M', 'L'],
-    description: 'Облегающий силуэт с посадкой на талии. Компрессионный эффект с утягивающей вставкой в области живота. Потайной карман на поясе сзади. Плоские фигурные швы. Дышащий материал высокой эластичности. Непросвечивающая ткань.',
-    specs: {
-      'Силуэт': 'Облегающий',
-      'Посадка': 'На талии',
-      'Компрессия': 'С утягивающей вставкой',
-      'Карман': 'Потайной на поясе',
-      'Ткань': 'Дышащая, непросвечивающая',
-      'Уход': 'Машинная стирка при 30°C',
-    },
+    modelUrl: '/models/brown_leggings.glb',
+    colors: [{ name: 'Шоколад', hex: '#5a3b32' }],
+    sizes: allSizes,
+    description: leggingsDesc,
+    specs: leggingsSpecs,
     isNew: true,
+    colorGroup: 'leggings-compression',
   },
   {
     id: '15',
-    name: 'Леггинсы в цвете айвори',
+    name: 'Леггинсы компрессионные',
     category: 'leggings',
     price: 6500,
     images: [ivoryLeggings1, ivoryLeggings2],
-    modelUrl: '/models/ivory_leggings.glb',
     spinImages: [ivoryLeggings1, ivoryLeggings2],
-    colors: [
-      { name: 'Айвори', hex: '#f0ede4' },
-    ],
-    sizes: ['XS', 'S', 'M', 'L'],
-    description: 'Облегающий силуэт с посадкой на талии. Компрессионный эффект с утягивающей вставкой в области живота. Потайной карман на поясе сзади. Плоские фигурные швы. Дышащий материал высокой эластичности. Непросвечивающая ткань.',
-    specs: {
-      'Силуэт': 'Облегающий',
-      'Посадка': 'На талии',
-      'Компрессия': 'С утягивающей вставкой',
-      'Карман': 'Потайной на поясе',
-      'Ткань': 'Дышащая, непросвечивающая',
-      'Уход': 'Машинная стирка при 30°C',
-    },
+    modelUrl: '/models/ivory_leggings.glb',
+    colors: [{ name: 'Айвори', hex: '#f0ede4' }],
+    sizes: allSizes,
+    description: leggingsDesc,
+    specs: leggingsSpecs,
     isNew: true,
+    colorGroup: 'leggings-compression',
   },
 
   // --- ТОПЫ ---
   {
-    id: '10',
+    id: '10-black',
     name: 'Топ спортивный',
     category: 'tops',
     price: 5500,
-    images: [braFront],
-    modelUrl: '/models/black_bra.glb',
-    colorModelUrls: {
-      'Чёрный': '/models/black_bra.glb',
-      'Голубой': '/models/blue_bra.glb',
-    },
+    images: [braFront, braBack],
     spinImages: [braFront, braBack],
-    colorSpinImages: {
-      'Чёрный': [braFront, braBack],
-      'Голубой': [blueBraFront, blueBraBack],
-    },
-    colorImages: {
-      'Чёрный': braFront,
-      'Голубой': blueBraFront,
-    },
-    colors: [
-      { name: 'Чёрный', hex: '#1a1a1a' },
-      { name: 'Голубой', hex: '#8bb8e8' },
-    ],
-    sizes: ['XS', 'S', 'M', 'L'],
-    description: 'Укороченный фасон с квадратным вырезом. Тонкие бретели, надёжная фиксация груди, съёмные чашки. Эластичный непросвечивающий материал. Силиконовый логотип на спинке.',
-    specs: {
-      'Фасон': 'Укороченный',
-      'Вырез': 'Квадратный',
-      'Бретели': 'Тонкие',
-      'Чашки': 'Съёмные',
-      'Материал': 'Эластичный, непросвечивающий',
-      'Уход': 'Ручная стирка',
-    },
+    modelUrl: '/models/black_bra.glb',
+    colors: [{ name: 'Чёрный', hex: '#1a1a1a' }],
+    sizes: allSizes,
+    description: braDesc,
+    specs: braSpecs,
     isNew: true,
+    colorGroup: 'top-basic',
+  },
+  {
+    id: '10-blue',
+    name: 'Топ спортивный',
+    category: 'tops',
+    price: 5500,
+    images: [blueBraFront, blueBraBack],
+    spinImages: [blueBraFront, blueBraBack],
+    modelUrl: '/models/blue_bra.glb',
+    colors: [{ name: 'Голубой', hex: '#8bb8e8' }],
+    sizes: allSizes,
+    description: braDesc,
+    specs: braSpecs,
+    isNew: true,
+    colorGroup: 'top-basic',
   },
   {
     id: '11',
     name: 'Топ спортивный с перекрёстными бретелями',
     category: 'tops',
     price: 5500,
-    images: [brownBraFront],
-    modelUrl: '/models/brown_bra.glb',
+    images: [brownBraFront, brownBraBack],
     spinImages: [brownBraFront, brownBraBack],
-    colors: [
-      { name: 'Шоколад', hex: '#3e2723' },
-    ],
-    sizes: ['XS', 'S', 'M', 'L'],
+    modelUrl: '/models/brown_bra.glb',
+    colors: [{ name: 'Шоколад', hex: '#3e2723' }],
+    sizes: allSizes,
     description: 'Укороченный фасон с квадратным вырезом. Перекрёстные бретели на спине. Надёжная фиксация груди, съёмные чашки. Эластичный непросвечивающий материал. Силиконовый логотип на спинке.',
     specs: {
       'Фасон': 'Укороченный',
@@ -257,77 +292,69 @@ export const products: Product[] = [
     },
     isNew: true,
   },
+
+  // --- МАЙКИ ---
   {
-    id: '12',
+    id: '12-black',
     name: 'Майка моделирующая на тонких бретелях',
     category: 'tanks',
     price: 5500,
-    images: [blackTopFront],
-    modelUrl: '/models/black_top.glb',
-    colorModelUrls: {
-      'Чёрный': '/models/black_top.glb',
-      'Айвори': '/models/ivory_top.glb',
-    },
+    images: [blackTopFront, blackTopBack],
     spinImages: [blackTopFront, blackTopBack],
-    colorSpinImages: {
-      'Чёрный': [blackTopFront, blackTopBack],
-      'Айвори': [whiteTopFront, whiteTopBack],
-    },
-    colorImages: {
-      'Чёрный': blackTopFront,
-      'Айвори': whiteTopFront,
-    },
-    colors: [
-      { name: 'Чёрный', hex: '#1a1a1a' },
-      { name: 'Айвори', hex: '#f0e6d3' },
-    ],
-    sizes: ['XS', 'S', 'M', 'L'],
-    description: 'Удлинённый фасон с приталенным силуэтом. V-образный вырез, тонкие лямки с регулировкой. Быстросохнущий материал. Поддержка груди, съёмные чашки.',
-    specs: {
-      'Фасон': 'Удлинённый',
-      'Вырез': 'V-образный',
-      'Лямки': 'Тонкие, регулируемые',
-      'Чашки': 'Съёмные',
-      'Материал': 'Быстросохнущий',
-      'Уход': 'Машинная стирка при 30°C',
-    },
+    modelUrl: '/models/black_top.glb',
+    colors: [{ name: 'Чёрный', hex: '#1a1a1a' }],
+    sizes: allSizes,
+    description: tankDesc,
+    specs: tankSpecs,
     isNew: true,
+    colorGroup: 'tank-basic',
+  },
+  {
+    id: '12-ivory',
+    name: 'Майка моделирующая на тонких бретелях',
+    category: 'tanks',
+    price: 5500,
+    images: [whiteTopFront, whiteTopBack],
+    spinImages: [whiteTopFront, whiteTopBack],
+    modelUrl: '/models/ivory_top.glb',
+    colors: [{ name: 'Айвори', hex: '#f0e6d3' }],
+    sizes: allSizes,
+    description: tankDesc,
+    specs: tankSpecs,
+    isNew: true,
+    colorGroup: 'tank-basic',
   },
 
   // --- СУМКИ ---
   {
-    id: '16',
+    id: '16-blue',
     name: 'Сумка спортивная',
     category: 'bags',
     price: 6900,
-    images: [bagBlueFront],
-    modelUrl: '/models/blue_bag.glb',
-    colorModelUrls: {
-      'Голубой': '/models/blue_bag.glb',
-      'Чёрный': '/models/black_bag.glb',
-    },
+    images: [bagBlueFront, bagBlueBack],
     spinImages: [bagBlueFront, bagBlueBack],
-    colorSpinImages: {
-      'Голубой': [bagBlueFront, bagBlueBack],
-      'Чёрный': [bagBlackFront],
-    },
-    colorImages: {
-      'Голубой': bagBlueFront,
-      'Чёрный': bagBlackFront,
-    },
-    colors: [
-      { name: 'Голубой', hex: '#c7dcf7' },
-      { name: 'Чёрный', hex: '#1a1a1a' },
-    ],
+    modelUrl: '/models/blue_bag.glb',
+    colors: [{ name: 'Голубой', hex: '#c7dcf7' }],
     sizes: ['M', 'L'],
-    description: 'Мягкая текстильная сумка с верхними ручками и съёмным плечевым ремнём. Подходит для города и тренировок.',
-    specs: {
-      'Материал': 'Плотный текстиль',
-      'Формат': 'Средний',
-      'Ремень': 'Съёмный, регулируемый',
-      'Уход': 'Сухая чистка',
-    },
+    description: bagDesc,
+    specs: bagSpecs,
     isNew: true,
+    colorGroup: 'bag-basic',
+  },
+  {
+    id: '16-black',
+    name: 'Сумка спортивная',
+    category: 'bags',
+    price: 6900,
+    images: [bagBlackFront],
+    spinImages: [bagBlackFront],
+    modelUrl: '/models/black_bag.glb',
+    colors: [{ name: 'Чёрный', hex: '#1a1a1a' }],
+    sizes: ['M', 'L'],
+    description: bagDesc,
+    specs: bagSpecs,
+    isNew: true,
+    colorGroup: 'bag-basic',
   },
 
   // --- ЛОНГСЛИВЫ ---
@@ -336,22 +363,13 @@ export const products: Product[] = [
     name: 'Лонгслив «Радость жизни»',
     category: 'longsleeves',
     price: 7600,
-    images: [longsleeveJoy1],
-    modelUrl: '/models/longsleeve.glb',
+    images: [longsleeveJoy1, longsleeveJoy2],
     spinImages: [longsleeveJoy1, longsleeveJoy2],
-    colors: [
-      { name: 'Айвори', hex: '#f0e6d3' },
-    ],
-    sizes: ['XS', 'S', 'M', 'L'],
-    description: 'Лонгслив свободного кроя из мягкого хлопкового трикотажа. Надпись-аффирмация на предплечье. Круглый вырез, длинные рукава с манжетами. Подходит для тренировок и повседневной носки.',
-    specs: {
-      'Крой': 'Свободный',
-      'Вырез': 'Круглый',
-      'Рукава': 'Длинные, с манжетами',
-      'Материал': 'Хлопковый трикотаж',
-      'Особенности': 'Надпись на предплечье',
-      'Уход': 'Машинная стирка при 30°C',
-    },
+    modelUrl: '/models/longsleeve.glb',
+    colors: [{ name: 'Айвори', hex: '#f0e6d3' }],
+    sizes: allSizes,
+    description: longsleeveDesc,
+    specs: longsleeveSpecs,
     isNew: true,
   },
   {
@@ -359,22 +377,13 @@ export const products: Product[] = [
     name: 'Лонгслив «Ты — энергия!»',
     category: 'longsleeves',
     price: 7600,
-    images: [longsleeveEnergy1],
-    modelUrl: '/models/longsleeve.glb',
+    images: [longsleeveEnergy1, longsleeveEnergy2],
     spinImages: [longsleeveEnergy1, longsleeveEnergy2],
-    colors: [
-      { name: 'Айвори', hex: '#f0e6d3' },
-    ],
-    sizes: ['XS', 'S', 'M', 'L'],
-    description: 'Лонгслив свободного кроя из мягкого хлопкового трикотажа. Надпись-аффирмация на предплечье. Круглый вырез, длинные рукава с манжетами. Подходит для тренировок и повседневной носки.',
-    specs: {
-      'Крой': 'Свободный',
-      'Вырез': 'Круглый',
-      'Рукава': 'Длинные, с манжетами',
-      'Материал': 'Хлопковый трикотаж',
-      'Особенности': 'Надпись на предплечье',
-      'Уход': 'Машинная стирка при 30°C',
-    },
+    modelUrl: '/models/longsleeve.glb',
+    colors: [{ name: 'Айвори', hex: '#f0e6d3' }],
+    sizes: allSizes,
+    description: longsleeveDesc,
+    specs: longsleeveSpecs,
     isNew: true,
   },
 ];
