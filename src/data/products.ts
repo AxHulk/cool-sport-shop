@@ -9,8 +9,9 @@ import blackJacket3 from '@/assets/black_jacket_3.webp';
 import brownJacket1 from '@/assets/brown_jacket_new_1.webp';
 import brownJacket2 from '@/assets/brown_jacket_new_2.webp';
 import brownJacket3 from '@/assets/brown_jacket_new_3.webp';
-import ivoryJacket1 from '@/assets/ivory_jacket_new_1.webp';
-import ivoryJacket2 from '@/assets/ivory_jacket_new_2.webp';
+import ivoryJacket1 from '@/assets/ivory_jacket_1.webp';
+import ivoryJacket2 from '@/assets/ivory_jacket_2.webp';
+import ivoryJacket3 from '@/assets/ivory_jacket_3.webp';
 import braFront from '@/assets/black_bra_new_1.webp';
 import braBack from '@/assets/black_bra_new_2.webp';
 import blueBraFront from '@/assets/blue_bra_new_1.webp';
@@ -173,8 +174,8 @@ export const products: Product[] = [
     name: 'Рашгард на молнии',
     category: 'rashguards',
     price: 7600,
-    images: [ivoryJacket1, ivoryJacket2],
-    spinImages: [ivoryJacket1, ivoryJacket2],
+    images: [ivoryJacket1, ivoryJacket2, ivoryJacket3],
+    spinImages: [ivoryJacket1, ivoryJacket2, ivoryJacket3],
     modelUrl: '/models/ivory_rashguard.glb',
     colors: [{ name: 'Айвори', hex: '#f0e6d3' }],
     sizes: allSizes,
