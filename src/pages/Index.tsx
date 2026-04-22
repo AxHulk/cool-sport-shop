@@ -8,8 +8,28 @@ import { organizationLd, websiteLd } from '@/lib/seo';
 import heroImg from '@/assets/hero_collage.webp';
 import shopTheLook from '@/assets/shop_the_look.webp';
 
+// Простой детерминированный PRNG (mulberry32) — одинаковый сид → одинаковая последовательность
+const seededShuffle = <T,>(arr: T[], seed: number): T[] => {
+  let s = seed >>> 0;
+  const rand = () => {
+    s = (s + 0x6D2B79F5) >>> 0;
+    let t = s;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+};
+
 const Index = () => {
-  const featured = products.filter(p => p.isBestseller || p.isNew).slice(0, 4);
+  // Сид меняется каждые 7 дней (число полных 7-дневных интервалов от epoch)
+  const weekSeed = Math.floor(Date.now() / (1000 * 60 * 60 * 24 * 7));
+  const featured = seededShuffle(products, weekSeed).slice(0, 4);
 
   return (
     <div>
