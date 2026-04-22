@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Truck, RefreshCw, Shield, Sparkles } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { products, categories } from '@/data/products';
 import ProductCard from '@/components/ProductCard';
@@ -8,20 +8,9 @@ import { organizationLd, websiteLd } from '@/lib/seo';
 import heroImg from '@/assets/hero_collage.webp';
 import look1 from '@/assets/look1.webp';
 import look2 from '@/assets/look2.webp';
-import premiumFabrics from '@/assets/premium_fabrics.webp';
-import seamlessTech from '@/assets/seamless_tech.webp';
-import fastDelivery from '@/assets/fast_delivery.webp';
-import fittingReturn from '@/assets/fitting_return.webp';
 
 const Index = () => {
   const featured = products.filter(p => p.isBestseller || p.isNew).slice(0, 4);
-
-  const advantages = [
-    { image: premiumFabrics, title: 'Премиальные ткани', desc: 'Итальянский нейлон и японский спандекс' },
-    { image: seamlessTech, title: 'Бесшовные технологии', desc: 'Комфорт без раздражения' },
-    { image: fastDelivery, title: 'Быстрая доставка', desc: 'По всей России за 2–5 дней' },
-    { image: fittingReturn, title: 'Примерка и возврат', desc: 'Бесплатный возврат в течение 14 дней' },
-  ];
 
   return (
     <div>
