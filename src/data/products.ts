@@ -51,7 +51,7 @@ import longsleeveEnergy2 from '@/assets/longsleeve_energy_2.webp';
 import longsleeveEnergy3 from '@/assets/longsleeve_energy_3.webp';
 
 export type ProductCategory = 'leggings' | 'tops' | 'tanks' | 'rashguards' | 'bags' | 'longsleeves';
-export type ProductSize = 'XS' | 'S' | 'M' | 'L';
+export type ProductSize = 'XS-S' | 'M-L';
 export type ProductColor = { name: string; hex: string };
 
 export interface Product {
@@ -141,7 +141,7 @@ const longsleeveSpecs = {
 };
 const longsleeveDesc = 'Лонгслив свободного кроя из мягкого хлопкового трикотажа. Надпись-аффирмация на предплечье. Круглый вырез, длинные рукава с манжетами. Подходит для тренировок и повседневной носки.';
 
-const allSizes: ProductSize[] = ['XS', 'S', 'M', 'L'];
+const allSizes: ProductSize[] = ['XS-S', 'M-L'];
 
 export const products: Product[] = [
   // --- РАШГАРДЫ ---
@@ -349,7 +349,7 @@ export const products: Product[] = [
     spinImages: [bagBlueFront, bagBlueBack, bagBlueThird],
     modelUrl: '/models/blue_bag.glb',
     colors: [{ name: 'Голубой', hex: '#c7dcf7' }],
-    sizes: ['M', 'L'],
+    sizes: ['XS-S', 'M-L'],
     description: bagDesc,
     specs: bagSpecs,
     isNew: true,
@@ -364,7 +364,7 @@ export const products: Product[] = [
     spinImages: [bagBlackBack, bagBlackFront],
     modelUrl: '/models/black_bag.glb',
     colors: [{ name: 'Чёрный', hex: '#1a1a1a' }],
-    sizes: ['M', 'L'],
+    sizes: ['XS-S', 'M-L'],
     description: bagDesc,
     specs: bagSpecs,
     isNew: true,
