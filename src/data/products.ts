@@ -16,8 +16,9 @@ import braFront from '@/assets/black_bra_1.webp';
 import braBack from '@/assets/black_bra_2.webp';
 import blueBraFront from '@/assets/blue_bra_1.webp';
 import blueBraBack from '@/assets/blue_bra_2.webp';
-import brownBraFront from '@/assets/brown_bra_new_1.webp';
-import brownBraBack from '@/assets/brown_bra_new_2.webp';
+import brownBraFront from '@/assets/brown_bra_1.webp';
+import brownBraBack from '@/assets/brown_bra_2.webp';
+import brownBraThird from '@/assets/brown_bra_3.webp';
 import blackTopFront from '@/assets/black_top_1.webp';
 import blackTopBack from '@/assets/black_top_2.webp';
 import blackTopThird from '@/assets/black_top_3.webp';
@@ -285,8 +286,8 @@ export const products: Product[] = [
     name: 'Топ спортивный с перекрёстными бретелями',
     category: 'tops',
     price: 5500,
-    images: [brownBraFront, brownBraBack],
-    spinImages: [brownBraFront, brownBraBack],
+    images: [brownBraFront, brownBraBack, brownBraThird],
+    spinImages: [brownBraFront, brownBraBack, brownBraThird],
     modelUrl: '/models/brown_bra.glb',
     colors: [{ name: 'Шоколад', hex: '#3e2723' }],
     sizes: allSizes,
