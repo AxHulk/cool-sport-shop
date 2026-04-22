@@ -1,10 +1,12 @@
 import { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Heart } from 'lucide-react';
-import { Product } from '@/data/products';
+import { Product, ProductSize } from '@/data/products';
 import { useFavorites } from '@/context/FavoritesContext';
+import { useCart } from '@/context/CartContext';
 import { cn } from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
+import { toast } from 'sonner';
 
 const ProductCard = ({ product }: { product: Product }) => {
   const { toggleFavorite, isFavorite } = useFavorites();
