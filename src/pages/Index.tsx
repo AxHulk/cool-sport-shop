@@ -6,8 +6,7 @@ import ProductCard from '@/components/ProductCard';
 import SEO from '@/components/SEO';
 import { organizationLd, websiteLd } from '@/lib/seo';
 import heroImg from '@/assets/hero_collage.webp';
-import look1 from '@/assets/look1.webp';
-import look2 from '@/assets/look2.webp';
+import shopTheLook from '@/assets/shop_the_look.webp';
 
 const Index = () => {
   const featured = products.filter(p => p.isBestseller || p.isNew).slice(0, 4);
