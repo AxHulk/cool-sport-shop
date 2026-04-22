@@ -1,5 +1,6 @@
 import catLongsleeves from '@/assets/longsleeve_ivory_1.webp';
 import catLeggingsHero from '@/assets/cat_leggings_hero.webp';
+import catRashguardsHero from '@/assets/cat_rashguards_hero.webp';
 import blackJacket1 from '@/assets/black_jacket_1.webp';
 import blackJacket2 from '@/assets/black_jacket_2.webp';
 import blackJacket3 from '@/assets/black_jacket_3.webp';
