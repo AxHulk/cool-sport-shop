@@ -196,32 +196,33 @@ const About = () => (
     </section>
 
     {/* Блок 5 — CTA */}
-    <section className="relative w-full min-h-[50vh] flex items-center">
+    <section className="relative w-full min-h-[60vh] flex items-center justify-center">
       <img
         src={ctaSection}
-        alt="Девушка выполняет асану в светлой студии"
+        alt="Две девушки бегут по лесной тропе на рассвете"
         className="absolute inset-0 w-full h-full object-cover"
         loading="lazy"
       />
-      <div className="absolute inset-0 bg-black/50" />
-      <div className="relative z-10 container text-center text-white py-20 max-w-3xl mx-auto">
-        <h2 className="text-2xl md:text-4xl font-serif mb-6 leading-tight">
+      {/* Лёгкая виньетка по центру, чтобы текст между фигурами был читаем, не перекрывая фон */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(0,0,0,0.55)_0%,_rgba(0,0,0,0.25)_45%,_rgba(0,0,0,0)_75%)]" />
+      <div className="relative z-10 container text-center text-white py-24 max-w-2xl mx-auto px-6">
+        <h2 className="text-2xl md:text-4xl font-serif mb-6 leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]">
           Ваш путь к внутреннему миру начинается здесь
         </h2>
-        <p className="text-base md:text-lg font-light leading-relaxed mb-8 opacity-90">
+        <p className="text-base md:text-lg font-light leading-relaxed mb-8 opacity-95 drop-shadow-[0_2px_6px_rgba(0,0,0,0.5)]">
           Ваше тело способно на потрясающие вещи, и оно заслуживает экипировки высшего класса.
           Ощутите истинную свободу через движение и бескомпромиссную эстетику.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
             to="/catalog"
-            className="inline-block px-8 py-3 bg-white text-black font-medium rounded hover:bg-white/90 transition-colors"
+            className="inline-block px-8 py-3 bg-white text-black text-xs font-semibold uppercase tracking-[0.22em] hover:bg-white/90 transition-colors"
           >
             Смотреть коллекцию
           </Link>
           <Link
             to="/catalog?category=leggings"
-            className="inline-block px-8 py-3 border border-white text-white font-medium rounded hover:bg-white/10 transition-colors"
+            className="inline-block px-8 py-3 border border-white text-white text-xs font-semibold uppercase tracking-[0.22em] hover:bg-white/10 transition-colors"
           >
             Подобрать леггинсы
           </Link>
