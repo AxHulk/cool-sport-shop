@@ -76,7 +76,7 @@ export const categories = [
   { slug: 'leggings' as const, name: 'Леггинсы', image: catLeggingsHero },
   { slug: 'tops' as const, name: 'Топы', image: braFront },
   { slug: 'tanks' as const, name: 'Майки', image: blackTopFront },
-  { slug: 'rashguards' as const, name: 'Рашгарды', image: brownJacket1 },
+  { slug: 'rashguards' as const, name: 'Рашгарды', image: catRashguardsHero },
   { slug: 'bags' as const, name: 'Сумки', image: bagBlueFront },
   { slug: 'longsleeves' as const, name: 'Лонгсливы', image: catLongsleeves },
 ];
