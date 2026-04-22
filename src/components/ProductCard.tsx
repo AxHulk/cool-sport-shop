@@ -74,18 +74,11 @@ const ProductCard = ({ product }: { product: Product }) => {
             ))}
           </div>
 
-          {(product.isNew || product.oldPrice) && (
+          {product.oldPrice && (
             <div className="absolute top-4 left-3 flex flex-col gap-1">
-              {product.isNew && (
-                <span className="bg-foreground text-background text-[10px] uppercase tracking-wider px-2 py-0.5">
-                  New
-                </span>
-              )}
-              {product.oldPrice && (
-                <span className="bg-accent text-accent-foreground text-[10px] uppercase tracking-wider px-2 py-0.5">
-                  Sale
-                </span>
-              )}
+              <span className="bg-accent text-accent-foreground text-[10px] uppercase tracking-wider px-2 py-0.5">
+                Sale
+              </span>
             </div>
           )}
         </Link>
