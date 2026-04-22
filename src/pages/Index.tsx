@@ -62,32 +62,32 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Featured Products */}
+      <section className="container py-16">
+        <div className="flex items-center justify-between mb-10">
+          <h2 className="text-xs font-semibold uppercase tracking-[0.22em]">Хиты и новинки</h2>
+          <Button variant="ghost" asChild>
+            <Link to="/catalog" className="text-xs uppercase tracking-[0.22em]">Все товары <ArrowRight className="ml-1 h-4 w-4" /></Link>
+          </Button>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          {featured.map(p => <ProductCard key={p.id} product={p} />)}
+        </div>
+      </section>
+
       {/* Categories */}
       <section className="container py-16">
-        <h2 className="text-3xl font-serif text-center mb-10">Категории</h2>
+        <h2 className="text-xs font-semibold uppercase tracking-[0.22em] text-center mb-10">Категории</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {categories.map(cat => (
             <Link key={cat.slug} to={`/catalog?category=${cat.slug}`} className="group relative aspect-square rounded-lg overflow-hidden">
               <img src={cat.image} alt={cat.name} width={600} height={600} loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
               <div className="absolute inset-0 bg-foreground/30 group-hover:bg-foreground/40 transition-colors" />
-              <span className="absolute bottom-4 left-4 text-background font-serif text-xl font-semibold">
+              <span className="absolute bottom-4 left-4 text-background text-xs font-semibold uppercase tracking-[0.22em]">
                 {cat.name}
               </span>
             </Link>
           ))}
-        </div>
-      </section>
-
-      {/* Featured Products */}
-      <section className="container py-16">
-        <div className="flex items-center justify-between mb-10">
-          <h2 className="text-3xl font-serif">Хиты и новинки</h2>
-          <Button variant="ghost" asChild>
-            <Link to="/catalog">Все товары <ArrowRight className="ml-1 h-4 w-4" /></Link>
-          </Button>
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {featured.map(p => <ProductCard key={p.id} product={p} />)}
         </div>
       </section>
 
