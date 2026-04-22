@@ -18,8 +18,9 @@ import blueBraFront from '@/assets/blue_bra_new_1.webp';
 import blueBraBack from '@/assets/blue_bra_new_2.webp';
 import brownBraFront from '@/assets/brown_bra_new_1.webp';
 import brownBraBack from '@/assets/brown_bra_new_2.webp';
-import blackTopFront from '@/assets/black_top_new_1.webp';
-import blackTopBack from '@/assets/black_top_new_2.webp';
+import blackTopFront from '@/assets/black_top_1.webp';
+import blackTopBack from '@/assets/black_top_2.webp';
+import blackTopThird from '@/assets/black_top_3.webp';
 import whiteTopFront from '@/assets/white_top_1.webp';
 import whiteTopBack from '@/assets/white_top_2.webp';
 import whiteTopThird from '@/assets/white_top_3.webp';
@@ -307,8 +308,8 @@ export const products: Product[] = [
     name: 'Майка моделирующая на тонких бретелях',
     category: 'tanks',
     price: 5500,
-    images: [blackTopFront, blackTopBack],
-    spinImages: [blackTopFront, blackTopBack],
+    images: [blackTopFront, blackTopBack, blackTopThird],
+    spinImages: [blackTopFront, blackTopBack, blackTopThird],
     modelUrl: '/models/black_top.glb',
     colors: [{ name: 'Чёрный', hex: '#1a1a1a' }],
     sizes: allSizes,
