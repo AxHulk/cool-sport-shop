@@ -21,7 +21,6 @@ const sortOptions = [
   { value: 'popular', label: 'По популярности' },
   { value: 'price-asc', label: 'Цена ↑' },
   { value: 'price-desc', label: 'Цена ↓' },
-  { value: 'new', label: 'Новинки' },
 ];
 
 const Catalog = () => {
@@ -42,7 +41,6 @@ const Catalog = () => {
     switch (sort) {
       case 'price-asc': result.sort((a, b) => a.price - b.price); break;
       case 'price-desc': result.sort((a, b) => b.price - a.price); break;
-      case 'new': result.sort((a, b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0)); break;
     }
     return result;
   }, [selectedCategory, sort]);
@@ -91,7 +89,6 @@ const Catalog = () => {
         </nav>
 
         <div className="flex items-center gap-3 pb-3">
-          <span className="text-xs text-muted-foreground">{filtered.length} товаров</span>
           <Select value={sort} onValueChange={setSort}>
             <SelectTrigger className="w-[180px] h-9 text-xs uppercase tracking-wider">
               <SelectValue />
