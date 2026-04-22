@@ -20,8 +20,9 @@ import blackTopFront from '@/assets/black_top_new_1.webp';
 import blackTopBack from '@/assets/black_top_new_2.webp';
 import whiteTopFront from '@/assets/white_top_new_1.webp';
 import whiteTopBack from '@/assets/white_top_new_2.webp';
-import blackLeggings1 from '@/assets/black_leggings_new_1.webp';
-import blackLeggings2 from '@/assets/black_leggings_new_2.webp';
+import blackLeggings1 from '@/assets/black_leggings_1.webp';
+import blackLeggings2 from '@/assets/black_leggings_2.webp';
+import blackLeggings3 from '@/assets/black_leggings_3.webp';
 import blueLeggings1 from '@/assets/blue_leggings_new_1.webp';
 import blueLeggings2 from '@/assets/blue_leggings_new_2.webp';
 import brownLeggings1 from '@/assets/brown_leggings_new_1.webp';
@@ -184,8 +185,8 @@ export const products: Product[] = [
     name: 'Леггинсы компрессионные',
     category: 'leggings',
     price: 6500,
-    images: [blackLeggings1, blackLeggings2],
-    spinImages: [blackLeggings1, blackLeggings2],
+    images: [blackLeggings1, blackLeggings2, blackLeggings3],
+    spinImages: [blackLeggings1, blackLeggings2, blackLeggings3],
     modelUrl: '/models/black_leggings.glb',
     colors: [{ name: 'Чёрный', hex: '#1a1a1a' }],
     sizes: allSizes,
