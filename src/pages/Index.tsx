@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Truck, RefreshCw, Shield, Sparkles } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { products, categories } from '@/data/products';
 import ProductCard from '@/components/ProductCard';
@@ -8,20 +8,9 @@ import { organizationLd, websiteLd } from '@/lib/seo';
 import heroImg from '@/assets/hero_collage.webp';
 import look1 from '@/assets/look1.webp';
 import look2 from '@/assets/look2.webp';
-import premiumFabrics from '@/assets/premium_fabrics.webp';
-import seamlessTech from '@/assets/seamless_tech.webp';
-import fastDelivery from '@/assets/fast_delivery.webp';
-import fittingReturn from '@/assets/fitting_return.webp';
 
 const Index = () => {
   const featured = products.filter(p => p.isBestseller || p.isNew).slice(0, 4);
-
-  const advantages = [
-    { image: premiumFabrics, title: 'Премиальные ткани', desc: 'Итальянский нейлон и японский спандекс' },
-    { image: seamlessTech, title: 'Бесшовные технологии', desc: 'Комфорт без раздражения' },
-    { image: fastDelivery, title: 'Быстрая доставка', desc: 'По всей России за 2–5 дней' },
-    { image: fittingReturn, title: 'Примерка и возврат', desc: 'Бесплатный возврат в течение 14 дней' },
-  ];
 
   return (
     <div>
@@ -65,7 +54,7 @@ const Index = () => {
       {/* Featured Products */}
       <section className="container py-16">
         <div className="flex items-center justify-between mb-10">
-          <h2 className="text-xs font-semibold uppercase tracking-[0.22em]">Хиты и новинки</h2>
+          <h2 className="text-2xl md:text-3xl font-semibold uppercase tracking-[0.22em]">Хиты и новинки</h2>
           <Button variant="ghost" asChild>
             <Link to="/catalog" className="text-xs uppercase tracking-[0.22em]">Все товары <ArrowRight className="ml-1 h-4 w-4" /></Link>
           </Button>
@@ -77,7 +66,7 @@ const Index = () => {
 
       {/* Categories */}
       <section className="container py-16">
-        <h2 className="text-xs font-semibold uppercase tracking-[0.22em] text-center mb-10">Категории</h2>
+        <h2 className="text-2xl md:text-3xl font-semibold uppercase tracking-[0.22em] text-center mb-10">Категории</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {categories.map(cat => (
             <Link key={cat.slug} to={`/catalog?category=${cat.slug}`} className="group relative aspect-square rounded-lg overflow-hidden">
@@ -90,23 +79,6 @@ const Index = () => {
           ))}
         </div>
       </section>
-
-      {/* Advantages */}
-      <section className="bg-secondary py-16">
-        <div className="container">
-          <h2 className="text-3xl font-serif text-center mb-10">Почему āsana</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {advantages.map(a => (
-              <div key={a.title} className="text-center">
-                <img src={a.image} alt={a.title} className="h-16 w-auto mx-auto mb-3 object-contain" />
-                <h3 className="font-sans font-semibold text-sm mb-1">{a.title}</h3>
-                <p className="text-xs text-muted-foreground">{a.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Shop the Look */}
       <section className="container py-16">
         <h2 className="text-3xl font-serif text-center mb-10">Shop the Look</h2>
