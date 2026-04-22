@@ -41,7 +41,8 @@ import ivoryLeggings4 from '@/assets/ivory_leggings_4.webp';
 import bagBlueFront from '@/assets/bag_blue_1.webp';
 import bagBlueBack from '@/assets/bag_blue_2.webp';
 import bagBlueThird from '@/assets/bag_blue_3.webp';
-import bagBlackFront from '@/assets/bag_black_new_1.webp';
+import bagBlackFront from '@/assets/bag_black_1.webp';
+import bagBlackBack from '@/assets/bag_black_2.webp';
 import longsleeveJoy1 from '@/assets/longsleeve_ivory_1.webp';
 import longsleeveJoy2 from '@/assets/longsleeve_ivory_2.webp';
 import longsleeveEnergy1 from '@/assets/longsleeve_energy_1.webp';
@@ -357,8 +358,8 @@ export const products: Product[] = [
     name: 'Сумка спортивная',
     category: 'bags',
     price: 6900,
-    images: [bagBlackFront],
-    spinImages: [bagBlackFront],
+    images: [bagBlackFront, bagBlackBack],
+    spinImages: [bagBlackFront, bagBlackBack],
     modelUrl: '/models/black_bag.glb',
     colors: [{ name: 'Чёрный', hex: '#1a1a1a' }],
     sizes: ['M', 'L'],
