@@ -3,8 +3,9 @@ import catTops from '@/assets/cat-tops.webp';
 import catRashguards from '@/assets/cat-rashguards.webp';
 import catBags from '@/assets/cat-bags.webp';
 import catLongsleeves from '@/assets/longsleeve_ivory_1.webp';
-import blackJacket1 from '@/assets/black_jacket_new_1.webp';
-import blackJacket2 from '@/assets/black_jacket_new_2.webp';
+import blackJacket1 from '@/assets/black_jacket_1.webp';
+import blackJacket2 from '@/assets/black_jacket_2.webp';
+import blackJacket3 from '@/assets/black_jacket_3.webp';
 import brownJacket1 from '@/assets/brown_jacket_new_1.webp';
 import brownJacket2 from '@/assets/brown_jacket_new_2.webp';
 import brownJacket3 from '@/assets/brown_jacket_new_3.webp';
@@ -141,8 +142,8 @@ export const products: Product[] = [
     name: 'Рашгард на молнии',
     category: 'rashguards',
     price: 7600,
-    images: [blackJacket1, blackJacket2],
-    spinImages: [blackJacket1, blackJacket2],
+    images: [blackJacket1, blackJacket2, blackJacket3],
+    spinImages: [blackJacket1, blackJacket2, blackJacket3],
     modelUrl: '/models/black_rashguard.glb',
     colors: [{ name: 'Чёрный', hex: '#1a1a1a' }],
     sizes: allSizes,
