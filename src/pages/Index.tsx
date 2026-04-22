@@ -90,23 +90,6 @@ const Index = () => {
           ))}
         </div>
       </section>
-
-      {/* Advantages */}
-      <section className="bg-secondary py-16">
-        <div className="container">
-          <h2 className="text-3xl font-serif text-center mb-10">Почему āsana</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {advantages.map(a => (
-              <div key={a.title} className="text-center">
-                <img src={a.image} alt={a.title} className="h-16 w-auto mx-auto mb-3 object-contain" />
-                <h3 className="font-sans font-semibold text-sm mb-1">{a.title}</h3>
-                <p className="text-xs text-muted-foreground">{a.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Shop the Look */}
       <section className="container py-16">
         <h2 className="text-3xl font-serif text-center mb-10">Shop the Look</h2>
