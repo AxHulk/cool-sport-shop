@@ -10,7 +10,16 @@ import { toast } from 'sonner';
 
 const ProductCard = ({ product }: { product: Product }) => {
   const { toggleFavorite, isFavorite } = useFavorites();
+  const { addItem } = useCart();
   const fav = isFavorite(product.id);
+  const defaultColor = product.colors[0];
+
+  const handleQuickAdd = (e: React.MouseEvent, size: ProductSize) => {
+    e.preventDefault();
+    e.stopPropagation();
+    addItem(product, size, defaultColor);
+    toast.success(`${product.name} (${size}) добавлен в корзину`);
+  };
   const [imgLoaded, setImgLoaded] = useState(false);
   const [frame, setFrame] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
