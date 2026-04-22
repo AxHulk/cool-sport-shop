@@ -56,7 +56,7 @@ const Catalog = () => {
     <div className="container py-8">
       <SEO title={seoTitle} description={seoDesc} canonical={canonical} jsonLd={breadcrumbLd(crumbs)} />
       <Breadcrumbs items={crumbs} className="mb-4" />
-      <h1 className="text-3xl md:text-4xl font-serif mb-8">{meta?.title || 'Каталог'}</h1>
+      <h1 className="text-3xl md:text-4xl font-serif mb-8 uppercase tracking-[0.08em]">{meta?.title || 'Каталог'}</h1>
 
       {/* Category tabs + sort */}
       <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10 border-b border-border">
