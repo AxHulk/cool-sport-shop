@@ -47,6 +47,7 @@ import longsleeveJoy1 from '@/assets/longsleeve_ivory_1.webp';
 import longsleeveJoy2 from '@/assets/longsleeve_ivory_2.webp';
 import longsleeveEnergy1 from '@/assets/longsleeve_energy_1.webp';
 import longsleeveEnergy2 from '@/assets/longsleeve_energy_2.webp';
+import longsleeveEnergy3 from '@/assets/longsleeve_energy_3.webp';
 
 export type ProductCategory = 'leggings' | 'tops' | 'tanks' | 'rashguards' | 'bags' | 'longsleeves';
 export type ProductSize = 'XS' | 'S' | 'M' | 'L';
