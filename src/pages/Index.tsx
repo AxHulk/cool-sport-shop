@@ -5,7 +5,7 @@ import { products, categories } from '@/data/products';
 import ProductCard from '@/components/ProductCard';
 import SEO from '@/components/SEO';
 import { organizationLd, websiteLd } from '@/lib/seo';
-import heroImg from '@/assets/hero.webp';
+import heroImg from '@/assets/hero_collage.webp';
 import look1 from '@/assets/look1.webp';
 import look2 from '@/assets/look2.webp';
 import premiumFabrics from '@/assets/premium_fabrics.webp';
@@ -31,28 +31,34 @@ const Index = () => {
         jsonLd={[organizationLd, websiteLd]}
       />
       {/* Hero */}
-      <section className="relative h-[80vh] min-h-[500px] overflow-hidden">
-        <img
-          src={heroImg}
-          alt="āsana спортивная одежда"
-          width={1920}
-          height={1080}
-          fetchPriority="high"
-          loading="eager"
-          decoding="async"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-foreground/60 to-foreground/20" />
-        <div className="relative container h-full flex flex-col justify-center">
-          <h1 className="text-4xl md:text-6xl font-serif text-background max-w-lg leading-tight">
-            Двигайся в своём стиле
-          </h1>
-          <p className="text-background/80 mt-4 max-w-md text-lg">
-            Премиальная спортивная одежда, которая подчёркивает силу и женственность
-          </p>
-          <Button size="lg" className="mt-6 w-fit" asChild>
-            <Link to="/catalog">Смотреть коллекцию <ArrowRight className="ml-2 h-4 w-4" /></Link>
-          </Button>
+      <section className="bg-secondary">
+        <div className="grid lg:grid-cols-[1fr_auto] items-stretch">
+          <div className="relative">
+            <img
+              src={heroImg}
+              alt="āsana — премиальная спортивная одежда"
+              width={1920}
+              height={1071}
+              fetchPriority="high"
+              loading="eager"
+              decoding="async"
+              className="w-full h-full object-cover aspect-[16/9] lg:aspect-auto lg:max-h-[80vh]"
+            />
+          </div>
+          <div className="flex flex-col justify-center items-start lg:items-end text-left lg:text-right px-6 py-12 lg:px-16 lg:py-0 lg:w-[420px]">
+            <h1 className="font-serif text-4xl md:text-5xl lg:text-[3.25rem] leading-[1.05] tracking-[-0.01em] text-foreground">
+              THE EARTH<br />SET
+            </h1>
+            <p className="mt-5 text-xs font-semibold uppercase tracking-[0.22em] text-foreground/70">
+              Хиты сезона в шоколаде
+            </p>
+            <Button
+              asChild
+              className="mt-10 rounded-none h-12 px-8 text-xs font-semibold uppercase tracking-[0.22em]"
+            >
+              <Link to="/catalog">Смотреть коллекцию</Link>
+            </Button>
+          </div>
         </div>
       </section>
 
