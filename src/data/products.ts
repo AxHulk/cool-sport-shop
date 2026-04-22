@@ -1,4 +1,5 @@
 import catLongsleeves from '@/assets/longsleeve_ivory_1.webp';
+import catLeggingsHero from '@/assets/cat_leggings_hero.webp';
 import blackJacket1 from '@/assets/black_jacket_1.webp';
 import blackJacket2 from '@/assets/black_jacket_2.webp';
 import blackJacket3 from '@/assets/black_jacket_3.webp';
@@ -71,7 +72,7 @@ export interface Product {
 }
 
 export const categories = [
-  { slug: 'leggings' as const, name: 'Леггинсы', image: brownLeggings2 },
+  { slug: 'leggings' as const, name: 'Леггинсы', image: catLeggingsHero },
   { slug: 'tops' as const, name: 'Топы', image: braFront },
   { slug: 'tanks' as const, name: 'Майки', image: blackTopFront },
   { slug: 'rashguards' as const, name: 'Рашгарды', image: brownJacket1 },
