@@ -27,13 +27,17 @@ const categoryNames: Record<string, string> = {
   longsleeves: 'Лонгсливы',
 };
 
+// Unified caption style — matches catalog category labels (uppercase, tracked, semibold)
+const labelClass = 'text-xs font-semibold uppercase tracking-[0.18em] text-foreground/80';
+const mutedLabelClass = 'text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground';
+
 const ProductPage = () => {
   const { id } = useParams();
   const product = products.find(p => p.id === id);
   const { addItem } = useCart();
   const { toggleFavorite, isFavorite } = useFavorites();
 
-  const [selectedSize, setSelectedSize] = useState(product?.sizes[1] || product?.sizes[0]);
+  const [selectedSize, setSelectedSize] = useState(product?.sizes[0]);
   const [view3D, setView3D] = useState(false);
 
   if (!product) return <div className="container py-20 text-center">Товар не найден</div>;
@@ -104,10 +108,10 @@ const ProductPage = () => {
           })()}
           {product.modelUrl && (
             <div className="flex gap-2 mt-3 justify-center">
-              <Button variant={view3D ? 'default' : 'outline'} size="sm" onClick={() => setView3D(true)}>
+              <Button variant={view3D ? 'default' : 'outline'} size="sm" onClick={() => setView3D(true)} className="text-xs font-semibold uppercase tracking-[0.18em]">
                 <RotateCcw className="h-4 w-4 mr-1" /> 3D
               </Button>
-              <Button variant={!view3D ? 'default' : 'outline'} size="sm" onClick={() => setView3D(false)}>
+              <Button variant={!view3D ? 'default' : 'outline'} size="sm" onClick={() => setView3D(false)} className="text-xs font-semibold uppercase tracking-[0.18em]">
                 <Image className="h-4 w-4 mr-1" /> Фото
               </Button>
             </div>
@@ -116,53 +120,47 @@ const ProductPage = () => {
 
         {/* Info */}
         <div>
-          <p className="text-sm text-muted-foreground mb-1">{categoryNames[product.category] || product.category}</p>
-          <h1 className="text-3xl font-serif mb-3">{product.name}</h1>
+          <p className={cn(mutedLabelClass, 'mb-2')}>{categoryNames[product.category] || product.category}</p>
+          <h1 className="text-3xl md:text-4xl font-serif uppercase tracking-[0.06em] mb-4">{product.name}</h1>
           <div className="flex items-center gap-3 mb-6">
             <span className="text-2xl font-semibold">{formatPrice(product.price)}</span>
             {product.oldPrice && <span className="text-lg text-muted-foreground line-through">{formatPrice(product.oldPrice)}</span>}
           </div>
 
-          <p className="text-muted-foreground mb-6">{product.description}</p>
-
-          {/* Color (current + other variants as links) */}
-          {(otherColors.length > 0 || productColor) && (
-            <div className="mb-6">
-              <p className="text-sm font-medium mb-2">Цвет: {productColor.name}</p>
-              <div className="flex gap-2">
-                <span
-                  className="w-8 h-8 rounded-full border-2 border-foreground scale-110"
-                  style={{ backgroundColor: productColor.hex }}
-                  title={productColor.name}
-                />
-                {otherColors.map(p => (
-                  <a
-                    key={p.id}
-                    href={`/product/${p.id}`}
-                    className="w-8 h-8 rounded-full border-2 border-transparent hover:border-foreground/40 transition-colors"
-                    style={{ backgroundColor: p.colors[0].hex }}
-                    title={p.colors[0].name}
-                  />
-                ))}
-              </div>
-            </div>
-          )}
+          <p className="text-sm text-muted-foreground leading-relaxed mb-8">{product.description}</p>
 
           {/* Size */}
           <div className="mb-6">
-            <div className="flex items-center justify-between mb-2">
-              <p className="text-sm font-medium">Размер: {selectedSize}</p>
+            <div className="flex items-center justify-between mb-3">
+              <p className={labelClass}>Размер: {selectedSize}</p>
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button variant="ghost" size="sm"><Ruler className="h-4 w-4 mr-1" />Таблица размеров</Button>
+                  <Button variant="ghost" size="sm" className="text-xs font-semibold uppercase tracking-[0.18em] h-8 px-2">
+                    <Ruler className="h-4 w-4 mr-1" />Таблица размеров
+                  </Button>
                 </DialogTrigger>
                 <DialogContent>
-                  <DialogHeader><DialogTitle>Таблица размеров</DialogTitle></DialogHeader>
+                  <DialogHeader>
+                    <DialogTitle className="uppercase tracking-[0.06em]">Таблица размеров</DialogTitle>
+                  </DialogHeader>
                   <table className="w-full text-sm">
-                    <thead><tr className="border-b"><th className="py-2 text-left">Размер</th><th>Грудь</th><th>Талия</th><th>Бёдра</th></tr></thead>
+                    <thead>
+                      <tr className="border-b">
+                        <th className={cn(mutedLabelClass, 'py-2 text-left')}>Размер</th>
+                        <th className={mutedLabelClass}>Грудь</th>
+                        <th className={mutedLabelClass}>Талия</th>
+                        <th className={mutedLabelClass}>Бёдра</th>
+                      </tr>
+                    </thead>
                     <tbody>
-                      {[['XS','80-84','60-64','86-90'],['S','84-88','64-68','90-94'],['M','88-92','68-72','94-98'],['L','92-96','72-76','98-102'],['XL','96-100','76-80','102-106']].map(([s,...v]) => (
-                        <tr key={s} className="border-b"><td className="py-2 font-medium">{s}</td>{v.map((x,i)=><td key={i} className="text-center">{x}</td>)}</tr>
+                      {[
+                        ['XS-S', '82-86', '62-66', '88-92'],
+                        ['M-L', '90-94', '70-74', '96-100'],
+                      ].map(([s, ...v]) => (
+                        <tr key={s} className="border-b">
+                          <td className="py-3 font-medium">{s}</td>
+                          {v.map((x, i) => <td key={i} className="text-center">{x}</td>)}
+                        </tr>
                       ))}
                     </tbody>
                   </table>
@@ -171,7 +169,13 @@ const ProductPage = () => {
             </div>
             <div className="flex gap-2">
               {product.sizes.map(s => (
-                <Button key={s} variant={selectedSize === s ? 'default' : 'outline'} size="sm" className="h-10 w-12" onClick={() => setSelectedSize(s)}>
+                <Button
+                  key={s}
+                  variant={selectedSize === s ? 'default' : 'outline'}
+                  size="sm"
+                  className="h-10 min-w-16 px-3 text-xs font-semibold uppercase tracking-[0.18em]"
+                  onClick={() => setSelectedSize(s)}
+                >
                   {s}
                 </Button>
               ))}
@@ -180,24 +184,53 @@ const ProductPage = () => {
 
           {/* Actions */}
           <div className="flex gap-3 mb-8">
-            <Button size="lg" className="flex-1" onClick={() => {
-              if (selectedSize) {
-                addItem(product, selectedSize, productColor);
-                toast.success(`${product.name} добавлен в корзину`, {
-                  description: `${productColor.name}, ${selectedSize}`,
-                });
-              }
-            }}>
+            <Button
+              size="lg"
+              className="flex-1 text-xs font-semibold uppercase tracking-[0.18em]"
+              onClick={() => {
+                if (selectedSize) {
+                  addItem(product, selectedSize, productColor);
+                  toast.success(`${product.name} добавлен в корзину`, {
+                    description: selectedSize,
+                  });
+                }
+              }}
+            >
               <ShoppingBag className="h-5 w-5 mr-2" /> Добавить в корзину
             </Button>
-            <Button variant="outline" size="lg" onClick={() => toggleFavorite(product.id)}>
-              <Heart className={cn("h-5 w-5", fav && "fill-accent text-accent")} />
+            <Button variant="outline" size="lg" onClick={() => toggleFavorite(product.id)} aria-label="Избранное">
+              <Heart className={cn('h-5 w-5', fav && 'fill-foreground text-foreground')} />
             </Button>
           </div>
 
+          {/* Other colors */}
+          {otherColors.length > 0 && (
+            <div className="border-t pt-6 mb-6">
+              <p className={cn(labelClass, 'mb-3')}>Смотрите в другом цвете</p>
+              <div className="flex flex-wrap gap-3">
+                {otherColors.map(p => (
+                  <a
+                    key={p.id}
+                    href={`/product/${p.id}`}
+                    className="group flex items-center gap-2 border border-border rounded-md px-3 py-2 hover:bg-foreground/5 transition-colors"
+                    title={p.colors[0].name}
+                  >
+                    <span
+                      className="w-5 h-5 rounded-full border border-border"
+                      style={{ backgroundColor: p.colors[0].hex }}
+                    />
+                    <span className="text-xs font-semibold uppercase tracking-[0.18em] text-foreground/80 group-hover:text-foreground">
+                      {p.colors[0].name}
+                    </span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Specs */}
           <div className="border-t pt-6">
-            <h3 className="font-sans font-semibold mb-3">Характеристики</h3>
+            <h3 className={cn(labelClass, 'mb-4')}>Характеристики</h3>
             <dl className="space-y-2">
               {Object.entries(product.specs).map(([k, v]) => (
                 <div key={k} className="flex text-sm">
@@ -216,7 +249,7 @@ const ProductPage = () => {
       {/* Related */}
       {related.length > 0 && (
         <section className="mt-16">
-          <h2 className="text-2xl font-serif mb-6">С этим покупают</h2>
+          <h2 className="text-2xl font-serif uppercase tracking-[0.06em] mb-6">С этим покупают</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {related.map(p => <ProductCard key={p.id} product={p} />)}
           </div>
