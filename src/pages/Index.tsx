@@ -6,8 +6,7 @@ import ProductCard from '@/components/ProductCard';
 import SEO from '@/components/SEO';
 import { organizationLd, websiteLd } from '@/lib/seo';
 import heroImg from '@/assets/hero_collage.webp';
-import look1 from '@/assets/look1.webp';
-import look2 from '@/assets/look2.webp';
+import shopTheLook from '@/assets/shop_the_look.webp';
 
 const Index = () => {
   const featured = products.filter(p => p.isBestseller || p.isNew).slice(0, 4);
@@ -81,18 +80,24 @@ const Index = () => {
       </section>
       {/* Shop the Look */}
       <section className="container py-16">
-        <h2 className="text-3xl font-serif text-center mb-10">Shop the Look</h2>
-        <div className="grid md:grid-cols-2 gap-6">
-          {[look1, look2].map((img, i) => (
-            <Link key={i} to="/catalog" className="group relative aspect-[4/5] rounded-lg overflow-hidden">
-              <img src={img} alt={`Образ ${i + 1}`} width={800} height={1000} loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-              <div className="absolute inset-0 bg-gradient-to-t from-foreground/50 to-transparent" />
-              <div className="absolute bottom-6 left-6">
-                <p className="text-background font-serif text-2xl mb-2">Образ {i + 1}</p>
-                <Button variant="secondary" size="sm">Собрать комплект</Button>
-              </div>
-            </Link>
-          ))}
+        <div className="relative w-full overflow-hidden rounded-lg">
+          <img
+            src={shopTheLook}
+            alt="Соберите образ āsana"
+            width={1920}
+            height={800}
+            loading="lazy"
+            decoding="async"
+            className="w-full h-auto object-cover aspect-[21/9]"
+          />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <Button
+              asChild
+              className="rounded-none h-12 px-8 text-xs font-semibold uppercase tracking-[0.22em]"
+            >
+              <Link to="/catalog">Собрать образ</Link>
+            </Button>
+          </div>
         </div>
       </section>
     </div>
