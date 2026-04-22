@@ -45,6 +45,7 @@ import bagBlackFront from '@/assets/bag_black_1.webp';
 import bagBlackBack from '@/assets/bag_black_2.webp';
 import longsleeveJoy1 from '@/assets/longsleeve_ivory_1.webp';
 import longsleeveJoy2 from '@/assets/longsleeve_ivory_2.webp';
+import longsleeveJoy3 from '@/assets/longsleeve_ivory_3.webp';
 import longsleeveEnergy1 from '@/assets/longsleeve_energy_1.webp';
 import longsleeveEnergy2 from '@/assets/longsleeve_energy_2.webp';
 import longsleeveEnergy3 from '@/assets/longsleeve_energy_3.webp';
@@ -376,8 +377,8 @@ export const products: Product[] = [
     name: 'Лонгслив «Радость жизни»',
     category: 'longsleeves',
     price: 7600,
-    images: [longsleeveJoy1, longsleeveJoy2],
-    spinImages: [longsleeveJoy1, longsleeveJoy2],
+    images: [longsleeveJoy1, longsleeveJoy2, longsleeveJoy3],
+    spinImages: [longsleeveJoy1, longsleeveJoy2, longsleeveJoy3],
     modelUrl: '/models/longsleeve.glb',
     colors: [{ name: 'Айвори', hex: '#f0e6d3' }],
     sizes: allSizes,
