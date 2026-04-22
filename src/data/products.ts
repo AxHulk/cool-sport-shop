@@ -71,8 +71,8 @@ export interface Product {
 }
 
 export const categories = [
-  { slug: 'leggings' as const, name: 'Леггинсы', image: brownLeggings1 },
-  { slug: 'tops' as const, name: 'Топы', image: blackTopFront },
+  { slug: 'leggings' as const, name: 'Леггинсы', image: brownLeggings2 },
+  { slug: 'tops' as const, name: 'Топы', image: braFront },
   { slug: 'tanks' as const, name: 'Майки', image: blackTopFront },
   { slug: 'rashguards' as const, name: 'Рашгарды', image: brownJacket1 },
   { slug: 'bags' as const, name: 'Сумки', image: bagBlueFront },
