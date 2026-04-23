@@ -144,7 +144,42 @@ Deno.serve(async (req) => {
       changed_by: "system",
     });
 
-    // 6. Send Telegram notification (fire-and-forget)
+    // 6. Send admin notification email (fire-and-forget)
+    try {
+      const adminItems = payload.items.map(i => ({
+        name: i.product_name,
+        size: i.size,
+        color: i.color,
+        quantity: i.quantity,
+        price: i.price,
+      }));
+      await supabase.functions.invoke('send-transactional-email', {
+        body: {
+          templateName: 'admin-order-notification',
+          recipientEmail: 'asana.wear@yandex.ru',
+          idempotencyKey: `admin-order-${payload.order_number}`,
+          templateData: {
+            orderNumber: payload.order_number,
+            customerName: payload.customer_name,
+            customerEmail: payload.customer_email,
+            customerPhone: payload.customer_phone,
+            items: adminItems,
+            totalPrice: payload.total_price,
+            deliveryPrice: payload.delivery_price,
+            deliveryMethod: payload.delivery_method,
+            city: payload.city,
+            address: payload.address,
+            paymentMethod: payload.payment_method,
+            discountAmount: payload.discount_amount,
+            promoCode: payload.promo_code || null,
+          },
+        },
+      });
+    } catch (adminEmailErr) {
+      console.error('Admin email notification error:', adminEmailErr);
+    }
+
+    // 7. Send Telegram notification (fire-and-forget)
     try {
       const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
       const TELEGRAM_API_KEY = Deno.env.get('TELEGRAM_API_KEY');
