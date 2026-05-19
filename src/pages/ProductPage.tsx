@@ -1,22 +1,23 @@
-import { useState, lazy, Suspense } from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Heart, ShoppingBag, Ruler, RotateCcw, Image } from 'lucide-react';
+import { Heart, ShoppingBag } from 'lucide-react';
 import { products } from '@/data/products';
 import { useCart } from '@/context/CartContext';
 import { useFavorites } from '@/context/FavoritesContext';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 import ProductCard from '@/components/ProductCard';
 import ProductImageSpin from '@/components/ProductImageSpin';
 import ComboRecommendation from '@/components/ComboRecommendation';
 import { cn } from '@/lib/utils';
-import { toast } from 'sonner';
-import { Skeleton } from '@/components/ui/skeleton';
 import SEO from '@/components/SEO';
 import { productLd, breadcrumbLd } from '@/lib/seo';
 import Breadcrumbs from '@/components/Breadcrumbs';
-
-const ProductViewer3D = lazy(() => import('@/components/ProductViewer3D'));
 
 const categoryNames: Record<string, string> = {
   leggings: 'Леггинсы',
@@ -27,27 +28,29 @@ const categoryNames: Record<string, string> = {
   longsleeves: 'Лонгсливы',
 };
 
-// Unified caption style — matches catalog category labels (uppercase, tracked, semibold)
 const labelClass = 'text-xs font-semibold uppercase tracking-[0.18em] text-foreground/80';
 const mutedLabelClass = 'text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground';
 
 const ProductPage = () => {
   const { id } = useParams();
-  const product = products.find(p => p.id === id);
+  const baseProduct = products.find(p => p.id === id);
   const { addItem } = useCart();
   const { toggleFavorite, isFavorite } = useFavorites();
 
+  // Color variants in the same group (including this product)
+  const colorVariants = baseProduct?.colorGroup
+    ? products.filter(p => p.colorGroup === baseProduct.colorGroup)
+    : baseProduct ? [baseProduct] : [];
+
+  // Local state: currently displayed product variant
+  const [currentId, setCurrentId] = useState(id);
+  const product = products.find(p => p.id === currentId) || baseProduct;
+
   const [selectedSize, setSelectedSize] = useState(product?.sizes[0]);
-  const [view3D, setView3D] = useState(false);
 
   if (!product) return <div className="container py-20 text-center">Товар не найден</div>;
 
   const productColor = product.colors[0];
-
-  // Find other color variants of the same colorGroup
-  const otherColors = product.colorGroup
-    ? products.filter(p => p.colorGroup === product.colorGroup && p.id !== product.id)
-    : [];
 
   const related = products
     .filter(p => p.category === product.category && p.id !== product.id && p.colorGroup !== product.colorGroup)
@@ -83,90 +86,64 @@ const ProductPage = () => {
       />
       <Breadcrumbs items={crumbs} className="mb-6" />
       <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
-        {/* Gallery / 3D Viewer */}
+        {/* Gallery */}
         <div>
-          {(() => {
-            const spinImgs = product.spinImages;
-            const mainImg = product.images[0];
-            const currentModelUrl = product.modelUrl;
-            if (currentModelUrl && view3D) {
-              const isRashguard = product.category === 'rashguards';
-              return (
-                <Suspense fallback={<Skeleton className="w-full aspect-square rounded-lg" />}>
-                  <ProductViewer3D modelUrl={currentModelUrl} autoRotate={!isRashguard} cameraPosition={isRashguard ? [0, 0.2, 3] : [0, 0, 3]} />
-                </Suspense>
-              );
-            } else if (spinImgs) {
-              return <ProductImageSpin images={spinImgs} />;
-            } else {
-              return (
-                <div className="aspect-square rounded-lg overflow-hidden bg-muted">
-                  <img src={mainImg} alt={product.name} className="w-full h-full object-cover" loading="lazy" decoding="async" />
-                </div>
-              );
-            }
-          })()}
-          {product.modelUrl && (
-            <div className="flex gap-2 mt-3 justify-center">
-              <Button variant={view3D ? 'default' : 'outline'} size="sm" onClick={() => setView3D(true)} className="text-xs font-semibold uppercase tracking-[0.18em]">
-                <RotateCcw className="h-4 w-4 mr-1" /> 3D
-              </Button>
-              <Button variant={!view3D ? 'default' : 'outline'} size="sm" onClick={() => setView3D(false)} className="text-xs font-semibold uppercase tracking-[0.18em]">
-                <Image className="h-4 w-4 mr-1" /> Фото
-              </Button>
+          {product.spinImages ? (
+            <ProductImageSpin key={product.id} images={product.spinImages} />
+          ) : (
+            <div className="aspect-square rounded-lg overflow-hidden bg-muted">
+              <img src={product.images[0]} alt={product.name} className="w-full h-full object-cover" loading="lazy" decoding="async" />
             </div>
           )}
         </div>
 
         {/* Info */}
         <div>
-          <p className={cn(mutedLabelClass, 'mb-2')}>{categoryNames[product.category] || product.category}</p>
-          <h1 className="text-3xl md:text-4xl font-serif uppercase tracking-[0.06em] mb-4">{product.name}</h1>
+          <h1 className="text-3xl md:text-4xl font-serif uppercase tracking-[0.06em] leading-[0.95] mb-4">
+            {product.name}
+          </h1>
           <div className="flex items-center gap-3 mb-6">
-            <span className="text-2xl font-semibold">{formatPrice(product.price)}</span>
-            {product.oldPrice && <span className="text-lg text-muted-foreground line-through">{formatPrice(product.oldPrice)}</span>}
+            <span className="text-base md:text-2xl font-semibold">{formatPrice(product.price)}</span>
+            {product.oldPrice && (
+              <span className="text-xs md:text-lg text-muted-foreground line-through">
+                {formatPrice(product.oldPrice)}
+              </span>
+            )}
           </div>
 
-          <p className="text-sm text-muted-foreground leading-relaxed mb-8">{product.description}</p>
+          {/* Color swap */}
+          {colorVariants.length > 1 && (
+            <div className="mb-6">
+              <p className={cn(labelClass, 'mb-3')}>Цвет: {productColor.name}</p>
+              <div className="flex flex-wrap gap-2">
+                {colorVariants.map(v => {
+                  const c = v.colors[0];
+                  const active = v.id === product.id;
+                  return (
+                    <button
+                      key={v.id}
+                      onClick={() => {
+                        setCurrentId(v.id);
+                        setSelectedSize(v.sizes[0]);
+                        window.history.replaceState(null, '', `/product/${v.id}`);
+                      }}
+                      title={c.name}
+                      aria-label={c.name}
+                      className={cn(
+                        'w-9 h-9 rounded-full border-2 transition-all',
+                        active ? 'border-foreground scale-110' : 'border-border hover:border-foreground/60'
+                      )}
+                      style={{ backgroundColor: c.hex }}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+          )}
 
           {/* Size */}
           <div className="mb-6">
-            <div className="flex items-center justify-between mb-3">
-              <p className={labelClass}>Размер: {selectedSize}</p>
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button variant="ghost" size="sm" className="text-xs font-semibold uppercase tracking-[0.18em] h-8 px-2">
-                    <Ruler className="h-4 w-4 mr-1" />Таблица размеров
-                  </Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle className="uppercase tracking-[0.06em]">Таблица размеров</DialogTitle>
-                  </DialogHeader>
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr className="border-b">
-                        <th className={cn(mutedLabelClass, 'py-2 text-left')}>Размер</th>
-                        <th className={mutedLabelClass}>Грудь</th>
-                        <th className={mutedLabelClass}>Талия</th>
-                        <th className={mutedLabelClass}>Бёдра</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {[
-                        ['XS-S', '82-86', '62-66', '88-92'],
-                        ['M-L', '90-94', '70-74', '96-100'],
-                      ].map(([s, ...v]) => (
-                        <tr key={s} className="border-b">
-                          <td className="py-3 font-medium">{s}</td>
-                          {v.map((x, i) => <td key={i} className="text-center">{x}</td>)}
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </DialogContent>
-              </Dialog>
-            </div>
+            <p className={cn(labelClass, 'mb-3')}>Размер: {selectedSize}</p>
             <div className="flex gap-2">
               {product.sizes.map(s => (
                 <Button
@@ -188,12 +165,7 @@ const ProductPage = () => {
               size="lg"
               className="flex-1 text-xs font-semibold uppercase tracking-[0.18em]"
               onClick={() => {
-                if (selectedSize) {
-                  addItem(product, selectedSize, productColor);
-                  toast.success(`${product.name} добавлен в корзину`, {
-                    description: selectedSize,
-                  });
-                }
+                if (selectedSize) addItem(product, selectedSize, productColor);
               }}
             >
               <ShoppingBag className="h-5 w-5 mr-2" /> Добавить в корзину
@@ -203,43 +175,74 @@ const ProductPage = () => {
             </Button>
           </div>
 
-          {/* Other colors */}
-          {otherColors.length > 0 && (
-            <div className="border-t pt-6 mb-6">
-              <p className={cn(labelClass, 'mb-3')}>Смотрите в другом цвете</p>
-              <div className="flex flex-wrap gap-3">
-                {otherColors.map(p => (
-                  <a
-                    key={p.id}
-                    href={`/product/${p.id}`}
-                    className="group flex items-center gap-2 border border-border rounded-md px-3 py-2 hover:bg-foreground/5 transition-colors"
-                    title={p.colors[0].name}
-                  >
-                    <span
-                      className="w-5 h-5 rounded-full border border-border"
-                      style={{ backgroundColor: p.colors[0].hex }}
-                    />
-                    <span className="text-xs font-semibold uppercase tracking-[0.18em] text-foreground/80 group-hover:text-foreground">
-                      {p.colors[0].name}
-                    </span>
-                  </a>
-                ))}
-              </div>
-            </div>
-          )}
+          {/* Collapsible sections */}
+          <Accordion type="multiple" className="border-t">
+            <AccordionItem value="description">
+              <AccordionTrigger className={cn(labelClass, 'py-4')}>
+                Описание
+              </AccordionTrigger>
+              <AccordionContent>
+                <p className="text-sm text-muted-foreground leading-relaxed">{product.description}</p>
+              </AccordionContent>
+            </AccordionItem>
 
-          {/* Specs */}
-          <div className="border-t pt-6">
-            <h3 className={cn(labelClass, 'mb-4')}>Характеристики</h3>
-            <dl className="space-y-2">
-              {Object.entries(product.specs).map(([k, v]) => (
-                <div key={k} className="flex text-sm">
-                  <dt className="w-40 text-muted-foreground">{k}</dt>
-                  <dd>{v}</dd>
-                </div>
-              ))}
-            </dl>
-          </div>
+            <AccordionItem value="specs">
+              <AccordionTrigger className={cn(labelClass, 'py-4')}>
+                Характеристики
+              </AccordionTrigger>
+              <AccordionContent>
+                <dl className="space-y-2">
+                  {Object.entries(product.specs).map(([k, v]) => (
+                    <div key={k} className="flex text-sm">
+                      <dt className="w-40 text-muted-foreground">{k}</dt>
+                      <dd>{v}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="sizes">
+              <AccordionTrigger className={cn(labelClass, 'py-4')}>
+                Размерная сетка
+              </AccordionTrigger>
+              <AccordionContent>
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b">
+                      <th className={cn(mutedLabelClass, 'py-2 text-left')}>Размер</th>
+                      <th className={mutedLabelClass}>Обхват груди</th>
+                      <th className={mutedLabelClass}>Обхват талии</th>
+                      <th className={mutedLabelClass}>Обхват бёдер</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {[
+                      ['XS-S', '82-86', '62-66', '88-92'],
+                      ['M-L', '90-94', '70-74', '96-100'],
+                    ].map(([s, ...v]) => (
+                      <tr key={s} className="border-b">
+                        <td className="py-3 font-medium">{s}</td>
+                        {v.map((x, i) => <td key={i} className="text-center">{x}</td>)}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="delivery">
+              <AccordionTrigger className={cn(labelClass, 'py-4')}>
+                Доставка и возврат
+              </AccordionTrigger>
+              <AccordionContent>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  Доставка по России курьером и в пункты выдачи 2–5 дней.
+                  Возврат и обмен в течение 14 дней.
+                </p>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </div>
       </div>
 
