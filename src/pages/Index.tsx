@@ -5,7 +5,7 @@ import { products, categories } from '@/data/products';
 import ProductCard from '@/components/ProductCard';
 import SEO from '@/components/SEO';
 import { organizationLd, websiteLd } from '@/lib/seo';
-import heroImg from '@/assets/hero_collage_new.jpg';
+import heroImg from '@/assets/hero_collage.jpg';
 import shopTheLook from '@/assets/shop_the_look.webp';
 
 // Простой детерминированный PRNG (mulberry32) — одинаковый сид → одинаковая последовательность
