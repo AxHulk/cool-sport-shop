@@ -25,6 +25,7 @@ import PaymentSecurity from "./pages/PaymentSecurity";
 import Unsubscribe from "./pages/Unsubscribe";
 import NotFound from "./pages/NotFound";
 import CookieBanner from "./components/CookieBanner";
+import DiscountPopup from "./components/DiscountPopup";
 import { lazy, Suspense } from "react";
 
 const AdminLayout = lazy(() => import("./components/admin/AdminLayout"));
@@ -91,6 +92,7 @@ const App = () => (
                     <Footer />
                     <CartDrawer />
                     <CookieBanner />
+                    <DiscountPopup />
                   </>
                 } />
               </Routes>
