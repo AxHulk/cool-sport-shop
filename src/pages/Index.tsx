@@ -73,9 +73,12 @@ const Index = () => {
       {/* Featured Products */}
       <section className="container py-16">
         <div className="flex items-center justify-between mb-10">
-          <h2 className="text-2xl md:text-3xl font-semibold uppercase tracking-[0.22em]">Хиты и новинки</h2>
+          <h2 className="text-2xl md:text-3xl font-semibold uppercase tracking-[0.22em]">Бестселлеры</h2>
           <Button variant="ghost" asChild>
-            <Link to="/catalog" className="text-xs uppercase tracking-[0.22em]">Все товары <ArrowRight className="ml-1 h-4 w-4" /></Link>
+            <Link to="/catalog" className="text-xs uppercase tracking-[0.22em] inline-flex items-center">
+              <span className="hidden md:inline">Смотреть товары</span>
+              <ArrowRight className="md:ml-1 h-4 w-4" />
+            </Link>
           </Button>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
