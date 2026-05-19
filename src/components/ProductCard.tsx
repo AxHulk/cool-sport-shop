@@ -130,7 +130,7 @@ const ProductCard = ({ product }: { product: Product }) => {
       <div className="mt-3 text-center">
         <Link
           to={`/product/${product.id}`}
-          className="block text-xs uppercase tracking-wider text-foreground/80 hover:text-foreground transition-colors leading-[0.95]"
+          className="block text-xs uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors"
         >
           {product.name}
         </Link>
