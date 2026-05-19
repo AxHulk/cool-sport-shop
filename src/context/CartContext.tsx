@@ -71,7 +71,6 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       }
       return [...prev, { product, size, color, quantity: 1 }];
     });
-    setIsCartOpen(true);
   };
 
   const removeItem = (productId: string, size: ProductSize, colorName: string) => {

@@ -6,7 +6,6 @@ import { useFavorites } from '@/context/FavoritesContext';
 import { useCart } from '@/context/CartContext';
 import { cn } from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
-import { toast } from 'sonner';
 
 const ProductCard = ({ product }: { product: Product }) => {
   const { toggleFavorite, isFavorite } = useFavorites();
@@ -18,7 +17,6 @@ const ProductCard = ({ product }: { product: Product }) => {
     e.preventDefault();
     e.stopPropagation();
     addItem(product, size, defaultColor);
-    toast.success(`${product.name} (${size}) добавлен в корзину`);
   };
   const [imgLoaded, setImgLoaded] = useState(false);
   const [frame, setFrame] = useState(0);
@@ -29,15 +27,21 @@ const ProductCard = ({ product }: { product: Product }) => {
 
   const formatPrice = (p: number) => p.toLocaleString('ru-RU') + ' ₽';
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const updateFrameFromX = (clientX: number, target: HTMLElement) => {
     if (total <= 1) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
+    const rect = target.getBoundingClientRect();
+    const x = clientX - rect.left;
     const idx = Math.floor((x / rect.width) * total);
     setFrame(Math.max(0, Math.min(total - 1, idx)));
   };
 
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) =>
+    updateFrameFromX(e.clientX, e.currentTarget);
   const handleMouseLeave = () => setFrame(0);
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) =>
+    updateFrameFromX(e.touches[0].clientX, e.currentTarget);
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) =>
+    updateFrameFromX(e.touches[0].clientX, e.currentTarget);
 
   return (
     <div className="group">
@@ -46,6 +50,8 @@ const ProductCard = ({ product }: { product: Product }) => {
         className="relative"
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
       >
         {/* Tick indicators above image */}
         {total > 1 && (
@@ -65,7 +71,6 @@ const ProductCard = ({ product }: { product: Product }) => {
         <Link to={`/product/${product.id}`} className="block">
           <div className="aspect-[3/4] overflow-hidden bg-muted/40 relative">
             {!imgLoaded && <Skeleton className="absolute inset-0" />}
-            {/* Render all images stacked, toggle visibility — eliminates flicker on hover */}
             {images.map((src, i) => (
               <img
                 key={src + i}
@@ -106,7 +111,6 @@ const ProductCard = ({ product }: { product: Product }) => {
           <Heart className={cn('h-5 w-5 text-foreground', fav && 'fill-accent text-accent')} />
         </button>
 
-        {/* Quick Add overlay — appears on hover (desktop only) */}
         <div className="hidden md:flex absolute bottom-3 left-3 right-3 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 bg-foreground/85 text-background backdrop-blur-sm flex-col items-center gap-2 py-3 px-3 pointer-events-none group-hover:pointer-events-auto">
           <span className="text-[10px] uppercase tracking-[0.22em] font-semibold">Быстрое добавление:</span>
           <div className="flex gap-2 w-full justify-center">
@@ -123,17 +127,17 @@ const ProductCard = ({ product }: { product: Product }) => {
         </div>
       </div>
 
-      <div className="mt-4 text-center">
+      <div className="mt-3 text-center">
         <Link
           to={`/product/${product.id}`}
-          className="block text-xs uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors"
+          className="block text-xs uppercase tracking-wider text-foreground/80 hover:text-foreground transition-colors leading-[0.95]"
         >
           {product.name}
         </Link>
         <div className="mt-1 flex items-center justify-center gap-2">
-          <span className="text-sm font-semibold">{formatPrice(product.price)}</span>
+          <span className="text-xs md:text-sm font-semibold">{formatPrice(product.price)}</span>
           {product.oldPrice && (
-            <span className="text-xs text-muted-foreground line-through">
+            <span className="text-[10px] md:text-xs text-muted-foreground line-through">
               {formatPrice(product.oldPrice)}
             </span>
           )}
