@@ -4,7 +4,7 @@ import { Product, ProductColor, products } from '@/data/products';
 import { ComboSet, calculateComboPrice, getDefaultProductForCategory, getRelevantCombos } from '@/data/comboSets';
 import { useCart } from '@/context/CartContext';
 import { Button } from '@/components/ui/button';
-import { toast } from 'sonner';
+
 
 interface ComboRecommendationProps {
   currentProduct: Product;
@@ -110,9 +110,6 @@ const ComboCard = ({ combo, currentProduct, addItem }: ComboCardProps) => {
     combo.categorySlots.forEach(slot => {
       const sel = selections[slot.category];
       if (sel) addItem(sel.product, sel.product.sizes[0], sel.color);
-    });
-    toast.success(`Комплект «${combo.name}» добавлен в корзину`, {
-      description: `Скидка ${combo.discountPercent}% — вы экономите ${formatPrice(savings)}`,
     });
   };
 
