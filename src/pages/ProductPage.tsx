@@ -175,6 +175,11 @@ const ProductPage = () => {
             </Button>
           </div>
 
+          {/* Short description (mobile only, under cart button) */}
+          <p className="md:hidden text-sm text-muted-foreground leading-snug mb-6 -mt-2">
+            {product.description}
+          </p>
+
           {/* Collapsible sections */}
           <Accordion type="multiple" className="border-t">
             <AccordionItem value="description">
