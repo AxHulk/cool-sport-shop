@@ -112,7 +112,7 @@ const ProductCard = ({ product }: { product: Product }) => {
         </button>
 
         <div className="hidden md:flex absolute bottom-3 left-3 right-3 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 bg-foreground/85 text-background backdrop-blur-sm flex-col items-center gap-2 py-3 px-3 pointer-events-none group-hover:pointer-events-auto">
-          <span className="text-[10px] uppercase tracking-[0.22em] font-semibold">Быстрое добавление:</span>
+          <span className="text-[10px] uppercase tracking-[0.22em] font-semibold">Добавить в корзину:</span>
           <div className="flex gap-2 w-full justify-center">
             {product.sizes.map((size) => (
               <button

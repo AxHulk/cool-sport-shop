@@ -35,12 +35,12 @@ const Footer = () => {
       <div className="container py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
         <div>
           <img src={logo} alt="āsana" className="h-6 mb-4 brightness-0 invert" />
-          <p className="text-sm opacity-80 mb-3">Премиальная спортивная одежда для женщин, которые выбирают стиль и комфорт.</p>
+          <p className="text-sm opacity-80 mb-3">for those who value balance &amp; well-being</p>
           <div className="text-xs opacity-70 space-y-1 mt-4">
             <p>ИП Стрельникова Анастасия Сергеевна</p>
             <p>ИНН 910224027786 · ОГРНИП 324911200048002</p>
-            <p>295001, г. Симферополь, ул. Студенческая, д. 25</p>
-            <p>Тел.: +7 (978) 77-69-299</p>
+            <p>295001, г. Симферополь</p>
+            <p>Тел.: +7 (978) 097-57-99</p>
             <p>Email: asana.wear@yandex.ru</p>
           </div>
         </div>
