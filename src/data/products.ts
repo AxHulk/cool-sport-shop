@@ -146,7 +146,7 @@ export const products: Product[] = [
   // --- РАШГАРДЫ ---
   {
     id: '9-black',
-    name: 'Рашгард на молнии',
+    name: 'Рашгард black',
     category: 'rashguards',
     price: 7600,
     images: [blackJacket1, blackJacket2, blackJacket3],
@@ -162,7 +162,7 @@ export const products: Product[] = [
   },
   {
     id: '9-brown',
-    name: 'Рашгард на молнии',
+    name: 'Рашгард chocolate',
     category: 'rashguards',
     price: 7600,
     images: [brownJacket3, brownJacket2, brownJacket1],
@@ -177,7 +177,7 @@ export const products: Product[] = [
   },
   {
     id: '9-ivory',
-    name: 'Рашгард на молнии',
+    name: 'Рашгард ivory',
     category: 'rashguards',
     price: 7600,
     images: [ivoryJacket1, ivoryJacket2, ivoryJacket3],
@@ -194,7 +194,7 @@ export const products: Product[] = [
   // --- ЛЕГГИНСЫ ---
   {
     id: '13-black',
-    name: 'Леггинсы компрессионные',
+    name: 'Леггинсы black',
     category: 'leggings',
     price: 6500,
     images: [blackLeggings1, blackLeggings2, blackLeggings3],
@@ -209,7 +209,7 @@ export const products: Product[] = [
   },
   {
     id: '13-blue',
-    name: 'Леггинсы компрессионные',
+    name: 'Леггинсы sky',
     category: 'leggings',
     price: 6500,
     images: [blueLeggings1, blueLeggings2, blueLeggings3],
@@ -224,7 +224,7 @@ export const products: Product[] = [
   },
   {
     id: '14',
-    name: 'Леггинсы компрессионные',
+    name: 'Леггинсы chocolate',
     category: 'leggings',
     price: 6500,
     images: [brownLeggings3, brownLeggings2, brownLeggings1],
@@ -239,7 +239,7 @@ export const products: Product[] = [
   },
   {
     id: '15',
-    name: 'Леггинсы компрессионные',
+    name: 'Леггинсы ivory',
     category: 'leggings',
     price: 6500,
     images: [ivoryLeggings1, ivoryLeggings2, ivoryLeggings3, ivoryLeggings4],
@@ -256,7 +256,7 @@ export const products: Product[] = [
   // --- ТОПЫ ---
   {
     id: '10-black',
-    name: 'Топ спортивный',
+    name: 'Топ black',
     category: 'tops',
     price: 5500,
     images: [braFront, braBack],
@@ -271,7 +271,7 @@ export const products: Product[] = [
   },
   {
     id: '10-blue',
-    name: 'Топ спортивный',
+    name: 'Топ sky',
     category: 'tops',
     price: 5500,
     images: [blueBraFront, blueBraBack],
@@ -286,7 +286,7 @@ export const products: Product[] = [
   },
   {
     id: '11',
-    name: 'Топ спортивный с перекрёстными бретелями',
+    name: 'Топ chocolate',
     category: 'tops',
     price: 5500,
     images: [brownBraFront, brownBraBack, brownBraThird],
@@ -341,7 +341,7 @@ export const products: Product[] = [
   // --- СУМКИ ---
   {
     id: '16-blue',
-    name: 'Сумка спортивная',
+    name: 'Сумка спортивная sky blue',
     category: 'bags',
     price: 6900,
     images: [bagBlueFront, bagBlueBack, bagBlueThird],
@@ -356,7 +356,7 @@ export const products: Product[] = [
   },
   {
     id: '16-black',
-    name: 'Сумка спортивная',
+    name: 'Сумка спортивная black',
     category: 'bags',
     price: 6900,
     images: [bagBlackBack, bagBlackFront],
@@ -373,7 +373,7 @@ export const products: Product[] = [
   // --- ЛОНГСЛИВЫ ---
   {
     id: '17',
-    name: 'Лонгслив «Радость жизни»',
+    name: 'Лонгслив напоминание',
     category: 'longsleeves',
     price: 7600,
     images: [longsleeveJoy1, longsleeveJoy2, longsleeveJoy3],
@@ -387,7 +387,7 @@ export const products: Product[] = [
   },
   {
     id: '18',
-    name: 'Лонгслив «Ты — энергия!»',
+    name: 'Лонгслив энергия',
     category: 'longsleeves',
     price: 7600,
     images: [longsleeveEnergy1, longsleeveEnergy2, longsleeveEnergy3],

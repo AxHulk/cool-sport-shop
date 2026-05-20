@@ -6,7 +6,7 @@ const Contacts = () => (
   <div className="container py-12 max-w-3xl mx-auto">
     <SEO
       title="Контакты āsana"
-      description="Телефон +7 (978) 77-69-299, email asana.wear@yandex.ru. Симферополь, ул. Студенческая, 25. Ежедневно с 9:00 до 21:00."
+      description="Телефон +7 (978) 097-57-99, email asana.wear@yandex.ru. Симферополь. Ежедневно с 9:00 до 21:00."
       jsonLd={organizationLd}
     />
     <h1 className="text-4xl font-serif mb-8 text-center">Контакты</h1>
@@ -17,7 +17,7 @@ const Contacts = () => (
         <Phone className="h-6 w-6 text-accent shrink-0" />
         <div>
           <h3 className="font-semibold">Телефон</h3>
-          <p className="text-sm font-medium">+7 (978) 77-69-299</p>
+          <p className="text-sm font-medium">+7 (978) 097-57-99</p>
           <p className="text-xs text-muted-foreground">Ежедневно с 9:00 до 21:00</p>
         </div>
       </div>
@@ -38,7 +38,7 @@ const Contacts = () => (
           ['', 'Индивидуальный предприниматель Стрельникова Анастасия Сергеевна'],
           ['ИНН', '910224027786'],
           ['ОГРНИП', '324911200048002'],
-          ['Юридический адрес', '295001, Россия, Респ. Крым, г. Симферополь, ул. Студенческая, д. 25'],
+          ['Юридический адрес', '295001, Россия, Респ. Крым, г. Симферополь'],
           ['Расчётный счёт', '40802810000006279207'],
           ['Банк', 'АО «Тинькофф Банк»'],
           ['БИК', '044525974'],
