@@ -69,7 +69,7 @@ const ProductCard = ({ product }: { product: Product }) => {
         )}
 
         <Link to={`/product/${product.id}`} className="block">
-          <div className="aspect-[3/4] overflow-hidden bg-muted/40 relative">
+          <div className="aspect-[2/3] overflow-hidden relative">
             {!imgLoaded && <Skeleton className="absolute inset-0" />}
             {images.map((src, i) => (
               <img

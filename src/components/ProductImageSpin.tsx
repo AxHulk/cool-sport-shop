@@ -72,7 +72,7 @@ const ProductImageSpin = ({ images }: ProductImageSpinProps) => {
   return (
     <div
       className={cn(
-        "relative w-full aspect-square rounded-lg overflow-hidden select-none",
+        "relative w-full aspect-[2/3] overflow-hidden select-none",
         zoom > 1 ? (isPanning ? "cursor-grabbing" : "cursor-grab") : "cursor-default"
       )}
       onPointerDown={handlePointerDown}
@@ -81,18 +81,10 @@ const ProductImageSpin = ({ images }: ProductImageSpinProps) => {
       onPointerLeave={handlePointerUp}
       onWheel={handleWheel}
     >
-      {/* Blurred backdrop — same image, softens edges */}
-      <img
-        src={images[currentFrame]}
-        aria-hidden
-        className="absolute inset-0 w-full h-full object-cover scale-110 blur-2xl brightness-95"
-        draggable={false}
-      />
-
       <img
         src={images[currentFrame]}
         alt="Product view"
-        className="relative z-10 w-full h-full object-contain transition-transform duration-200"
+        className="relative z-10 w-full h-full object-cover transition-transform duration-200"
         style={{
           transform: `scale(${zoom}) translate(${pan.x / zoom}px, ${pan.y / zoom}px)`,
         }}
