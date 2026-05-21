@@ -84,7 +84,7 @@ const ProductImageSpin = ({ images }: ProductImageSpinProps) => {
       <img
         src={images[currentFrame]}
         alt="Product view"
-        className="w-full h-full object-contain transition-transform duration-200"
+        className="w-full h-full object-cover transition-transform duration-200"
         style={{
           transform: `scale(${zoom}) translate(${pan.x / zoom}px, ${pan.y / zoom}px)`,
         }}
