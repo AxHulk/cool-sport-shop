@@ -24,6 +24,12 @@ import blackTopThird from '@/assets/black_top_3.webp';
 import whiteTopFront from '@/assets/white_top_1.webp';
 import whiteTopBack from '@/assets/white_top_2.webp';
 import whiteTopThird from '@/assets/white_top_3.webp';
+import tankIvory1 from '@/assets/tank_ivory_1.jpg';
+import tankIvory2 from '@/assets/tank_ivory_2.jpg';
+import tankIvory3 from '@/assets/tank_ivory_3.jpg';
+import tankIvory4 from '@/assets/tank_ivory_4.jpg';
+import tankIvory5 from '@/assets/tank_ivory_5.jpg';
+import tankIvory6 from '@/assets/tank_ivory_6.jpg';
 import blackLeggings1 from '@/assets/black_leggings_1.webp';
 import blackLeggings2 from '@/assets/black_leggings_2.webp';
 import blackLeggings3 from '@/assets/black_leggings_3.webp';
@@ -327,8 +333,8 @@ export const products: Product[] = [
     name: 'Майка моделирующая на тонких бретелях',
     category: 'tanks',
     price: 5500,
-    images: [whiteTopFront, whiteTopBack, whiteTopThird],
-    spinImages: [whiteTopFront, whiteTopBack, whiteTopThird],
+    images: [tankIvory1, tankIvory2, tankIvory3, tankIvory4, tankIvory5, tankIvory6],
+    spinImages: [tankIvory1, tankIvory2, tankIvory3, tankIvory4, tankIvory5, tankIvory6],
     modelUrl: '/models/ivory_top.glb',
     colors: [{ name: 'Айвори', hex: '#f0e6d3' }],
     sizes: allSizes,
