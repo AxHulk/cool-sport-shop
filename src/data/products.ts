@@ -61,6 +61,16 @@ import longsleeveJoy3 from '@/assets/longsleeve_ivory_3.webp';
 import longsleeveEnergy1 from '@/assets/longsleeve_energy_1.webp';
 import longsleeveEnergy2 from '@/assets/longsleeve_energy_2.webp';
 import longsleeveEnergy3 from '@/assets/longsleeve_energy_3.webp';
+import topChocolate1 from '@/assets/top_chocolate_1.webp';
+import topChocolate2 from '@/assets/top_chocolate_2.webp';
+import topChocolate3 from '@/assets/top_chocolate_3.webp';
+import topChocolate4 from '@/assets/top_chocolate_4.webp';
+import topChocolate5 from '@/assets/top_chocolate_5.webp';
+import topSky1 from '@/assets/top_sky_1.webp';
+import topSky2 from '@/assets/top_sky_2.webp';
+import topSky3 from '@/assets/top_sky_3.webp';
+import topSky4 from '@/assets/top_sky_4.webp';
+import topSky5 from '@/assets/top_sky_5.webp';
 
 export type ProductCategory = 'leggings' | 'tops' | 'tanks' | 'rashguards' | 'bags' | 'longsleeves';
 export type ProductSize = 'XS-S' | 'M-L';
@@ -287,10 +297,10 @@ export const products: Product[] = [
     name: 'Топ sky',
     category: 'tops',
     price: 5500,
-    images: [blueBraFront, blueBraBack],
-    spinImages: [blueBraFront, blueBraBack],
+    images: [topSky1, topSky4, topSky2, topSky3, topSky5],
+    spinImages: [topSky1, topSky4, topSky2, topSky3, topSky5],
     modelUrl: '/models/blue_bra.glb',
-    colors: [{ name: 'Голубой', hex: '#8bb8e8' }],
+    colors: [{ name: 'Голубой', hex: '#bcd4ec' }],
     sizes: allSizes,
     description: braDesc,
     specs: braSpecs,
@@ -302,8 +312,8 @@ export const products: Product[] = [
     name: 'Топ chocolate',
     category: 'tops',
     price: 5500,
-    images: [brownBraFront, brownBraBack, brownBraThird],
-    spinImages: [brownBraFront, brownBraBack, brownBraThird],
+    images: [topChocolate2, topChocolate3, topChocolate4, topChocolate1, topChocolate5],
+    spinImages: [topChocolate2, topChocolate3, topChocolate4, topChocolate1, topChocolate5],
     modelUrl: '/models/brown_bra.glb',
     colors: [{ name: 'Шоколад', hex: '#3e2723' }],
     sizes: allSizes,
