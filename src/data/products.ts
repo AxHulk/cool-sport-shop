@@ -2,34 +2,35 @@ import catLongsleeves from '@/assets/longsleeve_ivory_1.webp';
 import catLeggingsHero from '@/assets/cat_leggings_hero.webp';
 import catRashguardsHero from '@/assets/cat_rashguards_hero.webp';
 import catTopsHero from '@/assets/cat_tops_hero.webp';
-import blackJacket1 from '@/assets/black_jacket_1.webp';
-import blackJacket2 from '@/assets/black_jacket_2.webp';
-import blackJacket3 from '@/assets/black_jacket_3.webp';
-import brownJacket1 from '@/assets/brown_jacket_1.webp';
-import brownJacket2 from '@/assets/brown_jacket_2.webp';
-import brownJacket3 from '@/assets/brown_jacket_3.webp';
-import ivoryJacket1 from '@/assets/ivory_jacket_1.webp';
-import ivoryJacket2 from '@/assets/ivory_jacket_2.webp';
-import ivoryJacket3 from '@/assets/ivory_jacket_3.webp';
-import braFront from '@/assets/black_bra_1.webp';
-import braBack from '@/assets/black_bra_2.webp';
-import blueBraFront from '@/assets/blue_bra_1.webp';
-import blueBraBack from '@/assets/blue_bra_2.webp';
-import brownBraFront from '@/assets/brown_bra_1.webp';
-import brownBraBack from '@/assets/brown_bra_2.webp';
-import brownBraThird from '@/assets/brown_bra_3.webp';
-import blackTopFront from '@/assets/black_top_1.webp';
-import blackTopBack from '@/assets/black_top_2.webp';
-import blackTopThird from '@/assets/black_top_3.webp';
-import whiteTopFront from '@/assets/white_top_1.webp';
-import whiteTopBack from '@/assets/white_top_2.webp';
-import whiteTopThird from '@/assets/white_top_3.webp';
-import tankIvory1 from '@/assets/tank_ivory_1.jpg';
-import tankIvory2 from '@/assets/tank_ivory_2.jpg';
-import tankIvory3 from '@/assets/tank_ivory_3.jpg';
-import tankIvory4 from '@/assets/tank_ivory_4.jpg';
-import tankIvory5 from '@/assets/tank_ivory_5.jpg';
-import tankIvory6 from '@/assets/tank_ivory_6.jpg';
+import rashguardBlack1 from '@/assets/rashguard_black_1.webp';
+import rashguardBlack2 from '@/assets/rashguard_black_2.webp';
+import rashguardBlack3 from '@/assets/rashguard_black_3.webp';
+import rashguardBlack4 from '@/assets/rashguard_black_4.webp';
+import rashguardBlack5 from '@/assets/rashguard_black_5.webp';
+import rashguardBlack6 from '@/assets/rashguard_black_6.webp';
+import rashguardChocolate1 from '@/assets/rashguard_chocolate_1.webp';
+import rashguardChocolate2 from '@/assets/rashguard_chocolate_2.webp';
+import rashguardChocolate3 from '@/assets/rashguard_chocolate_3.webp';
+import rashguardChocolate4 from '@/assets/rashguard_chocolate_4.webp';
+import rashguardChocolate5 from '@/assets/rashguard_chocolate_5.webp';
+import rashguardIvory1 from '@/assets/rashguard_ivory_1.webp';
+import rashguardIvory2 from '@/assets/rashguard_ivory_2.webp';
+import rashguardIvory3 from '@/assets/rashguard_ivory_3.webp';
+import rashguardIvory4 from '@/assets/rashguard_ivory_4.webp';
+import topBlack1 from '@/assets/top_black_1.webp';
+import topBlack2 from '@/assets/top_black_2.webp';
+import topBlack3 from '@/assets/top_black_3.webp';
+import topBlack4 from '@/assets/top_black_4.webp';
+import blackTank1 from '@/assets/black_tank_1.webp';
+import blackTank2 from '@/assets/black_tank_2.webp';
+import blackTank3 from '@/assets/black_tank_3.webp';
+import blackTank4 from '@/assets/black_tank_4.webp';
+import tankIvory1 from '@/assets/ivory_tank_1.webp';
+import tankIvory2 from '@/assets/ivory_tank_2.webp';
+import tankIvory3 from '@/assets/ivory_tank_3.webp';
+import tankIvory4 from '@/assets/ivory_tank_4.webp';
+import tankIvory5 from '@/assets/ivory_tank_5.webp';
+import tankIvory6 from '@/assets/ivory_tank_6.webp';
 import blackLeggings1 from '@/assets/black_leggings_1.webp';
 import blackLeggings2 from '@/assets/black_leggings_2.webp';
 import blackLeggings3 from '@/assets/black_leggings_3.webp';
@@ -40,6 +41,7 @@ import blueLeggings2 from '@/assets/blue_leggings_2.webp';
 import blueLeggings3 from '@/assets/blue_leggings_3.webp';
 import blueLeggings4 from '@/assets/blue_leggings_4.webp';
 import blueLeggings5 from '@/assets/blue_leggings_5.webp';
+import blueLeggings6 from '@/assets/blue_leggings_6.webp';
 import brownLeggings1 from '@/assets/brown_leggings_1.webp';
 import brownLeggings2 from '@/assets/brown_leggings_2.webp';
 import brownLeggings3 from '@/assets/brown_leggings_3.webp';
@@ -53,14 +55,22 @@ import ivoryLeggings5 from '@/assets/ivory_leggings_5.webp';
 import bagBlueFront from '@/assets/bag_blue_1.webp';
 import bagBlueBack from '@/assets/bag_blue_2.webp';
 import bagBlueThird from '@/assets/bag_blue_3.webp';
+import bagBlue4 from '@/assets/bag_blue_4.webp';
+import bagBlue5 from '@/assets/bag_blue_5.webp';
 import bagBlackFront from '@/assets/bag_black_1.webp';
 import bagBlackBack from '@/assets/bag_black_2.webp';
+import bagBlack3 from '@/assets/bag_black_3.webp';
+import bagBlack4 from '@/assets/bag_black_4.webp';
 import longsleeveJoy1 from '@/assets/longsleeve_ivory_1.webp';
 import longsleeveJoy2 from '@/assets/longsleeve_ivory_2.webp';
 import longsleeveJoy3 from '@/assets/longsleeve_ivory_3.webp';
+import longsleeveJoy4 from '@/assets/longsleeve_ivory_4.webp';
+import longsleeveJoy5 from '@/assets/longsleeve_ivory_5.webp';
+import longsleeveJoy6 from '@/assets/longsleeve_ivory_6.webp';
 import longsleeveEnergy1 from '@/assets/longsleeve_energy_1.webp';
 import longsleeveEnergy2 from '@/assets/longsleeve_energy_2.webp';
 import longsleeveEnergy3 from '@/assets/longsleeve_energy_3.webp';
+import longsleeveEnergy4 from '@/assets/longsleeve_energy_4.webp';
 import topChocolate1 from '@/assets/top_chocolate_1.webp';
 import topChocolate2 from '@/assets/top_chocolate_2.webp';
 import topChocolate3 from '@/assets/top_chocolate_3.webp';
@@ -99,7 +109,7 @@ export interface Product {
 export const categories = [
   { slug: 'leggings' as const, name: 'Леггинсы', image: catLeggingsHero },
   { slug: 'tops' as const, name: 'Топы', image: catTopsHero },
-  { slug: 'tanks' as const, name: 'Майки', image: blackTopFront },
+  { slug: 'tanks' as const, name: 'Майки', image: blackTank1 },
   { slug: 'rashguards' as const, name: 'Рашгарды', image: catRashguardsHero },
   { slug: 'bags' as const, name: 'Сумки', image: bagBlueFront },
   { slug: 'longsleeves' as const, name: 'Лонгсливы', image: catLongsleeves },
@@ -172,8 +182,8 @@ export const products: Product[] = [
     name: 'Рашгард black',
     category: 'rashguards',
     price: 7600,
-    images: [blackJacket1, blackJacket2, blackJacket3],
-    spinImages: [blackJacket1, blackJacket2, blackJacket3],
+    images: [rashguardBlack1, rashguardBlack2, rashguardBlack3, rashguardBlack4, rashguardBlack5, rashguardBlack6],
+    spinImages: [rashguardBlack1, rashguardBlack2, rashguardBlack3, rashguardBlack4, rashguardBlack5, rashguardBlack6],
     modelUrl: '/models/black_rashguard.glb',
     colors: [{ name: 'Чёрный', hex: '#1a1a1a' }],
     sizes: allSizes,
@@ -188,8 +198,8 @@ export const products: Product[] = [
     name: 'Рашгард chocolate',
     category: 'rashguards',
     price: 7600,
-    images: [brownJacket3, brownJacket2, brownJacket1],
-    spinImages: [brownJacket3, brownJacket2, brownJacket1],
+    images: [rashguardChocolate1, rashguardChocolate2, rashguardChocolate3, rashguardChocolate4, rashguardChocolate5],
+    spinImages: [rashguardChocolate1, rashguardChocolate2, rashguardChocolate3, rashguardChocolate4, rashguardChocolate5],
     modelUrl: '/models/brown_rashguard.glb',
     colors: [{ name: 'Шоколад', hex: '#3e2723' }],
     sizes: allSizes,
@@ -203,8 +213,8 @@ export const products: Product[] = [
     name: 'Рашгард ivory',
     category: 'rashguards',
     price: 7600,
-    images: [ivoryJacket1, ivoryJacket2, ivoryJacket3],
-    spinImages: [ivoryJacket1, ivoryJacket2, ivoryJacket3],
+    images: [rashguardIvory1, rashguardIvory2, rashguardIvory3, rashguardIvory4],
+    spinImages: [rashguardIvory1, rashguardIvory2, rashguardIvory3, rashguardIvory4],
     modelUrl: '/models/ivory_rashguard.glb',
     colors: [{ name: 'Айвори', hex: '#f0e6d3' }],
     sizes: allSizes,
@@ -235,8 +245,8 @@ export const products: Product[] = [
     name: 'Леггинсы sky',
     category: 'leggings',
     price: 6500,
-    images: [blueLeggings1, blueLeggings2, blueLeggings3, blueLeggings4, blueLeggings5],
-    spinImages: [blueLeggings1, blueLeggings2, blueLeggings3, blueLeggings4, blueLeggings5],
+    images: [blueLeggings1, blueLeggings2, blueLeggings3, blueLeggings4, blueLeggings5, blueLeggings6],
+    spinImages: [blueLeggings1, blueLeggings2, blueLeggings3, blueLeggings4, blueLeggings5, blueLeggings6],
     modelUrl: '/models/blue_leggings.glb',
     colors: [{ name: 'Голубой', hex: '#c7dcf7' }],
     sizes: allSizes,
@@ -282,8 +292,8 @@ export const products: Product[] = [
     name: 'Топ black',
     category: 'tops',
     price: 5500,
-    images: [braFront, braBack],
-    spinImages: [braFront, braBack],
+    images: [topBlack1, topBlack2, topBlack3, topBlack4],
+    spinImages: [topBlack1, topBlack2, topBlack3, topBlack4],
     modelUrl: '/models/black_bra.glb',
     colors: [{ name: 'Чёрный', hex: '#1a1a1a' }],
     sizes: allSizes,
@@ -335,8 +345,8 @@ export const products: Product[] = [
     name: 'Майка моделирующая на тонких бретелях',
     category: 'tanks',
     price: 5500,
-    images: [blackTopFront, blackTopBack, blackTopThird],
-    spinImages: [blackTopFront, blackTopBack, blackTopThird],
+    images: [blackTank1, blackTank2, blackTank3, blackTank4],
+    spinImages: [blackTank1, blackTank2, blackTank3, blackTank4],
     modelUrl: '/models/black_top.glb',
     colors: [{ name: 'Чёрный', hex: '#1a1a1a' }],
     sizes: allSizes,
@@ -367,8 +377,8 @@ export const products: Product[] = [
     name: 'Сумка спортивная sky blue',
     category: 'bags',
     price: 6900,
-    images: [bagBlueFront, bagBlueBack, bagBlueThird],
-    spinImages: [bagBlueFront, bagBlueBack, bagBlueThird],
+    images: [bagBlueFront, bagBlueBack, bagBlueThird, bagBlue4, bagBlue5],
+    spinImages: [bagBlueFront, bagBlueBack, bagBlueThird, bagBlue4, bagBlue5],
     modelUrl: '/models/blue_bag.glb',
     colors: [{ name: 'Голубой', hex: '#c7dcf7' }],
     sizes: ['XS-S', 'M-L'],
@@ -382,8 +392,8 @@ export const products: Product[] = [
     name: 'Сумка спортивная black',
     category: 'bags',
     price: 6900,
-    images: [bagBlackBack, bagBlackFront],
-    spinImages: [bagBlackBack, bagBlackFront],
+    images: [bagBlackFront, bagBlackBack, bagBlack3, bagBlack4],
+    spinImages: [bagBlackFront, bagBlackBack, bagBlack3, bagBlack4],
     modelUrl: '/models/black_bag.glb',
     colors: [{ name: 'Чёрный', hex: '#1a1a1a' }],
     sizes: ['XS-S', 'M-L'],
@@ -399,8 +409,8 @@ export const products: Product[] = [
     name: 'Лонгслив напоминание',
     category: 'longsleeves',
     price: 7600,
-    images: [longsleeveJoy1, longsleeveJoy2, longsleeveJoy3],
-    spinImages: [longsleeveJoy1, longsleeveJoy2, longsleeveJoy3],
+    images: [longsleeveJoy1, longsleeveJoy2, longsleeveJoy3, longsleeveJoy4, longsleeveJoy5, longsleeveJoy6],
+    spinImages: [longsleeveJoy1, longsleeveJoy2, longsleeveJoy3, longsleeveJoy4, longsleeveJoy5, longsleeveJoy6],
     modelUrl: '/models/longsleeve.glb',
     colors: [{ name: 'Айвори', hex: '#f0e6d3' }],
     sizes: allSizes,
@@ -413,8 +423,8 @@ export const products: Product[] = [
     name: 'Лонгслив энергия',
     category: 'longsleeves',
     price: 7600,
-    images: [longsleeveEnergy1, longsleeveEnergy2, longsleeveEnergy3],
-    spinImages: [longsleeveEnergy1, longsleeveEnergy2, longsleeveEnergy3],
+    images: [longsleeveEnergy1, longsleeveEnergy2, longsleeveEnergy3, longsleeveEnergy4],
+    spinImages: [longsleeveEnergy1, longsleeveEnergy2, longsleeveEnergy3, longsleeveEnergy4],
     modelUrl: '/models/longsleeve.glb',
     colors: [{ name: 'Айвори', hex: '#f0e6d3' }],
     sizes: allSizes,
