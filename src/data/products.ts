@@ -38,6 +38,8 @@ import blackLeggings5 from '@/assets/black_leggings_5.webp';
 import blueLeggings1 from '@/assets/blue_leggings_1.webp';
 import blueLeggings2 from '@/assets/blue_leggings_2.webp';
 import blueLeggings3 from '@/assets/blue_leggings_3.webp';
+import blueLeggings4 from '@/assets/blue_leggings_4.webp';
+import blueLeggings5 from '@/assets/blue_leggings_5.webp';
 import brownLeggings1 from '@/assets/brown_leggings_1.webp';
 import brownLeggings2 from '@/assets/brown_leggings_2.webp';
 import brownLeggings3 from '@/assets/brown_leggings_3.webp';
@@ -47,6 +49,7 @@ import ivoryLeggings1 from '@/assets/ivory_leggings_1.webp';
 import ivoryLeggings2 from '@/assets/ivory_leggings_2.webp';
 import ivoryLeggings3 from '@/assets/ivory_leggings_3.webp';
 import ivoryLeggings4 from '@/assets/ivory_leggings_4.webp';
+import ivoryLeggings5 from '@/assets/ivory_leggings_5.webp';
 import bagBlueFront from '@/assets/bag_blue_1.webp';
 import bagBlueBack from '@/assets/bag_blue_2.webp';
 import bagBlueThird from '@/assets/bag_blue_3.webp';
@@ -222,8 +225,8 @@ export const products: Product[] = [
     name: 'Леггинсы sky',
     category: 'leggings',
     price: 6500,
-    images: [blueLeggings1, blueLeggings2, blueLeggings3],
-    spinImages: [blueLeggings1, blueLeggings2, blueLeggings3],
+    images: [blueLeggings1, blueLeggings2, blueLeggings3, blueLeggings4, blueLeggings5],
+    spinImages: [blueLeggings1, blueLeggings2, blueLeggings3, blueLeggings4, blueLeggings5],
     modelUrl: '/models/blue_leggings.glb',
     colors: [{ name: 'Голубой', hex: '#c7dcf7' }],
     sizes: allSizes,
@@ -252,8 +255,8 @@ export const products: Product[] = [
     name: 'Леггинсы ivory',
     category: 'leggings',
     price: 6500,
-    images: [ivoryLeggings1, ivoryLeggings2, ivoryLeggings3, ivoryLeggings4],
-    spinImages: [ivoryLeggings1, ivoryLeggings2, ivoryLeggings3, ivoryLeggings4],
+    images: [ivoryLeggings1, ivoryLeggings2, ivoryLeggings3, ivoryLeggings4, ivoryLeggings5],
+    spinImages: [ivoryLeggings1, ivoryLeggings2, ivoryLeggings3, ivoryLeggings4, ivoryLeggings5],
     modelUrl: '/models/ivory_leggings.glb',
     colors: [{ name: 'Айвори', hex: '#f0ede4' }],
     sizes: allSizes,
