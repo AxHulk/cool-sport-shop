@@ -3,6 +3,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sh
 import { Button } from '@/components/ui/button';
 import { Minus, Plus, Trash2, Tag } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
+import DolyamiBadge from '@/components/DolyamiBadge';
 
 const CartDrawer = () => {
   const { items, isCartOpen, setIsCartOpen, removeItem, updateQuantity, totalPrice, totalPriceWithDiscount, appliedCombo } = useCart();
@@ -80,6 +81,7 @@ const CartDrawer = () => {
                   <span>{formatPrice(totalPrice)}</span>
                 </div>
               )}
+              <DolyamiBadge price={totalPriceWithDiscount} variant="block" />
               <Button className="w-full" asChild onClick={() => setIsCartOpen(false)}>
                 <Link to="/checkout">Оформить заказ</Link>
               </Button>

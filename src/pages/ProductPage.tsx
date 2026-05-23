@@ -14,6 +14,7 @@ import {
 import ProductCard from '@/components/ProductCard';
 import ProductImageSpin from '@/components/ProductImageSpin';
 import ComboRecommendation from '@/components/ComboRecommendation';
+import DolyamiBadge from '@/components/DolyamiBadge';
 import { cn } from '@/lib/utils';
 import SEO from '@/components/SEO';
 import { productLd, breadcrumbLd } from '@/lib/seo';
@@ -174,6 +175,13 @@ const ProductPage = () => {
               <Heart className={cn('h-5 w-5', fav && 'fill-foreground text-foreground')} />
             </Button>
           </div>
+
+          {/* Долями */}
+          <div className="mb-3">
+            <DolyamiBadge price={product.price} variant="block" />
+          </div>
+
+
 
 
 
