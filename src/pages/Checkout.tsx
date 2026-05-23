@@ -21,7 +21,7 @@ interface FormData {
   deliveryMethod: 'courier' | 'pickup' | '';
   city: string;
   address: string;
-  paymentMethod: 'card' | 'sbp' | '';
+  paymentMethod: 'card' | 'sbp' | 'dolyami' | '';
   promoCode: string;
 }
 
