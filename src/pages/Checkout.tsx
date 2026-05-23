@@ -154,6 +154,49 @@ const Checkout = () => {
       }
 
       setOrderNumber(num);
+
+      // If Dolyami selected — create payment in T-Kassa and redirect to payment form
+      if (form.paymentMethod === 'dolyami') {
+        try {
+          const initRes = await fetch(
+            `https://${projectId}.supabase.co/functions/v1/tinkoff-init`,
+            {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', 'apikey': import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY },
+              body: JSON.stringify({
+                order_number: num,
+                amount: finalPrice,
+                customer_email: form.email,
+                customer_phone: form.phone,
+                payment_method: 'dolyami',
+                success_url: `${window.location.origin}/?order=${num}&payment=success`,
+                fail_url: `${window.location.origin}/checkout?order=${num}&payment=fail`,
+                items: items.map(i => ({
+                  name: i.product.name,
+                  quantity: i.quantity,
+                  amount: i.product.price * i.quantity,
+                })),
+              }),
+            }
+          );
+          const initData = await initRes.json();
+          if (!initRes.ok || !initData.payment_url) {
+            throw new Error(initData.error || 'Не удалось создать платёж');
+          }
+          clearCart();
+          // Redirect to T-Kassa payment form (Dolyame method preselected)
+          window.location.href = initData.payment_url;
+          return;
+        } catch (payErr) {
+          console.error('Tinkoff init error:', payErr);
+          toast.error('Не удалось перейти к оплате Долями', {
+            description: (payErr as Error).message,
+          });
+          setSubmitting(false);
+          return;
+        }
+      }
+
       clearCart();
       setDone(true);
       toast.success('Заказ оформлен!', { description: `Номер заказа: ${num}` });
