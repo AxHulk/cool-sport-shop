@@ -49,6 +49,7 @@ const Footer = () => {
           <div className="space-y-2 text-sm opacity-80">
             <Link to="/catalog?category=leggings" className="block hover:opacity-100">Леггинсы</Link>
             <Link to="/catalog?category=tops" className="block hover:opacity-100">Топы</Link>
+            <Link to="/catalog?category=longsleeves" className="block hover:opacity-100">Лонгсливы</Link>
             <Link to="/catalog?category=rashguards" className="block hover:opacity-100">Рашгарды</Link>
             <Link to="/catalog?category=bags" className="block hover:opacity-100">Сумки</Link>
           </div>

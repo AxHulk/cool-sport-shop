@@ -19,7 +19,7 @@ const ComboRecommendation = ({ currentProduct }: ComboRecommendationProps) => {
   return (
     <section className="mt-12">
       <h2 className="text-2xl font-serif mb-6 flex items-center gap-2">
-        <Tag className="h-5 w-5 text-sky-500" />
+        <Tag className="h-5 w-5 text-foreground" style={{ fill: '#e4f0fe' }} />
         Собрать сет с максимальной выгодой
       </h2>
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 items-stretch">
@@ -114,13 +114,13 @@ const ComboCard = ({ combo, currentProduct, addItem }: ComboCardProps) => {
   };
 
   return (
-    <div className="border rounded-xl p-5 flex flex-col hover:border-sky-400/60 transition-colors">
+    <div className="border rounded-xl p-5 flex flex-col hover:border-[#e4f0fe] transition-colors">
       <div className="flex items-center justify-between mb-4">
         <div>
           <h3 className="font-semibold text-sm">{combo.name}</h3>
           <p className="text-xs text-muted-foreground">{combo.description}</p>
         </div>
-        <span className="bg-sky-400 text-white text-xs font-bold px-2.5 py-1 rounded-full shrink-0">
+        <span className="bg-[#e4f0fe] text-foreground text-xs font-bold px-2.5 py-1 rounded-full shrink-0">
           -{combo.discountPercent}%
         </span>
       </div>
@@ -148,10 +148,10 @@ const ComboCard = ({ combo, currentProduct, addItem }: ComboCardProps) => {
               <span className="text-muted-foreground line-through">{formatPrice(fullPrice)}</span>
               <span className="font-bold text-lg">{formatPrice(discountedPrice)}</span>
             </div>
-            <p className="text-xs text-sky-600 font-medium">Экономия: {formatPrice(savings)}</p>
+            <p className="text-xs text-foreground/70 font-medium">Экономия: {formatPrice(savings)}</p>
           </>
         )}
-        <Button className="w-full bg-sky-500 hover:bg-sky-600 text-white" size="sm" onClick={handleAddCombo} disabled={!allSelected}>
+        <Button className="w-full bg-[#e4f0fe] hover:bg-[#cde2fb] text-foreground" size="sm" onClick={handleAddCombo} disabled={!allSelected}>
           <ShoppingBag className="h-4 w-4 mr-1" />
           Добавить сет в корзину
         </Button>

@@ -99,7 +99,7 @@ const ProductPage = () => {
 
         {/* Info */}
         <div>
-          <h1 className="text-3xl md:text-4xl font-serif uppercase tracking-[0.06em] leading-[0.95] mb-4">
+          <h1 className="text-base md:text-4xl font-serif uppercase tracking-[0.06em] leading-[0.95] mb-4">
             {product.name}
           </h1>
           <div className="flex items-center gap-3 mb-6">
@@ -160,7 +160,7 @@ const ProductPage = () => {
           </div>
 
           {/* Actions */}
-          <div className="flex gap-3 mb-8">
+          <div className="flex gap-3 mb-3">
             <Button
               size="lg"
               className="flex-1 text-xs font-semibold uppercase tracking-[0.18em]"
@@ -175,10 +175,7 @@ const ProductPage = () => {
             </Button>
           </div>
 
-          {/* Short description (mobile only, under cart button) */}
-          <p className="md:hidden text-sm text-muted-foreground leading-snug mb-6 -mt-2">
-            {product.description}
-          </p>
+
 
           {/* Collapsible sections */}
           <Accordion type="multiple" className="border-t">
