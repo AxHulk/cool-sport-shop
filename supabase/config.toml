@@ -23,3 +23,9 @@ verify_jwt = false
 
 [functions.telegram-poll]
 verify_jwt = false
+
+[functions.tinkoff-init]
+verify_jwt = false
+
+[functions.tinkoff-webhook]
+verify_jwt = false
