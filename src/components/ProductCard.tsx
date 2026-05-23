@@ -76,11 +76,13 @@ const ProductCard = ({ product }: { product: Product }) => {
     <div className="group">
       <div
         ref={containerRef}
-        className="relative"
+        className="relative touch-pan-y"
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onTouchCancel={handleTouchEnd}
       >
         {/* Tick indicators above image */}
         {total > 1 && (
