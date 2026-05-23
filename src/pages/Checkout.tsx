@@ -287,22 +287,45 @@ const Checkout = () => {
             <div className="space-y-4">
               <div>
                 <Label className="mb-2 block">Способ оплаты *</Label>
-                <div className="flex gap-3">
+                <div className="grid grid-cols-2 gap-3">
                   <Button
                     variant={form.paymentMethod === 'card' ? 'default' : 'outline'}
-                    className="flex-1 h-16"
+                    className="h-16"
                     onClick={() => updateField('paymentMethod', 'card')}
                   >💳 Карта</Button>
                   <Button
                     variant={form.paymentMethod === 'sbp' ? 'default' : 'outline'}
-                    className="flex-1 h-16"
+                    className="h-16"
                     onClick={() => updateField('paymentMethod', 'sbp')}
                   >📱 СБП</Button>
                 </div>
+                {isDolyamiEligible(finalPrice) && (
+                  <button
+                    type="button"
+                    onClick={() => updateField('paymentMethod', 'dolyami')}
+                    className={cn(
+                      'mt-3 w-full flex items-center justify-between gap-3 px-4 py-3 border transition-colors text-left',
+                      form.paymentMethod === 'dolyami'
+                        ? 'border-foreground bg-foreground text-background'
+                        : 'border-border hover:bg-secondary/40',
+                    )}
+                  >
+                    <div className="flex flex-col">
+                      <span className="text-xs uppercase tracking-[0.18em] opacity-80">
+                        Долями — 4 платежа без переплат
+                      </span>
+                      <span className="text-base font-semibold mt-0.5">
+                        4 × {formatPrice(dolyamiPart(finalPrice))}
+                      </span>
+                    </div>
+                    <span className="text-sm font-semibold lowercase tracking-tight">долями</span>
+                  </button>
+                )}
                 {errors.paymentMethod && <p className="text-xs text-destructive mt-1">{errors.paymentMethod}</p>}
               </div>
             </div>
           )}
+
 
           <div className="flex gap-3 mt-8">
             {step > 0 && <Button variant="outline" onClick={() => setStep(step - 1)}>Назад</Button>}
