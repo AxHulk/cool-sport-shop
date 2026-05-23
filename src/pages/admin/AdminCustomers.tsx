@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { adminApi } from '@/lib/adminApi';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -12,8 +12,8 @@ const AdminCustomers = () => {
   useEffect(() => { loadCustomers(); }, []);
 
   const loadCustomers = async () => {
-    const { data } = await supabase.from('customers').select('*').order('last_order_at', { ascending: false });
-    setCustomers(data || []);
+    const res = await adminApi<{ data: any[] }>('listCustomers');
+    setCustomers(res.data || []);
   };
 
   const fmt = (n: number) => Number(n).toLocaleString('ru-RU') + ' ₽';
