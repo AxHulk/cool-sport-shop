@@ -6,6 +6,7 @@ import { useFavorites } from '@/context/FavoritesContext';
 import { useCart } from '@/context/CartContext';
 import { cn } from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
+import DolyamiBadge from '@/components/DolyamiBadge';
 
 const SWIPE_THRESHOLD = 30;
 
