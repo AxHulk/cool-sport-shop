@@ -330,7 +330,13 @@ const Checkout = () => {
           <div className="flex gap-3 mt-8">
             {step > 0 && <Button variant="outline" onClick={() => setStep(step - 1)}>Назад</Button>}
             <Button className="flex-1" onClick={handleSubmit} disabled={submitting}>
-              {submitting ? 'Оформление...' : step < 2 ? 'Далее' : `Оплатить ${formatPrice(finalPrice)}`}
+              {submitting
+                ? 'Оформление...'
+                : step < 2
+                ? 'Далее'
+                : form.paymentMethod === 'dolyami'
+                ? `Оплатить Долями · 4 × ${formatPrice(dolyamiPart(finalPrice))}`
+                : `Оплатить ${formatPrice(finalPrice)}`}
             </Button>
           </div>
         </div>
