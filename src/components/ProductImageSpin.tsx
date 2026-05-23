@@ -69,10 +69,38 @@ const ProductImageSpin = ({ images }: ProductImageSpinProps) => {
     resetView();
   }, [resetView]);
 
+  // Swipe handling (only when not zoomed)
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
+  const swiped = useRef(false);
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    if (zoom > 1) return;
+    touchStart.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    swiped.current = false;
+  }, [zoom]);
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    if (zoom > 1 || !touchStart.current) return;
+    const dx = e.touches[0].clientX - touchStart.current.x;
+    const dy = e.touches[0].clientY - touchStart.current.y;
+    if (Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy)) {
+      swiped.current = true;
+    }
+  }, [zoom]);
+  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
+    if (!touchStart.current) return;
+    if (swiped.current && images.length > 1) {
+      const dx = e.changedTouches[0].clientX - touchStart.current.x;
+      if (Math.abs(dx) > 30) {
+        if (dx < 0) selectFrame((currentFrame + 1) % images.length);
+        else selectFrame((currentFrame - 1 + images.length) % images.length);
+      }
+    }
+    touchStart.current = null;
+  }, [currentFrame, images.length, selectFrame]);
+
   return (
     <div
       className={cn(
-        "relative w-full aspect-[2/3] overflow-hidden select-none",
+        "relative w-full aspect-[2/3] overflow-hidden select-none touch-pan-y",
         zoom > 1 ? (isPanning ? "cursor-grabbing" : "cursor-grab") : "cursor-default"
       )}
       onPointerDown={handlePointerDown}
@@ -80,6 +108,9 @@ const ProductImageSpin = ({ images }: ProductImageSpinProps) => {
       onPointerUp={handlePointerUp}
       onPointerLeave={handlePointerUp}
       onWheel={handleWheel}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
     >
       <img
         src={images[currentFrame]}
