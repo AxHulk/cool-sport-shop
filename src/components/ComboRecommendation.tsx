@@ -19,7 +19,7 @@ const ComboRecommendation = ({ currentProduct }: ComboRecommendationProps) => {
   return (
     <section className="mt-12">
       <h2 className="text-2xl font-serif mb-6 flex items-center gap-2">
-        <Tag className="h-5 w-5 text-sky-500" />
+        <Tag className="h-5 w-5 text-foreground" style={{ fill: '#e4f0fe' }} />
         Собрать сет с максимальной выгодой
       </h2>
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 items-stretch">
