@@ -114,13 +114,13 @@ const ComboCard = ({ combo, currentProduct, addItem }: ComboCardProps) => {
   };
 
   return (
-    <div className="border rounded-xl p-5 flex flex-col hover:border-sky-400/60 transition-colors">
+    <div className="border rounded-xl p-5 flex flex-col hover:border-[#e4f0fe] transition-colors">
       <div className="flex items-center justify-between mb-4">
         <div>
           <h3 className="font-semibold text-sm">{combo.name}</h3>
           <p className="text-xs text-muted-foreground">{combo.description}</p>
         </div>
-        <span className="bg-sky-400 text-white text-xs font-bold px-2.5 py-1 rounded-full shrink-0">
+        <span className="bg-[#e4f0fe] text-foreground text-xs font-bold px-2.5 py-1 rounded-full shrink-0">
           -{combo.discountPercent}%
         </span>
       </div>
