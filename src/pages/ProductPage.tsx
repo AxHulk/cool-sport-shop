@@ -160,7 +160,7 @@ const ProductPage = () => {
           </div>
 
           {/* Actions */}
-          <div className="flex gap-3 mb-8">
+          <div className="flex gap-3 mb-3">
             <Button
               size="lg"
               className="flex-1 text-xs font-semibold uppercase tracking-[0.18em]"
@@ -175,10 +175,7 @@ const ProductPage = () => {
             </Button>
           </div>
 
-          {/* Short description (mobile only, under cart button) */}
-          <p className="md:hidden text-sm text-muted-foreground leading-snug mb-6 -mt-2">
-            {product.description}
-          </p>
+
 
           {/* Collapsible sections */}
           <Accordion type="multiple" className="border-t">
