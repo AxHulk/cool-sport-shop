@@ -10,6 +10,7 @@ import { Minus, Plus, Trash2, ChevronLeft } from 'lucide-react';
 import ConsentCheckbox from '@/components/ConsentCheckbox';
 import { supabase } from '@/integrations/supabase/client';
 import SEO from '@/components/SEO';
+import DolyamiBadge, { isDolyamiEligible, dolyamiPart } from '@/components/DolyamiBadge';
 
 const steps = ['Контакты', 'Доставка', 'Оплата'];
 
