@@ -99,7 +99,7 @@ const ProductPage = () => {
 
         {/* Info */}
         <div>
-          <h1 className="text-3xl md:text-4xl font-serif uppercase tracking-[0.06em] leading-[0.95] mb-4">
+          <h1 className="text-base md:text-4xl font-serif uppercase tracking-[0.06em] leading-[0.95] mb-4">
             {product.name}
           </h1>
           <div className="flex items-center gap-3 mb-6">
