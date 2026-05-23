@@ -3,9 +3,10 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import AdminSidebar from './AdminSidebar';
 import AdminAuth from './AdminAuth';
+import { isAdminAuthed } from '@/lib/adminApi';
 
 const AdminLayout = () => {
-  const [authed, setAuthed] = useState(() => localStorage.getItem('admin_auth') === 'true');
+  const [authed, setAuthed] = useState(() => isAdminAuthed());
   const navigate = useNavigate();
 
   useEffect(() => {
