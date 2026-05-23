@@ -89,8 +89,8 @@ const Header = () => {
         </div>
 
         {/* Right: desktop icons only */}
-        <div className="hidden md:flex items-center justify-end gap-1">
-          <Link to="/favorites" className={cn(iconButtonClass)} aria-label="Избранное">
+        <div className="flex items-center justify-end gap-1">
+          <Link to="/favorites" className={cn(iconButtonClass, 'hidden md:inline-flex')} aria-label="Избранное">
             <Heart className="h-5 w-5" />
             {favorites.length > 0 && (
               <span className="absolute -top-0.5 -right-0.5 bg-foreground text-background text-[10px] rounded-full min-w-4 h-4 px-1 flex items-center justify-center">
@@ -101,7 +101,7 @@ const Header = () => {
           <button
             type="button"
             onClick={() => setIsCartOpen(true)}
-            className={cn(iconButtonClass)}
+            className={cn(iconButtonClass, 'hidden md:inline-flex')}
             aria-label="Корзина"
           >
             <ShoppingBag className="h-5 w-5" />
@@ -112,8 +112,6 @@ const Header = () => {
             )}
           </button>
         </div>
-        {/* Spacer on mobile to keep grid balanced */}
-        <div className="md:hidden" />
       </div>
     </header>
   );
