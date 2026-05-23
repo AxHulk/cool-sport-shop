@@ -14,6 +14,7 @@ import {
 import ProductCard from '@/components/ProductCard';
 import ProductImageSpin from '@/components/ProductImageSpin';
 import ComboRecommendation from '@/components/ComboRecommendation';
+import DolyamiBadge from '@/components/DolyamiBadge';
 import { cn } from '@/lib/utils';
 import SEO from '@/components/SEO';
 import { productLd, breadcrumbLd } from '@/lib/seo';
