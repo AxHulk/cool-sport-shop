@@ -7,6 +7,8 @@ import { useCart } from '@/context/CartContext';
 import { cn } from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
 
+const SWIPE_THRESHOLD = 30;
+
 const ProductCard = ({ product }: { product: Product }) => {
   const { toggleFavorite, isFavorite } = useFavorites();
   const { addItem } = useCart();
