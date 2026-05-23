@@ -26,51 +26,32 @@ const AdminOrders = () => {
   useEffect(() => { loadOrders(); }, [filter]);
 
   const loadOrders = async () => {
-    let q = supabase.from('orders').select('*').order('created_at', { ascending: false });
-    if (filter !== 'all') q = q.eq('status', filter as any);
-    const { data } = await q;
-    setOrders(data || []);
+    const res = await adminApi<{ data: any[] }>('listOrders', { status: filter });
+    setOrders(res.data || []);
   };
 
   const openOrder = async (order: any) => {
     setSelected(order);
     setTrackingNumber(order.tracking_number || '');
-    const [itemsRes, histRes] = await Promise.all([
-      supabase.from('order_items').select('*').eq('order_id', order.id),
-      supabase.from('order_history').select('*').eq('order_id', order.id).order('changed_at', { ascending: false }),
-    ]);
-    setOrderItems(itemsRes.data || []);
-    setHistory(histRes.data || []);
+    const res = await adminApi<{ items: any[]; history: any[] }>('getOrderDetails', { orderId: order.id });
+    setOrderItems(res.items || []);
+    setHistory(res.history || []);
   };
 
   const changeStatus = async (orderId: string, oldStatus: string, newStatus: string) => {
-    await supabase.from('orders').update({ status: newStatus as any }).eq('id', orderId);
-    await supabase.from('order_history').insert({
-      order_id: orderId,
-      field_changed: 'status',
-      old_value: oldStatus,
-      new_value: newStatus,
-      changed_by: 'admin',
-    });
+    await adminApi('updateOrderStatus', { orderId, oldStatus, newStatus });
     toast.success(`Статус изменён на "${statusLabels[newStatus]}"`);
     loadOrders();
     if (selected?.id === orderId) {
       setSelected({ ...selected, status: newStatus });
-      const { data } = await supabase.from('order_history').select('*').eq('order_id', orderId).order('changed_at', { ascending: false });
-      setHistory(data || []);
+      const res = await adminApi<{ history: any[] }>('getOrderDetails', { orderId });
+      setHistory(res.history || []);
     }
   };
 
   const saveTracking = async () => {
     if (!selected) return;
-    await supabase.from('orders').update({ tracking_number: trackingNumber }).eq('id', selected.id);
-    await supabase.from('order_history').insert({
-      order_id: selected.id,
-      field_changed: 'tracking_number',
-      old_value: selected.tracking_number || '',
-      new_value: trackingNumber,
-      changed_by: 'admin',
-    });
+    await adminApi('updateOrderTracking', { orderId: selected.id, trackingNumber });
     toast.success('Трек-номер сохранён');
     setSelected({ ...selected, tracking_number: trackingNumber });
     loadOrders();
