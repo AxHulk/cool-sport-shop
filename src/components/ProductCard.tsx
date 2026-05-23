@@ -99,7 +99,16 @@ const ProductCard = ({ product }: { product: Product }) => {
           </div>
         )}
 
-        <Link to={`/product/${product.id}`} className="block">
+        <Link
+          to={`/product/${product.id}`}
+          className="block"
+          onClickCapture={(e) => {
+            if (swiping.current) {
+              e.preventDefault();
+              e.stopPropagation();
+            }
+          }}
+        >
           <div className="aspect-[2/3] overflow-hidden relative">
             {!imgLoaded && <Skeleton className="absolute inset-0" />}
             {images.map((src, i) => (
