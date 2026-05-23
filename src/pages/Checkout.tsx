@@ -385,6 +385,9 @@ const Checkout = () => {
               <span>Итого</span>
               <span>{formatPrice(finalPrice)}</span>
             </div>
+            <div className="pt-1">
+              <DolyamiBadge price={finalPrice} variant="block" />
+            </div>
           </div>
         </div>
       </div>
