@@ -183,6 +183,9 @@ const ProductCard = ({ product }: { product: Product }) => {
             </span>
           )}
         </div>
+        <div className="mt-1 flex justify-center">
+          <DolyamiBadge price={product.price} variant="inline" />
+        </div>
       </div>
     </div>
   );
