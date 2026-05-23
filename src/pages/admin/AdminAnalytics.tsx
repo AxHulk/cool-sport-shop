@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { adminApi } from '@/lib/adminApi';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, Line, CartesianGrid, Legend, PieChart, Pie, Cell } from 'recharts';
 
-const COLORS = ['hsl(0 0% 12%)', 'hsl(350 60% 72%)', 'hsl(30 20% 60%)', 'hsl(200 60% 50%)', 'hsl(120 40% 50%)'];
+const COLORS = ['hsl(0 0% 12%)', 'hsl(213 95% 75%)', 'hsl(30 20% 60%)', 'hsl(200 60% 50%)', 'hsl(120 40% 50%)'];
 
 const AdminAnalytics = () => {
   const [topProducts, setTopProducts] = useState<any[]>([]);
@@ -14,8 +14,11 @@ const AdminAnalytics = () => {
   useEffect(() => { loadAnalytics(); }, []);
 
   const loadAnalytics = async () => {
+    const { items, recentOrders, allOrders } = await adminApi<{
+      items: any[]; recentOrders: any[]; allOrders: any[];
+    }>('analytics');
+
     // Top products
-    const { data: items } = await supabase.from('order_items').select('product_name, quantity, size');
     const productMap: Record<string, number> = {};
     (items || []).forEach(i => { productMap[i.product_name] = (productMap[i.product_name] || 0) + i.quantity; });
     const sorted = Object.entries(productMap).sort((a, b) => b[1] - a[1]).slice(0, 5);
@@ -26,17 +29,15 @@ const AdminAnalytics = () => {
     (items || []).forEach(i => { sizeMap[i.size] = (sizeMap[i.size] || 0) + i.quantity; });
     setSizeBreakdown(Object.entries(sizeMap).map(([name, value]) => ({ name, value })));
 
-    // Revenue by day (last 30 days)
-    const { data: orders } = await supabase.from('orders').select('total_price, created_at').gte('created_at', new Date(Date.now() - 30 * 86400000).toISOString());
+    // Revenue by day
     const dayMap: Record<string, number> = {};
-    (orders || []).forEach(o => {
+    (recentOrders || []).forEach(o => {
       const day = new Date(o.created_at).toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit' });
       dayMap[day] = (dayMap[day] || 0) + Number(o.total_price);
     });
     setRevenueByDay(Object.entries(dayMap).map(([date, revenue]) => ({ date, revenue })));
 
     // Status breakdown
-    const { data: allOrders } = await supabase.from('orders').select('status');
     const stMap: Record<string, number> = {};
     const stLabels: Record<string, string> = { new: 'Новый', assembling: 'Сборка', shipped: 'Доставка', returned: 'Возврат' };
     (allOrders || []).forEach(o => { stMap[o.status] = (stMap[o.status] || 0) + 1; });

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { adminApi } from '@/lib/adminApi';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -17,20 +17,18 @@ const AdminReturns = () => {
   useEffect(() => { loadReturns(); }, []);
 
   const loadReturns = async () => {
-    const { data } = await supabase
-      .from('returns')
-      .select('*, orders(order_number, customer_name), order_items(product_name, size, color)')
-      .order('created_at', { ascending: false });
-    setReturns(data || []);
+    const res = await adminApi<{ data: any[] }>('listReturns');
+    const data = res.data || [];
+    setReturns(data);
 
     // Compute reason stats
     const counts: Record<string, number> = {};
-    (data || []).forEach(r => { counts[r.reason] = (counts[r.reason] || 0) + 1; });
+    data.forEach(r => { counts[r.reason] = (counts[r.reason] || 0) + 1; });
     setReasonStats(Object.entries(counts).map(([k, v]) => ({ name: reasonLabels[k] || k, value: v })));
   };
 
   const changeStatus = async (id: string, newStatus: string) => {
-    await supabase.from('returns').update({ status: newStatus as any }).eq('id', id);
+    await adminApi('updateReturnStatus', { id, newStatus });
     toast.success(`Статус возврата изменён`);
     loadReturns();
   };
