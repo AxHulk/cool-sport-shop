@@ -81,6 +81,7 @@ const CartDrawer = () => {
                   <span>{formatPrice(totalPrice)}</span>
                 </div>
               )}
+              <DolyamiBadge price={totalPriceWithDiscount} variant="block" />
               <Button className="w-full" asChild onClick={() => setIsCartOpen(false)}>
                 <Link to="/checkout">Оформить заказ</Link>
               </Button>
