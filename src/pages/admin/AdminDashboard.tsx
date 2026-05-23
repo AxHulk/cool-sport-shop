@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { adminApi } from '@/lib/adminApi';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ShoppingCart, DollarSign, RotateCcw, Package } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -14,27 +15,24 @@ const AdminDashboard = () => {
   }, []);
 
   const loadData = async () => {
-    const now = new Date();
-    const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).toISOString();
-    const weekStart = new Date(now.getTime() - 7 * 86400000).toISOString();
-    const monthStart = new Date(now.getTime() - 30 * 86400000).toISOString();
-
-    const [todayRes, weekRes, monthRes, returnsRes, recentRes, stockRes] = await Promise.all([
-      supabase.from('orders').select('id', { count: 'exact' }).gte('created_at', todayStart),
-      supabase.from('orders').select('total_price').gte('created_at', weekStart),
-      supabase.from('orders').select('total_price').gte('created_at', monthStart),
-      supabase.from('returns').select('id', { count: 'exact' }).eq('status', 'pending'),
-      supabase.from('orders').select('*').order('created_at', { ascending: false }).limit(5),
+    const [dash, stockRes] = await Promise.all([
+      adminApi<{
+        todayCount: number;
+        weekRevenue: number;
+        monthRevenue: number;
+        pendingReturns: number;
+        recentOrders: any[];
+      }>('dashboard'),
       supabase.from('products_inventory').select('*').lt('quantity', 3).order('quantity', { ascending: true }).limit(10),
     ]);
 
     setStats({
-      todayOrders: todayRes.count || 0,
-      weekRevenue: weekRes.data?.reduce((s, o) => s + Number(o.total_price), 0) || 0,
-      monthRevenue: monthRes.data?.reduce((s, o) => s + Number(o.total_price), 0) || 0,
-      returns: returnsRes.count || 0,
+      todayOrders: dash.todayCount,
+      weekRevenue: dash.weekRevenue,
+      monthRevenue: dash.monthRevenue,
+      returns: dash.pendingReturns,
     });
-    setRecentOrders(recentRes.data || []);
+    setRecentOrders(dash.recentOrders);
     setLowStock(stockRes.data || []);
   };
 
