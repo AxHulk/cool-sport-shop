@@ -3,26 +3,34 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Lock } from 'lucide-react';
-
-const ADMIN_LOGIN = 'A';
-const ADMIN_PASSWORD = 'Strelka';
+import { adminApi, setAdminPassword } from '@/lib/adminApi';
 
 interface AdminAuthProps {
   onAuth: () => void;
 }
 
 const AdminAuth = ({ onAuth }: AdminAuthProps) => {
-  const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (login === ADMIN_LOGIN && password === ADMIN_PASSWORD) {
-      localStorage.setItem('admin_auth', 'true');
+    if (!password) return;
+    setLoading(true);
+    setError('');
+    try {
+      // Set password first so the helper sends it
+      setAdminPassword(password);
+      await adminApi('login');
       onAuth();
-    } else {
-      setError('Неверный логин или пароль');
+    } catch (err: any) {
+      // Wipe stored credential on failure
+      localStorage.removeItem('admin_password');
+      localStorage.removeItem('admin_auth');
+      setError('Неверный пароль');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -36,15 +44,19 @@ const AdminAuth = ({ onAuth }: AdminAuthProps) => {
           <h1 className="text-xl font-semibold">Админ-панель</h1>
         </div>
         <div className="space-y-2">
-          <Label>Логин</Label>
-          <Input value={login} onChange={e => setLogin(e.target.value)} autoFocus />
-        </div>
-        <div className="space-y-2">
           <Label>Пароль</Label>
-          <Input type="password" value={password} onChange={e => setPassword(e.target.value)} />
+          <Input
+            type="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            autoFocus
+            autoComplete="current-password"
+          />
         </div>
         {error && <p className="text-sm text-destructive">{error}</p>}
-        <Button type="submit" className="w-full">Войти</Button>
+        <Button type="submit" className="w-full" disabled={loading}>
+          {loading ? 'Проверка…' : 'Войти'}
+        </Button>
       </form>
     </div>
   );
