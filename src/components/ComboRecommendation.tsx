@@ -148,10 +148,10 @@ const ComboCard = ({ combo, currentProduct, addItem }: ComboCardProps) => {
               <span className="text-muted-foreground line-through">{formatPrice(fullPrice)}</span>
               <span className="font-bold text-lg">{formatPrice(discountedPrice)}</span>
             </div>
-            <p className="text-xs text-sky-600 font-medium">Экономия: {formatPrice(savings)}</p>
+            <p className="text-xs text-foreground/70 font-medium">Экономия: {formatPrice(savings)}</p>
           </>
         )}
-        <Button className="w-full bg-sky-500 hover:bg-sky-600 text-white" size="sm" onClick={handleAddCombo} disabled={!allSelected}>
+        <Button className="w-full bg-[#e4f0fe] hover:bg-[#cde2fb] text-foreground" size="sm" onClick={handleAddCombo} disabled={!allSelected}>
           <ShoppingBag className="h-4 w-4 mr-1" />
           Добавить сет в корзину
         </Button>
