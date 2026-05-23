@@ -40,10 +40,37 @@ const ProductCard = ({ product }: { product: Product }) => {
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) =>
     updateFrameFromX(e.clientX, e.currentTarget);
   const handleMouseLeave = () => setFrame(0);
-  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) =>
-    updateFrameFromX(e.touches[0].clientX, e.currentTarget);
-  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) =>
-    updateFrameFromX(e.touches[0].clientX, e.currentTarget);
+
+  const touchStart = useRef<{ x: number; y: number; frame: number } | null>(null);
+  const swiping = useRef(false);
+
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    touchStart.current = { x: e.touches[0].clientX, y: e.touches[0].clientY, frame };
+    swiping.current = false;
+  };
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (!touchStart.current || total <= 1) return;
+    const dx = e.touches[0].clientX - touchStart.current.x;
+    const dy = e.touches[0].clientY - touchStart.current.y;
+    if (!swiping.current && Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy)) {
+      swiping.current = true;
+    }
+    if (swiping.current) {
+      e.preventDefault();
+      const rect = e.currentTarget.getBoundingClientRect();
+      const step = rect.width / total;
+      const delta = Math.round(-dx / step);
+      const next = Math.max(0, Math.min(total - 1, touchStart.current.frame + delta));
+      setFrame(next);
+    }
+  };
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (swiping.current) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    touchStart.current = null;
+  };
 
   return (
     <div className="group">
