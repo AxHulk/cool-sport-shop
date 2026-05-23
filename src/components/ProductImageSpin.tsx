@@ -155,19 +155,21 @@ const ProductImageSpin = ({ images }: ProductImageSpinProps) => {
         </button>
       </div>
 
-      {/* Dot indicators */}
-      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2 z-20">
-        {images.map((_, i) => (
-          <button
-            key={i}
-            className={cn(
-              "w-2.5 h-2.5 rounded-full transition-all",
-              i === currentFrame ? "bg-foreground scale-125" : "bg-foreground/30 hover:bg-foreground/50"
-            )}
-            onClick={(e) => { e.stopPropagation(); selectFrame(i); }}
-          />
-        ))}
-      </div>
+      {/* Tick indicators */}
+      {images.length > 1 && (
+        <div className="absolute top-2 left-2 right-2 z-20 flex gap-1 px-1">
+          {images.map((_, i) => (
+            <button
+              key={i}
+              onClick={(e) => { e.stopPropagation(); selectFrame(i); }}
+              className={cn(
+                'flex-1 transition-all duration-200',
+                i === currentFrame ? 'h-0.5 bg-foreground' : 'h-px bg-foreground/25'
+              )}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
