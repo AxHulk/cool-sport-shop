@@ -176,6 +176,13 @@ const ProductPage = () => {
             </Button>
           </div>
 
+          {/* Долями */}
+          <div className="mb-3">
+            <DolyamiBadge price={product.price} variant="block" />
+          </div>
+
+
+
 
 
           {/* Collapsible sections */}
