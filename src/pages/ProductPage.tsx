@@ -53,9 +53,13 @@ const ProductPage = () => {
 
   const productColor = product.colors[0];
 
-  const related = products
-    .filter(p => p.category === product.category && p.id !== product.id && p.colorGroup !== product.colorGroup)
-    .slice(0, 4);
+  const related = product.recommendedIds && product.recommendedIds.length > 0
+    ? (product.recommendedIds
+        .map(rid => products.find(p => p.id === rid))
+        .filter((p): p is typeof products[number] => Boolean(p) && p!.id !== product.id))
+    : products
+        .filter(p => p.category === product.category && p.id !== product.id && p.colorGroup !== product.colorGroup)
+        .slice(0, 4);
   const formatPrice = (p: number) => p.toLocaleString('ru-RU') + ' ₽';
   const fav = isFavorite(product.id);
 
