@@ -104,6 +104,8 @@ export interface Product {
   tags?: string[];
   /** Identifies a group of color variants for the same base product */
   colorGroup?: string;
+  /** Explicit "С этим заказывают" recommendations (product ids) */
+  recommendedIds?: string[];
 }
 
 export const categories = [
