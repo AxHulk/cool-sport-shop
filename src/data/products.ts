@@ -435,3 +435,46 @@ export const products: Product[] = [
     isNew: true,
   },
 ];
+
+// --- Состав (кроме сумок) ---
+const compositions: Record<string, string> = {
+  '9-black': '79% нейлон, 21% эластан',
+  '9-ivory': '79% нейлон, 21% эластан',
+  '9-brown': '79% нейлон, 21% эластан',
+  '13-black': '79% нейлон, 21% эластан',
+  '13-blue': '80% нейлон, 20% спандекс',
+  '14': '80% нейлон, 20% спандекс',
+  '15': '79% нейлон, 21% эластан',
+  '12-black': '79% нейлон, 21% эластан',
+  '12-ivory': '79% нейлон, 21% эластан',
+  '10-black': '79% нейлон, 21% эластан',
+  '10-blue': '82% нейлон, 18% спандекс',
+  '11': '80% нейлон, 20% спандекс',
+  '17': '93% хлопок, 7% эластан',
+  '18': '93% хлопок, 7% эластан',
+};
+
+// --- "С этим заказывают" по таблице бренда ---
+const recommendations: Record<string, string[]> = {
+  '9-black': ['12-black', '10-black', '13-black', '16-blue'],
+  '9-ivory': ['15', '10-blue', '12-ivory', '16-black'],
+  '9-brown': ['11', '14', '16-blue'],
+  '13-black': ['10-black', '17', '9-black', '16-black'],
+  '14': ['11', '9-brown', '17'],
+  '15': ['12-ivory', '9-ivory', '17', '16-black'],
+  '13-blue': ['10-blue', '17', '16-blue'],
+  '12-ivory': ['15', '9-ivory', '17', '16-black'],
+  '12-black': ['17', '13-black', '16-black'],
+  '10-blue': ['13-blue', '17', '9-brown'],
+  '10-black': ['9-black', '13-black', '17', '16-black'],
+  '11': ['14', '9-brown', '17', '16-blue'],
+  '17': ['10-black', '13-black'],
+  '18': ['10-black', '13-black'],
+};
+
+products.forEach((p) => {
+  const comp = compositions[p.id];
+  if (comp) p.specs = { 'Состав': comp, ...p.specs };
+  const rec = recommendations[p.id];
+  if (rec) p.recommendedIds = rec;
+});
