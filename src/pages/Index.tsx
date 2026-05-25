@@ -131,9 +131,9 @@ const Index = () => {
                 <div className="absolute top-4 left-4 z-10 bg-foreground text-background text-[10px] font-semibold uppercase tracking-[0.22em] px-2.5 py-1">
                   −{combo.discountPercent}%
                 </div>
-                <div className={`grid ${items.length === 2 ? 'grid-cols-2' : 'grid-cols-3'} gap-px bg-foreground/5`}>
+                <div className={`grid ${items.length === 2 ? 'grid-cols-2' : 'grid-cols-3'} gap-px bg-foreground/5 h-[320px] md:h-[360px]`}>
                   {items.map((item) => (
-                    <div key={item.id} className="aspect-[3/4] overflow-hidden bg-background">
+                    <div key={item.id} className="overflow-hidden bg-background">
                       <img
                         src={item.images[0]}
                         alt={item.name}
@@ -144,19 +144,19 @@ const Index = () => {
                     </div>
                   ))}
                 </div>
-                <div className="p-6 flex flex-col gap-3">
+                <div className="p-6 flex flex-col gap-3 flex-1">
                   <div>
                     <h3 className="text-base font-semibold uppercase tracking-[0.1em]">{combo.name}</h3>
                     <p className="mt-1 text-xs uppercase tracking-[0.18em] text-foreground/60">{combo.description}</p>
                   </div>
-                  <div className="flex items-baseline gap-3 mt-1">
+                  <div className="flex items-baseline gap-3 mt-auto">
                     <span className="text-lg font-semibold">{discountedPrice.toLocaleString('ru-RU')} ₽</span>
                     <span className="text-sm text-foreground/50 line-through">{fullPrice.toLocaleString('ru-RU')} ₽</span>
                     <span className="ml-auto text-[10px] font-semibold uppercase tracking-[0.22em] text-foreground/60">
                       −{savings.toLocaleString('ru-RU')} ₽
                     </span>
                   </div>
-                  <span className="mt-2 inline-flex items-center text-xs font-semibold uppercase tracking-[0.22em] text-foreground group-hover:gap-2 gap-1 transition-all">
+                  <span className="inline-flex items-center text-xs font-semibold uppercase tracking-[0.22em] text-foreground group-hover:gap-2 gap-1 transition-all">
                     Собрать сет <ArrowRight className="h-3.5 w-3.5" />
                   </span>
                 </div>
