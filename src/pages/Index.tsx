@@ -6,7 +6,7 @@ import ProductCard from '@/components/ProductCard';
 import SEO from '@/components/SEO';
 import { organizationLd, websiteLd } from '@/lib/seo';
 import heroImg from '@/assets/hero_collage.jpg';
-import shopTheLook from '@/assets/shop_the_look.webp';
+import { comboSets, getDefaultProductForCategory, calculateComboPrice } from '@/data/comboSets';
 
 // Простой детерминированный PRNG (mulberry32) — одинаковый сид → одинаковая последовательность
 const seededShuffle = <T,>(arr: T[], seed: number): T[] => {
