@@ -6,7 +6,7 @@ import ProductCard from '@/components/ProductCard';
 import SEO from '@/components/SEO';
 import { organizationLd, websiteLd } from '@/lib/seo';
 import heroImg from '@/assets/hero_collage.jpg';
-import shopTheLook from '@/assets/shop_the_look.webp';
+import { comboSets, getDefaultProductForCategory, calculateComboPrice } from '@/data/comboSets';
 
 // Простой детерминированный PRNG (mulberry32) — одинаковый сид → одинаковая последовательность
 const seededShuffle = <T,>(arr: T[], seed: number): T[] => {
@@ -101,26 +101,68 @@ const Index = () => {
           ))}
         </div>
       </section>
-      {/* Shop the Look */}
+      {/* Готовые сеты */}
       <section className="container py-16">
-        <div className="relative w-full overflow-hidden rounded-lg">
-          <img
-            src={shopTheLook}
-            alt="Соберите образ āsana"
-            width={1920}
-            height={800}
-            loading="lazy"
-            decoding="async"
-            className="w-full h-auto object-cover aspect-[21/9]"
-          />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <Button
-              asChild
-              className="rounded-none h-12 px-8 text-xs font-semibold uppercase tracking-[0.22em]"
-            >
-              <Link to="/catalog">Собрать образ</Link>
-            </Button>
+        <div className="flex items-end justify-between mb-10">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-foreground/60 mb-2">Соберите образ</p>
+            <h2 className="text-2xl md:text-3xl font-semibold uppercase tracking-[0.05em]">Готовые сеты</h2>
           </div>
+          <Button variant="ghost" asChild>
+            <Link to="/catalog" className="text-xs uppercase tracking-[0.22em] inline-flex items-center">
+              <span className="hidden md:inline">Все товары</span>
+              <ArrowRight className="md:ml-1 h-4 w-4" />
+            </Link>
+          </Button>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {comboSets.map((combo) => {
+            const items = combo.categorySlots
+              .map((slot) => getDefaultProductForCategory(slot.category))
+              .filter(Boolean) as NonNullable<ReturnType<typeof getDefaultProductForCategory>>[];
+            const { fullPrice, discountedPrice, savings } = calculateComboPrice(items, combo.discountPercent);
+            const target = items[0] ? `/product/${items[0].id}` : '/catalog';
+            return (
+              <Link
+                key={combo.id}
+                to={target}
+                className="group relative flex flex-col bg-secondary overflow-hidden border border-transparent hover:border-foreground/20 transition-colors"
+              >
+                <div className="absolute top-4 left-4 z-10 bg-foreground text-background text-[10px] font-semibold uppercase tracking-[0.22em] px-2.5 py-1">
+                  −{combo.discountPercent}%
+                </div>
+                <div className={`grid ${items.length === 2 ? 'grid-cols-2' : 'grid-cols-3'} gap-px bg-foreground/5`}>
+                  {items.map((item) => (
+                    <div key={item.id} className="aspect-[3/4] overflow-hidden bg-background">
+                      <img
+                        src={item.images[0]}
+                        alt={item.name}
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    </div>
+                  ))}
+                </div>
+                <div className="p-6 flex flex-col gap-3">
+                  <div>
+                    <h3 className="text-base font-semibold uppercase tracking-[0.1em]">{combo.name}</h3>
+                    <p className="mt-1 text-xs uppercase tracking-[0.18em] text-foreground/60">{combo.description}</p>
+                  </div>
+                  <div className="flex items-baseline gap-3 mt-1">
+                    <span className="text-lg font-semibold">{discountedPrice.toLocaleString('ru-RU')} ₽</span>
+                    <span className="text-sm text-foreground/50 line-through">{fullPrice.toLocaleString('ru-RU')} ₽</span>
+                    <span className="ml-auto text-[10px] font-semibold uppercase tracking-[0.22em] text-foreground/60">
+                      −{savings.toLocaleString('ru-RU')} ₽
+                    </span>
+                  </div>
+                  <span className="mt-2 inline-flex items-center text-xs font-semibold uppercase tracking-[0.22em] text-foreground group-hover:gap-2 gap-1 transition-all">
+                    Собрать сет <ArrowRight className="h-3.5 w-3.5" />
+                  </span>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </section>
     </div>
