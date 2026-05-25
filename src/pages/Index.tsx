@@ -135,7 +135,7 @@ const Index = () => {
                   {items.map((item) => (
                     <div key={item.id} className="aspect-[3/4] overflow-hidden bg-background">
                       <img
-                        src={item.image}
+                        src={item.images[0]}
                         alt={item.name}
                         loading="lazy"
                         decoding="async"
