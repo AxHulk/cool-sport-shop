@@ -189,7 +189,8 @@ const Checkout = () => {
                 customer_email: form.email,
                 customer_phone: form.phone,
                 payment_method: 'dolyami',
-                success_url: `${window.location.origin}/checkout?order=${num}&payment=success`,
+                // Не передаём SuccessURL — Т-Банк покажет свой финальный экран "Оплачено / В магазин"
+                // Кнопка "В магазин" уведёт на главную сайта (настраивается в ЛК магазина Т-Банка)
                 fail_url: `${window.location.origin}/checkout?order=${num}&payment=fail`,
                 items: items.map(i => ({
                   name: i.product.name,
