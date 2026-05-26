@@ -169,7 +169,7 @@ const Checkout = () => {
                 customer_email: form.email,
                 customer_phone: form.phone,
                 payment_method: 'dolyami',
-                success_url: `${window.location.origin}/?order=${num}&payment=success`,
+                success_url: `${window.location.origin}/checkout?order=${num}&payment=success`,
                 fail_url: `${window.location.origin}/checkout?order=${num}&payment=fail`,
                 items: items.map(i => ({
                   name: i.product.name,
