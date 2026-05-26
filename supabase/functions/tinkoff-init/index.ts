@@ -104,9 +104,10 @@ Deno.serve(async (req) => {
       OrderId: body.order_number,
       Description: `Заказ №${body.order_number}`,
       NotificationURL: notificationURL,
-      SuccessURL: body.success_url || "",
-      FailURL: body.fail_url || "",
     };
+    // SuccessURL передаём только если явно задан — иначе Т-Банк показывает свой финальный экран "Оплачено"
+    if (body.success_url) initPayload.SuccessURL = body.success_url;
+    if (body.fail_url) initPayload.FailURL = body.fail_url;
 
     // Token from scalar fields + Password
     initPayload.Token = makeToken(initPayload);
