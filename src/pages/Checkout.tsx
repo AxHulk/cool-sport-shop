@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useCart } from '@/context/CartContext';
 import { Button } from '@/components/ui/button';
@@ -45,6 +45,26 @@ const Checkout = () => {
     promoCode: '',
   });
   const navigate = useNavigate();
+
+  // Handle return from T-Kassa payment page
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const payment = params.get('payment');
+    const order = params.get('order');
+    if (payment === 'success' && order) {
+      setOrderNumber(order);
+      setDone(true);
+      clearCart();
+      // Clean URL
+      window.history.replaceState({}, '', '/checkout');
+    } else if (payment === 'fail' && order) {
+      toast.error('Оплата не прошла', {
+        description: `Заказ №${order}. Попробуйте ещё раз или выберите другой способ оплаты.`,
+      });
+      window.history.replaceState({}, '', '/checkout');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const formatPrice = (p: number) => p.toLocaleString('ru-RU') + ' ₽';
 
@@ -169,7 +189,7 @@ const Checkout = () => {
                 customer_email: form.email,
                 customer_phone: form.phone,
                 payment_method: 'dolyami',
-                success_url: `${window.location.origin}/?order=${num}&payment=success`,
+                success_url: `${window.location.origin}/checkout?order=${num}&payment=success`,
                 fail_url: `${window.location.origin}/checkout?order=${num}&payment=fail`,
                 items: items.map(i => ({
                   name: i.product.name,
