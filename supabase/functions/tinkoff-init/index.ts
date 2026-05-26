@@ -114,10 +114,13 @@ Deno.serve(async (req) => {
     // Attach non-scalar fields after token calc
     initPayload.Receipt = receipt;
 
-    // Hint Dolyame as the default method on T-Kassa form
+    // Подсказка выбранного метода на форме Т-Кассы
     if (body.payment_method === "dolyami") {
       initPayload.DATA = { PaymentMethod: "dolyame" };
+    } else if (body.payment_method === "sbp") {
+      initPayload.DATA = { PaymentMethod: "sbp" };
     }
+    // для "card" — ничего не передаём, форма карты по умолчанию
 
     const tinkoffRes = await fetch(TINKOFF_API, {
       method: "POST",
