@@ -46,6 +46,26 @@ const Checkout = () => {
   });
   const navigate = useNavigate();
 
+  // Handle return from T-Kassa payment page
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const payment = params.get('payment');
+    const order = params.get('order');
+    if (payment === 'success' && order) {
+      setOrderNumber(order);
+      setDone(true);
+      clearCart();
+      // Clean URL
+      window.history.replaceState({}, '', '/checkout');
+    } else if (payment === 'fail' && order) {
+      toast.error('Оплата не прошла', {
+        description: `Заказ №${order}. Попробуйте ещё раз или выберите другой способ оплаты.`,
+      });
+      window.history.replaceState({}, '', '/checkout');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const formatPrice = (p: number) => p.toLocaleString('ru-RU') + ' ₽';
 
   const updateField = (field: keyof FormData, value: string) => {
