@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Heart, ShoppingBag } from 'lucide-react';
 import { products } from '@/data/products';
+import { getSizeChart } from '@/data/sizeCharts';
 import { useCart } from '@/context/CartContext';
 import { useFavorites } from '@/context/FavoritesContext';
 import { Button } from '@/components/ui/button';
