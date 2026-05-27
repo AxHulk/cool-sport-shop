@@ -61,6 +61,8 @@ import bagBlackFront from '@/assets/bag_black_1.webp';
 import bagBlackBack from '@/assets/bag_black_2.webp';
 import bagBlack3 from '@/assets/bag_black_3.webp';
 import bagBlack4 from '@/assets/bag_black_4.webp';
+import bagBlackDimensions from '@/assets/bag_black_dimensions.jpg';
+import bagBlueDimensions from '@/assets/bag_blue_dimensions.jpg';
 import longsleeveJoy1 from '@/assets/longsleeve_ivory_1.webp';
 import longsleeveJoy2 from '@/assets/longsleeve_ivory_2.webp';
 import longsleeveJoy3 from '@/assets/longsleeve_ivory_3.webp';
@@ -379,7 +381,7 @@ export const products: Product[] = [
     name: 'Сумка спортивная sky blue',
     category: 'bags',
     price: 6900,
-    images: [bagBlueFront, bagBlueBack, bagBlueThird, bagBlue4, bagBlue5],
+    images: [bagBlueFront, bagBlueBack, bagBlueThird, bagBlue4, bagBlue5, bagBlueDimensions],
     spinImages: [bagBlueFront, bagBlueBack, bagBlueThird, bagBlue4, bagBlue5],
     modelUrl: '/models/blue_bag.glb',
     colors: [{ name: 'Голубой', hex: '#c7dcf7' }],
@@ -394,7 +396,7 @@ export const products: Product[] = [
     name: 'Сумка спортивная black',
     category: 'bags',
     price: 6900,
-    images: [bagBlackFront, bagBlackBack, bagBlack3, bagBlack4],
+    images: [bagBlackFront, bagBlackBack, bagBlack3, bagBlack4, bagBlackDimensions],
     spinImages: [bagBlackFront, bagBlackBack, bagBlack3, bagBlack4],
     modelUrl: '/models/black_bag.glb',
     colors: [{ name: 'Чёрный', hex: '#1a1a1a' }],
