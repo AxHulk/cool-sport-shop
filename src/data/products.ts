@@ -381,7 +381,7 @@ export const products: Product[] = [
     name: 'Сумка спортивная sky blue',
     category: 'bags',
     price: 6900,
-    images: [bagBlueFront, bagBlueBack, bagBlueThird, bagBlue4, bagBlue5],
+    images: [bagBlueFront, bagBlueBack, bagBlueThird, bagBlue4, bagBlue5, bagBlueDimensions],
     spinImages: [bagBlueFront, bagBlueBack, bagBlueThird, bagBlue4, bagBlue5],
     modelUrl: '/models/blue_bag.glb',
     colors: [{ name: 'Голубой', hex: '#c7dcf7' }],
