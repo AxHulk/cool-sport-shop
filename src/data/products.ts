@@ -86,7 +86,7 @@ import topSky4 from '@/assets/top_sky_4.webp';
 import topSky5 from '@/assets/top_sky_5.webp';
 
 export type ProductCategory = 'leggings' | 'tops' | 'tanks' | 'rashguards' | 'bags' | 'longsleeves';
-export type ProductSize = 'XS-S' | 'M-L';
+export type ProductSize = 'XS-S' | 'M-L' | 'ONE SIZE';
 export type ProductColor = { name: string; hex: string };
 
 export interface Product {
@@ -386,7 +386,7 @@ export const products: Product[] = [
     spinImages: [bagBlueFront, bagBlueBack, bagBlueThird, bagBlue4, bagBlue5, bagBlueDimensions],
     modelUrl: '/models/blue_bag.glb',
     colors: [{ name: 'Голубой', hex: '#c7dcf7' }],
-    sizes: ['XS-S', 'M-L'],
+    sizes: ['ONE SIZE'],
     description: bagDesc,
     specs: bagSpecs,
     isNew: true,
@@ -401,7 +401,7 @@ export const products: Product[] = [
     spinImages: [bagBlackFront, bagBlackBack, bagBlack3, bagBlack4, bagBlackDimensions],
     modelUrl: '/models/black_bag.glb',
     colors: [{ name: 'Чёрный', hex: '#1a1a1a' }],
-    sizes: ['XS-S', 'M-L'],
+    sizes: ['ONE SIZE'],
     description: bagDesc,
     specs: bagSpecs,
     isNew: true,
@@ -418,7 +418,7 @@ export const products: Product[] = [
     spinImages: [longsleeveJoy1, longsleeveJoy2, longsleeveJoy3, longsleeveJoy4, longsleeveJoy5, longsleeveJoy6],
     modelUrl: '/models/longsleeve.glb',
     colors: [{ name: 'Айвори', hex: '#f0e6d3' }],
-    sizes: allSizes,
+    sizes: ['ONE SIZE'],
     description: longsleeveDesc,
     specs: longsleeveSpecs,
     isNew: true,
@@ -432,7 +432,7 @@ export const products: Product[] = [
     spinImages: [longsleeveEnergy1, longsleeveEnergy2, longsleeveEnergy3, longsleeveEnergy4],
     modelUrl: '/models/longsleeve.glb',
     colors: [{ name: 'Айвори', hex: '#f0e6d3' }],
-    sizes: allSizes,
+    sizes: ['ONE SIZE'],
     description: longsleeveDesc,
     specs: longsleeveSpecs,
     isNew: true,
