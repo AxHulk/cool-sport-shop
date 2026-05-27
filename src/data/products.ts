@@ -109,12 +109,12 @@ export interface Product {
 }
 
 export const categories = [
-  { slug: 'leggings' as const, name: 'Леггинсы', image: catLeggingsHero },
-  { slug: 'tops' as const, name: 'Топы', image: catTopsHero },
+  { slug: 'leggings' as const, name: 'Леггинсы', image: blackLeggings1 },
+  { slug: 'tops' as const, name: 'Топы', image: topBlack1 },
   { slug: 'tanks' as const, name: 'Майки', image: blackTank1 },
-  { slug: 'rashguards' as const, name: 'Рашгарды', image: catRashguardsHero },
+  { slug: 'rashguards' as const, name: 'Рашгарды', image: rashguardBlack1 },
   { slug: 'bags' as const, name: 'Сумки', image: bagBlueFront },
-  { slug: 'longsleeves' as const, name: 'Лонгсливы', image: catLongsleeves },
+  { slug: 'longsleeves' as const, name: 'Лонгсливы', image: longsleeveJoy1 },
 ];
 
 // Shared specs/descriptions
