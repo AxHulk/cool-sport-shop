@@ -382,7 +382,7 @@ export const products: Product[] = [
     category: 'bags',
     price: 6900,
     images: [bagBlueFront, bagBlueBack, bagBlueThird, bagBlue4, bagBlue5, bagBlueDimensions],
-    spinImages: [bagBlueFront, bagBlueBack, bagBlueThird, bagBlue4, bagBlue5],
+    spinImages: [bagBlueFront, bagBlueBack, bagBlueThird, bagBlue4, bagBlue5, bagBlueDimensions],
     modelUrl: '/models/blue_bag.glb',
     colors: [{ name: 'Голубой', hex: '#c7dcf7' }],
     sizes: ['XS-S', 'M-L'],
