@@ -55,10 +55,10 @@ const Index = () => {
           </div>
           <div className="flex flex-col justify-center items-center text-center px-6 py-12 lg:px-16 lg:py-0 lg:w-[420px]">
             <h1 style={{ fontFamily: "'Basic', sans-serif" }} className="text-4xl md:text-5xl lg:text-[3.25rem] leading-[1.05] tracking-[-0.01em] text-foreground">
-              THE EARTH<br />SET
+              BALANCE
             </h1>
             <p className="mt-5 text-xs font-semibold uppercase tracking-[0.22em] text-foreground/70">
-              ​
+              soul — body — mind
             </p>
             <Button
               asChild
