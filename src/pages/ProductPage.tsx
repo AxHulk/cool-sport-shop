@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Heart, ShoppingBag } from 'lucide-react';
 import { products } from '@/data/products';
@@ -46,6 +46,7 @@ const ProductPage = () => {
 
   // Local state: currently displayed product variant
   const [currentId, setCurrentId] = useState(id);
+  useEffect(() => { setCurrentId(id); }, [id]);
   const product = products.find(p => p.id === currentId) || baseProduct;
 
   const [selectedSize, setSelectedSize] = useState(product?.sizes[0]);
