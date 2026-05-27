@@ -397,7 +397,7 @@ export const products: Product[] = [
     category: 'bags',
     price: 6900,
     images: [bagBlackFront, bagBlackBack, bagBlack3, bagBlack4, bagBlackDimensions],
-    spinImages: [bagBlackFront, bagBlackBack, bagBlack3, bagBlack4],
+    spinImages: [bagBlackFront, bagBlackBack, bagBlack3, bagBlack4, bagBlackDimensions],
     modelUrl: '/models/black_bag.glb',
     colors: [{ name: 'Чёрный', hex: '#1a1a1a' }],
     sizes: ['XS-S', 'M-L'],
