@@ -222,27 +222,42 @@ const ProductPage = () => {
                 Размерная сетка
               </AccordionTrigger>
               <AccordionContent>
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b">
-                      <th className={cn(mutedLabelClass, 'py-2 text-left')}>Размер</th>
-                      <th className={mutedLabelClass}>Обхват груди</th>
-                      <th className={mutedLabelClass}>Обхват талии</th>
-                      <th className={mutedLabelClass}>Обхват бёдер</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {[
-                      ['XS-S', '82-86', '62-66', '88-92'],
-                      ['M-L', '90-94', '70-74', '96-100'],
-                    ].map(([s, ...v]) => (
-                      <tr key={s} className="border-b">
-                        <td className="py-3 font-medium">{s}</td>
-                        {v.map((x, i) => <td key={i} className="text-center">{x}</td>)}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                {(() => {
+                  const chart = getSizeChart(product);
+                  return (
+                    <div className="space-y-3">
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-sm">
+                          <thead>
+                            <tr className="border-b">
+                              {chart.columns.map((c, i) => (
+                                <th
+                                  key={c}
+                                  className={cn(mutedLabelClass, 'py-2', i === 0 ? 'text-left' : 'text-center')}
+                                >
+                                  {c}
+                                </th>
+                              ))}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {chart.rows.map((row) => (
+                              <tr key={row.size} className="border-b">
+                                <td className="py-3 font-medium">{row.size}</td>
+                                {row.values.map((x, i) => (
+                                  <td key={i} className="text-center">{x}</td>
+                                ))}
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                      {chart.footnote && (
+                        <p className="text-xs text-muted-foreground">{chart.footnote}</p>
+                      )}
+                    </div>
+                  );
+                })()}
               </AccordionContent>
             </AccordionItem>
 
