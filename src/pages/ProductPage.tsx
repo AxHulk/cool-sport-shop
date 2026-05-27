@@ -217,59 +217,62 @@ const ProductPage = () => {
               </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="sizes">
-              <AccordionTrigger className={cn(labelClass, 'py-4')}>
-                Размерная сетка
-              </AccordionTrigger>
-              <AccordionContent>
-                {(() => {
-                  const chart = getSizeChart(product);
-                  return (
-                    <div className="space-y-3">
-                      <div className="overflow-x-auto">
-                        <table className="w-full text-sm">
-                          <thead>
-                            <tr className="border-b">
-                              {chart.columns.map((c, i) => (
-                                <th
-                                  key={c}
-                                  className={cn(mutedLabelClass, 'py-2', i === 0 ? 'text-left' : 'text-center')}
-                                >
-                                  {c}
-                                </th>
-                              ))}
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {chart.rows.map((row) => (
-                              <tr key={row.size} className="border-b">
-                                <td className="py-3 font-medium">{row.size}</td>
-                                {row.values.map((x, i) => (
-                                  <td key={i} className="text-center">{x}</td>
+            {product.category !== 'bags' && product.category !== 'longsleeves' && (
+              <AccordionItem value="sizes">
+                <AccordionTrigger className={cn(labelClass, 'py-4')}>
+                  Размерная сетка
+                </AccordionTrigger>
+                <AccordionContent>
+                  {(() => {
+                    const chart = getSizeChart(product);
+                    return (
+                      <div className="space-y-3">
+                        <div className="overflow-x-auto">
+                          <table className="w-full text-sm">
+                            <thead>
+                              <tr className="border-b">
+                                {chart.columns.map((c, i) => (
+                                  <th
+                                    key={c}
+                                    className={cn(mutedLabelClass, 'py-2', i === 0 ? 'text-left' : 'text-center')}
+                                  >
+                                    {c}
+                                  </th>
                                 ))}
                               </tr>
-                            ))}
-                          </tbody>
-                        </table>
+                            </thead>
+                            <tbody>
+                              {chart.rows.map((row) => (
+                                <tr key={row.size} className="border-b">
+                                  <td className="py-3 font-medium">{row.size}</td>
+                                  {row.values.map((x, i) => (
+                                    <td key={i} className="text-center">{x}</td>
+                                  ))}
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                        {chart.footnote && (
+                          <p className="text-xs text-muted-foreground">{chart.footnote}</p>
+                        )}
                       </div>
-                      {chart.footnote && (
-                        <p className="text-xs text-muted-foreground">{chart.footnote}</p>
-                      )}
-                    </div>
-                  );
-                })()}
-              </AccordionContent>
-            </AccordionItem>
+                    );
+                  })()}
+                </AccordionContent>
+              </AccordionItem>
+            )}
 
             <AccordionItem value="delivery">
               <AccordionTrigger className={cn(labelClass, 'py-4')}>
                 Доставка и возврат
               </AccordionTrigger>
               <AccordionContent>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  Доставка по России курьером и в пункты выдачи 2–5 дней.
-                  Возврат и обмен в течение 14 дней.
-                </p>
+                <div className="text-sm text-muted-foreground leading-relaxed space-y-3">
+                  <p>Доставка по России курьером и в пункты выдачи 2–5 дней.</p>
+                  <p>Возврат и обмен в течение 14 дней.</p>
+                  <p>Возврат возможен только на товар, не бывший в использовании, с сохраненными заводскими ярлыками, неповрежденной пломбой и оригинальной упаковкой. Просим бережно относиться к изделию при примерке.</p>
+                </div>
               </AccordionContent>
             </AccordionItem>
           </Accordion>
