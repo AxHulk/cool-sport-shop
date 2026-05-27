@@ -51,6 +51,9 @@ const Header = () => {
                   <Link to="/catalog?category=tops" className={mobileLinkClass}>Топы</Link>
                 </SheetClose>
                 <SheetClose asChild>
+                  <Link to="/catalog?category=tanks" className={mobileLinkClass}>Майки</Link>
+                </SheetClose>
+                <SheetClose asChild>
                   <Link to="/catalog?category=longsleeves" className={mobileLinkClass}>Лонгсливы</Link>
                 </SheetClose>
                 <SheetClose asChild>
