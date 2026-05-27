@@ -14,7 +14,7 @@ export interface ComboSet {
 export const comboSets: ComboSet[] = [
   {
     id: 'combo-full',
-    name: 'Полный комплект',
+    name: 'полный комплект',
     description: 'Леггинсы + Топ + Рашгард',
     categorySlots: [
       { category: 'leggings', label: 'Леггинсы' },
@@ -25,7 +25,7 @@ export const comboSets: ComboSet[] = [
   },
   {
     id: 'combo-top-leggings',
-    name: 'Базовый комплект',
+    name: 'базовый',
     description: 'Леггинсы + Топ',
     categorySlots: [
       { category: 'leggings', label: 'Леггинсы' },
@@ -35,7 +35,7 @@ export const comboSets: ComboSet[] = [
   },
   {
     id: 'combo-bag',
-    name: 'Комплект с сумкой',
+    name: 'базовый+сумка',
     description: 'Сумка + Топ + Леггинсы',
     categorySlots: [
       { category: 'bags', label: 'Сумка' },

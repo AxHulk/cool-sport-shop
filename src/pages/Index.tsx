@@ -146,7 +146,7 @@ const Index = () => {
                 </div>
                 <div className="p-6 flex flex-col gap-3 flex-1">
                   <div>
-                    <h3 className="text-base font-semibold uppercase tracking-[0.1em]">{combo.name}</h3>
+                    <h3 className="text-base font-semibold uppercase tracking-[0.1em]">Сет «{combo.name}»</h3>
                     <p className="mt-1 text-xs uppercase tracking-[0.18em] text-foreground/60">{combo.description}</p>
                   </div>
                   <div className="flex items-baseline gap-3 mt-auto">

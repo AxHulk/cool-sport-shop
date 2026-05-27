@@ -72,7 +72,7 @@ const CartDrawer = () => {
               <div className="bg-accent/10 border border-accent/30 rounded-lg p-3 flex items-center gap-2">
                 <Tag className="h-4 w-4 text-accent shrink-0" />
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs font-semibold">Комплект «{appliedCombo.comboName}»</p>
+                  <p className="text-xs font-semibold">Сет «{appliedCombo.comboName}»</p>
                   <p className="text-xs text-muted-foreground">Скидка {appliedCombo.discountPercent}% — экономия {formatPrice(appliedCombo.savings)}</p>
                 </div>
               </div>
