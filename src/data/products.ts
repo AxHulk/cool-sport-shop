@@ -1,7 +1,8 @@
-import catLongsleeves from '@/assets/longsleeve_ivory_1.webp';
-import catLeggingsHero from '@/assets/cat_leggings_hero.webp';
-import catRashguardsHero from '@/assets/cat_rashguards_hero.webp';
-import catTopsHero from '@/assets/cat_tops_hero.webp';
+import catLeggingsCover from '@/assets/cat_leggings_cover.jpg';
+import catLongsleevesCover from '@/assets/cat_longsleeves_cover.jpg';
+import catTanksCover from '@/assets/cat_tanks_cover.jpg';
+import catRashguardsCover from '@/assets/cat_rashguards_cover.jpg';
+import catTopsCover from '@/assets/cat_tops_cover.jpg';
 import rashguardBlack1 from '@/assets/rashguard_black_1.webp';
 import rashguardBlack2 from '@/assets/rashguard_black_2.webp';
 import rashguardBlack3 from '@/assets/rashguard_black_3.webp';
@@ -111,12 +112,12 @@ export interface Product {
 }
 
 export const categories = [
-  { slug: 'leggings' as const, name: 'Леггинсы', image: blackLeggings1 },
-  { slug: 'tops' as const, name: 'Топы', image: topBlack1 },
-  { slug: 'tanks' as const, name: 'Майки', image: blackTank1 },
-  { slug: 'rashguards' as const, name: 'Рашгарды', image: rashguardBlack1 },
+  { slug: 'leggings' as const, name: 'Леггинсы', image: catLeggingsCover },
+  { slug: 'tops' as const, name: 'Топы', image: catTopsCover },
+  { slug: 'tanks' as const, name: 'Майки', image: catTanksCover },
+  { slug: 'rashguards' as const, name: 'Рашгарды', image: catRashguardsCover },
   { slug: 'bags' as const, name: 'Сумки', image: bagBlueFront },
-  { slug: 'longsleeves' as const, name: 'Лонгсливы', image: longsleeveJoy1 },
+  { slug: 'longsleeves' as const, name: 'Лонгсливы', image: catLongsleevesCover },
 ];
 
 // Shared specs/descriptions
