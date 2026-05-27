@@ -61,6 +61,8 @@ import bagBlackFront from '@/assets/bag_black_1.webp';
 import bagBlackBack from '@/assets/bag_black_2.webp';
 import bagBlack3 from '@/assets/bag_black_3.webp';
 import bagBlack4 from '@/assets/bag_black_4.webp';
+import bagBlackDimensions from '@/assets/bag_black_dimensions.jpg';
+import bagBlueDimensions from '@/assets/bag_blue_dimensions.jpg';
 import longsleeveJoy1 from '@/assets/longsleeve_ivory_1.webp';
 import longsleeveJoy2 from '@/assets/longsleeve_ivory_2.webp';
 import longsleeveJoy3 from '@/assets/longsleeve_ivory_3.webp';
