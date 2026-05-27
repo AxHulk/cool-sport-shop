@@ -36,16 +36,31 @@ const CartDrawer = () => {
                     <p className="text-xs text-muted-foreground">{item.color.name}, {item.size}</p>
                     <p className="text-sm font-semibold mt-1">{formatPrice(item.product.price)}</p>
                     <div className="flex items-center gap-2 mt-2">
-                      <Button variant="outline" size="icon" className="h-7 w-7" onClick={() => updateQuantity(item.product.id, item.size, item.color.name, item.quantity - 1)}>
+                      <button
+                        type="button"
+                        onClick={() => updateQuantity(item.product.id, item.size, item.color.name, item.quantity - 1)}
+                        className="h-7 w-7 inline-flex items-center justify-center rounded-md border border-border bg-background text-foreground/80 transition-colors active:bg-foreground/5"
+                        aria-label="Уменьшить"
+                      >
                         <Minus className="h-3 w-3" />
-                      </Button>
+                      </button>
                       <span className="text-sm w-6 text-center">{item.quantity}</span>
-                      <Button variant="outline" size="icon" className="h-7 w-7" onClick={() => updateQuantity(item.product.id, item.size, item.color.name, item.quantity + 1)}>
+                      <button
+                        type="button"
+                        onClick={() => updateQuantity(item.product.id, item.size, item.color.name, item.quantity + 1)}
+                        className="h-7 w-7 inline-flex items-center justify-center rounded-md border border-border bg-background text-foreground/80 transition-colors active:bg-foreground/5"
+                        aria-label="Увеличить"
+                      >
                         <Plus className="h-3 w-3" />
-                      </Button>
-                      <Button variant="ghost" size="icon" className="h-7 w-7 ml-auto" onClick={() => removeItem(item.product.id, item.size, item.color.name)}>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => removeItem(item.product.id, item.size, item.color.name)}
+                        className="h-7 w-7 inline-flex items-center justify-center rounded-md text-muted-foreground hover:text-foreground transition-colors ml-auto"
+                        aria-label="Удалить"
+                      >
                         <Trash2 className="h-3 w-3" />
-                      </Button>
+                      </button>
                     </div>
                   </div>
                 </div>

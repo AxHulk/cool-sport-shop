@@ -342,6 +342,7 @@ export const products: Product[] = [
       'Уход': 'Ручная стирка',
     },
     isNew: true,
+    colorGroup: 'top-basic',
   },
 
   // --- МАЙКИ ---
