@@ -441,7 +441,7 @@ const Checkout = () => {
             </div>
             {appliedCombo && (
               <div className="flex justify-between text-accent">
-                <span>Скидка «{appliedCombo.comboName}» (-{appliedCombo.discountPercent}%)</span>
+                <span>Скидка по сету «{appliedCombo.comboName}» (-{appliedCombo.discountPercent}%)</span>
                 <span>-{formatPrice(appliedCombo.savings)}</span>
               </div>
             )}

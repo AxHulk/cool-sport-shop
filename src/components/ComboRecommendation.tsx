@@ -117,7 +117,7 @@ const ComboCard = ({ combo, currentProduct, addItem }: ComboCardProps) => {
     <div className="border rounded-xl p-5 flex flex-col hover:border-[#e4f0fe] transition-colors">
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h3 className="font-semibold text-sm">{combo.name}</h3>
+          <h3 className="font-semibold text-sm">Сет «{combo.name}»</h3>
           <p className="text-xs text-muted-foreground">{combo.description}</p>
         </div>
         <span className="bg-[#e4f0fe] text-foreground text-xs font-bold px-2.5 py-1 rounded-full shrink-0">
