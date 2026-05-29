@@ -92,9 +92,11 @@ const Checkout = () => {
     }
 
     if (s === 1) {
-      if (!form.deliveryMethod) newErrors.deliveryMethod = 'Выберите способ доставки';
-      if (!form.city.trim()) newErrors.city = 'Введите город';
-      if (form.deliveryMethod === 'courier' && !form.address.trim()) newErrors.address = 'Введите адрес';
+      if (!cdek) {
+        setCdekError('Выберите город, способ доставки СДЭК и адрес/пункт выдачи');
+      } else {
+        setCdekError('');
+      }
     }
 
     if (s === 2) {
