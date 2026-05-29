@@ -11,6 +11,7 @@ import ConsentCheckbox from '@/components/ConsentCheckbox';
 import { supabase } from '@/integrations/supabase/client';
 import SEO from '@/components/SEO';
 import DolyamiBadge, { isDolyamiEligible, dolyamiPart } from '@/components/DolyamiBadge';
+import CdekDelivery, { type CdekSelection } from '@/components/checkout/CdekDelivery';
 
 const steps = ['Контакты', 'Доставка', 'Оплата'];
 
@@ -34,6 +35,8 @@ const Checkout = () => {
   const [consentError, setConsentError] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
+  const [cdek, setCdek] = useState<CdekSelection | null>(null);
+  const [cdekError, setCdekError] = useState('');
   const [form, setForm] = useState<FormData>({
     name: '',
     phone: '',
@@ -89,9 +92,11 @@ const Checkout = () => {
     }
 
     if (s === 1) {
-      if (!form.deliveryMethod) newErrors.deliveryMethod = 'Выберите способ доставки';
-      if (!form.city.trim()) newErrors.city = 'Введите город';
-      if (form.deliveryMethod === 'courier' && !form.address.trim()) newErrors.address = 'Введите адрес';
+      if (!cdek) {
+        setCdekError('Выберите город, способ доставки СДЭК и адрес/пункт выдачи');
+      } else {
+        setCdekError('');
+      }
     }
 
     if (s === 2) {
@@ -101,7 +106,8 @@ const Checkout = () => {
     setErrors(newErrors);
     const hasFieldErrors = Object.keys(newErrors).length > 0;
     const hasConsentError = s === 0 && !consent;
-    return !hasFieldErrors && !hasConsentError;
+    const hasCdekError = s === 1 && !cdek;
+    return !hasFieldErrors && !hasConsentError && !hasCdekError;
   };
 
   if (items.length === 0 && !done) {
@@ -127,7 +133,7 @@ const Checkout = () => {
   }
 
   const priceAfterCombo = totalPriceWithDiscount;
-  const deliveryPrice = priceAfterCombo >= 10000 ? 0 : 490;
+  const deliveryPrice = cdek?.price ?? 0;
   const finalPrice = priceAfterCombo + deliveryPrice;
 
   const handleSubmit = async () => {
@@ -149,9 +155,15 @@ const Checkout = () => {
             customer_name: form.name,
             customer_phone: form.phone,
             customer_email: form.email,
-            city: form.city,
-            address: form.address,
-            delivery_method: form.deliveryMethod,
+            city: cdek?.city_name || '',
+            address: cdek?.mode === 'pickup'
+              ? `СДЭК ПВЗ ${cdek.pvz_code}: ${cdek.pvz_address}`
+              : (cdek?.courier_address || ''),
+            delivery_method: cdek?.mode === 'pickup' ? 'cdek_pvz' : 'cdek_courier_fitting',
+            cdek_city_code: cdek?.city_code,
+            cdek_pvz_code: cdek?.pvz_code || null,
+            cdek_period_min: cdek?.period_min ?? null,
+            cdek_period_max: cdek?.period_max ?? null,
             payment_method: form.paymentMethod,
             total_price: priceAfterCombo,
             delivery_price: deliveryPrice,
@@ -238,9 +250,11 @@ const Checkout = () => {
             })),
             totalPrice: priceAfterCombo,
             deliveryPrice,
-            deliveryMethod: form.deliveryMethod,
-            city: form.city,
-            address: form.address,
+            deliveryMethod: cdek?.mode === 'pickup' ? 'cdek_pvz' : 'cdek_courier_fitting',
+            city: cdek?.city_name || '',
+            address: cdek?.mode === 'pickup'
+              ? `СДЭК ПВЗ ${cdek.pvz_code}: ${cdek.pvz_address}`
+              : (cdek?.courier_address || ''),
             paymentMethod: form.paymentMethod,
             discountAmount: appliedCombo?.savings || 0,
           },
@@ -311,37 +325,8 @@ const Checkout = () => {
 
           {step === 1 && (
             <div className="space-y-4">
-              <div>
-                <Label className="mb-2 block">Способ доставки *</Label>
-                <div className="flex gap-3">
-                  <Button
-                    variant={form.deliveryMethod === 'courier' ? 'default' : 'outline'}
-                    className="flex-1 h-16"
-                    onClick={() => updateField('deliveryMethod', 'courier')}
-                  >🚚 Курьер</Button>
-                  <Button
-                    variant={form.deliveryMethod === 'pickup' ? 'default' : 'outline'}
-                    className="flex-1 h-16"
-                    onClick={() => updateField('deliveryMethod', 'pickup')}
-                  >📦 Пункт выдачи</Button>
-                </div>
-                {errors.deliveryMethod && <p className="text-xs text-destructive mt-1">{errors.deliveryMethod}</p>}
-              </div>
-              <div>
-                <Label>Город *</Label>
-                <Input value={form.city} onChange={e => updateField('city', e.target.value)} placeholder="Москва" className={errors.city ? 'border-destructive' : ''} />
-                {errors.city && <p className="text-xs text-destructive mt-1">{errors.city}</p>}
-              </div>
-              {form.deliveryMethod === 'courier' && (
-                <div>
-                  <Label>Адрес *</Label>
-                  <Input value={form.address} onChange={e => updateField('address', e.target.value)} placeholder="ул. Примерная, д. 1, кв. 10" className={errors.address ? 'border-destructive' : ''} />
-                  {errors.address && <p className="text-xs text-destructive mt-1">{errors.address}</p>}
-                </div>
-              )}
-              {deliveryPrice > 0 && (
-                <p className="text-sm text-muted-foreground">Бесплатная доставка от {formatPrice(10000)}</p>
-              )}
+              <CdekDelivery quantity={totalItems} value={cdek} onChange={setCdek} />
+              {cdekError && <p className="text-xs text-destructive mt-1">{cdekError}</p>}
             </div>
           )}
 
@@ -446,8 +431,8 @@ const Checkout = () => {
               </div>
             )}
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Доставка</span>
-              <span>{deliveryPrice === 0 ? 'Бесплатно' : formatPrice(deliveryPrice)}</span>
+              <span className="text-muted-foreground">Доставка СДЭК</span>
+              <span>{cdek ? formatPrice(deliveryPrice) : '—'}</span>
             </div>
             <div className="flex justify-between font-semibold text-base border-t pt-2">
               <span>Итого</span>
