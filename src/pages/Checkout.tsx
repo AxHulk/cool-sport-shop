@@ -155,9 +155,15 @@ const Checkout = () => {
             customer_name: form.name,
             customer_phone: form.phone,
             customer_email: form.email,
-            city: form.city,
-            address: form.address,
-            delivery_method: form.deliveryMethod,
+            city: cdek?.city_name || '',
+            address: cdek?.mode === 'pickup'
+              ? `СДЭК ПВЗ ${cdek.pvz_code}: ${cdek.pvz_address}`
+              : (cdek?.courier_address || ''),
+            delivery_method: cdek?.mode === 'pickup' ? 'cdek_pvz' : 'cdek_courier_fitting',
+            cdek_city_code: cdek?.city_code,
+            cdek_pvz_code: cdek?.pvz_code || null,
+            cdek_period_min: cdek?.period_min ?? null,
+            cdek_period_max: cdek?.period_max ?? null,
             payment_method: form.paymentMethod,
             total_price: priceAfterCombo,
             delivery_price: deliveryPrice,
