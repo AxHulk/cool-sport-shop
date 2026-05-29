@@ -325,37 +325,8 @@ const Checkout = () => {
 
           {step === 1 && (
             <div className="space-y-4">
-              <div>
-                <Label className="mb-2 block">Способ доставки *</Label>
-                <div className="flex gap-3">
-                  <Button
-                    variant={form.deliveryMethod === 'courier' ? 'default' : 'outline'}
-                    className="flex-1 h-16"
-                    onClick={() => updateField('deliveryMethod', 'courier')}
-                  >🚚 Курьер</Button>
-                  <Button
-                    variant={form.deliveryMethod === 'pickup' ? 'default' : 'outline'}
-                    className="flex-1 h-16"
-                    onClick={() => updateField('deliveryMethod', 'pickup')}
-                  >📦 Пункт выдачи</Button>
-                </div>
-                {errors.deliveryMethod && <p className="text-xs text-destructive mt-1">{errors.deliveryMethod}</p>}
-              </div>
-              <div>
-                <Label>Город *</Label>
-                <Input value={form.city} onChange={e => updateField('city', e.target.value)} placeholder="Москва" className={errors.city ? 'border-destructive' : ''} />
-                {errors.city && <p className="text-xs text-destructive mt-1">{errors.city}</p>}
-              </div>
-              {form.deliveryMethod === 'courier' && (
-                <div>
-                  <Label>Адрес *</Label>
-                  <Input value={form.address} onChange={e => updateField('address', e.target.value)} placeholder="ул. Примерная, д. 1, кв. 10" className={errors.address ? 'border-destructive' : ''} />
-                  {errors.address && <p className="text-xs text-destructive mt-1">{errors.address}</p>}
-                </div>
-              )}
-              {deliveryPrice > 0 && (
-                <p className="text-sm text-muted-foreground">Бесплатная доставка от {formatPrice(10000)}</p>
-              )}
+              <CdekDelivery quantity={totalItems} value={cdek} onChange={setCdek} />
+              {cdekError && <p className="text-xs text-destructive mt-1">{cdekError}</p>}
             </div>
           )}
 
