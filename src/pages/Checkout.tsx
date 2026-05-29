@@ -106,7 +106,8 @@ const Checkout = () => {
     setErrors(newErrors);
     const hasFieldErrors = Object.keys(newErrors).length > 0;
     const hasConsentError = s === 0 && !consent;
-    return !hasFieldErrors && !hasConsentError;
+    const hasCdekError = s === 1 && !cdek;
+    return !hasFieldErrors && !hasConsentError && !hasCdekError;
   };
 
   if (items.length === 0 && !done) {
