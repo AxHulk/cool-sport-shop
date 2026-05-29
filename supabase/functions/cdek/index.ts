@@ -94,12 +94,15 @@ Deno.serve(async (req) => {
       const data = await cdekFetch(
         `/location/suggest/cities?name=${encodeURIComponent(q)}&country_code=RU`,
       );
-      const cities = (Array.isArray(data) ? data : []).slice(0, 10).map((c: any) => ({
-        code: c.code,
-        city: c.city,
-        region: c.region,
-        full: c.full_name,
-      }));
+      const cities = (Array.isArray(data) ? data : []).slice(0, 10).map((c: any) => {
+        const parts = (c.full_name || '').split(',').map((s: string) => s.trim());
+        return {
+          code: c.code,
+          city: c.city || parts[0] || c.full_name || '',
+          region: c.region || parts.slice(1, -1).join(', ') || '',
+          full: c.full_name || c.city || '',
+        };
+      });
       return json({ cities });
     }
 
