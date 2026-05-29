@@ -133,7 +133,7 @@ const Checkout = () => {
   }
 
   const priceAfterCombo = totalPriceWithDiscount;
-  const deliveryPrice = priceAfterCombo >= 10000 ? 0 : 490;
+  const deliveryPrice = cdek?.price ?? 0;
   const finalPrice = priceAfterCombo + deliveryPrice;
 
   const handleSubmit = async () => {
