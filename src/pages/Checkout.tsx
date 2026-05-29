@@ -431,8 +431,8 @@ const Checkout = () => {
               </div>
             )}
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Доставка</span>
-              <span>{deliveryPrice === 0 ? 'Бесплатно' : formatPrice(deliveryPrice)}</span>
+              <span className="text-muted-foreground">Доставка СДЭК</span>
+              <span>{cdek ? formatPrice(deliveryPrice) : '—'}</span>
             </div>
             <div className="flex justify-between font-semibold text-base border-t pt-2">
               <span>Итого</span>
