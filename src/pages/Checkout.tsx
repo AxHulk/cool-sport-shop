@@ -250,9 +250,11 @@ const Checkout = () => {
             })),
             totalPrice: priceAfterCombo,
             deliveryPrice,
-            deliveryMethod: form.deliveryMethod,
-            city: form.city,
-            address: form.address,
+            deliveryMethod: cdek?.mode === 'pickup' ? 'cdek_pvz' : 'cdek_courier_fitting',
+            city: cdek?.city_name || '',
+            address: cdek?.mode === 'pickup'
+              ? `СДЭК ПВЗ ${cdek.pvz_code}: ${cdek.pvz_address}`
+              : (cdek?.courier_address || ''),
             paymentMethod: form.paymentMethod,
             discountAmount: appliedCombo?.savings || 0,
           },
