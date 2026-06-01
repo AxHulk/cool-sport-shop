@@ -38,17 +38,23 @@ type Op =
   | 'listReturns'
   | 'updateReturnStatus'
   | 'analytics'
-  | 'dashboard';
+  | 'dashboard'
+  | 'listInventory'
+  | 'updateInventoryQty'
+  | 'addInventory';
 
 interface Body {
   op: Op;
-  // op-specific args
   status?: string;
   id?: string;
   orderId?: string;
   newStatus?: string;
   oldStatus?: string;
   trackingNumber?: string;
+  quantity?: number;
+  productId?: string;
+  size?: string;
+  color?: string;
 }
 
 Deno.serve(async (req) => {
@@ -204,6 +210,44 @@ Deno.serve(async (req) => {
           pendingReturns: pendingReturnsRes.count ?? 0,
           recentOrders: recentRes.data ?? [],
         });
+      }
+
+      case 'listInventory': {
+        const { data, error } = await supabase
+          .from('products_inventory')
+          .select('*')
+          .order('product_id');
+        if (error) throw error;
+        return json({ data });
+      }
+
+      case 'updateInventoryQty': {
+        if (!body.id || typeof body.quantity !== 'number')
+          return json({ error: 'id and quantity required' }, 400);
+        const { error } = await supabase
+          .from('products_inventory')
+          .update({ quantity: body.quantity })
+          .eq('id', body.id);
+        if (error) throw error;
+        return json({ ok: true });
+      }
+
+      case 'addInventory': {
+        if (!body.productId || !body.size || !body.color)
+          return json({ error: 'productId, size, color required' }, 400);
+        const { error } = await supabase
+          .from('products_inventory')
+          .insert({
+            product_id: body.productId,
+            size: body.size,
+            color: body.color,
+            quantity: body.quantity ?? 0,
+          });
+        if (error) {
+          if ((error as any).code === '23505') return json({ error: 'duplicate' }, 409);
+          throw error;
+        }
+        return json({ ok: true });
       }
 
       default:
