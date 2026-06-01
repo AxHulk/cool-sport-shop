@@ -38,17 +38,23 @@ type Op =
   | 'listReturns'
   | 'updateReturnStatus'
   | 'analytics'
-  | 'dashboard';
+  | 'dashboard'
+  | 'listInventory'
+  | 'updateInventoryQty'
+  | 'addInventory';
 
 interface Body {
   op: Op;
-  // op-specific args
   status?: string;
   id?: string;
   orderId?: string;
   newStatus?: string;
   oldStatus?: string;
   trackingNumber?: string;
+  quantity?: number;
+  productId?: string;
+  size?: string;
+  color?: string;
 }
 
 Deno.serve(async (req) => {
