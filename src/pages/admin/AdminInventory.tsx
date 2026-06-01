@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { adminApi } from '@/lib/adminApi';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -18,9 +18,13 @@ const AdminInventory = () => {
   useEffect(() => { loadInventory(); }, []);
 
   const loadInventory = async () => {
-    const { data } = await supabase.from('products_inventory').select('*').order('product_id');
-    setInventory(data || []);
-    setEdits({});
+    try {
+      const { data } = await adminApi<{ data: any[] }>('listInventory');
+      setInventory(data || []);
+      setEdits({});
+    } catch (e: any) {
+      toast.error(e?.message || 'Не удалось загрузить остатки');
+    }
   };
 
   const updateQty = (id: string, val: string) => {
@@ -30,9 +34,13 @@ const AdminInventory = () => {
   const saveItem = async (item: any) => {
     const qty = edits[item.id];
     if (qty === undefined) return;
-    await supabase.from('products_inventory').update({ quantity: qty }).eq('id', item.id);
-    toast.success('Остаток обновлён');
-    loadInventory();
+    try {
+      await adminApi('updateInventoryQty', { id: item.id, quantity: qty });
+      toast.success('Остаток обновлён');
+      loadInventory();
+    } catch (e: any) {
+      toast.error(e?.message || 'Не удалось сохранить');
+    }
   };
 
   const addItem = async () => {
@@ -40,14 +48,14 @@ const AdminInventory = () => {
     const size = prompt('Размер (XS/S/M/L):');
     const color = prompt('Цвет:');
     if (!productId || !size || !color) return;
-    const qty = parseInt(prompt('Количество:') || '0');
-    const { error } = await supabase.from('products_inventory').insert({ product_id: productId, size, color, quantity: qty });
-    if (error) {
-      if (error.code === '23505') toast.error('Такой SKU уже существует');
-      else toast.error(error.message);
-    } else {
+    const quantity = parseInt(prompt('Количество:') || '0');
+    try {
+      await adminApi('addInventory', { productId, size, color, quantity });
       toast.success('SKU добавлен');
       loadInventory();
+    } catch (e: any) {
+      if (e?.context?.status === 409) toast.error('Такой SKU уже существует');
+      else toast.error(e?.message || 'Ошибка');
     }
   };
 
