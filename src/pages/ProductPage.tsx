@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Heart, ShoppingBag } from 'lucide-react';
+import { Heart, ShoppingBag, Check } from 'lucide-react';
 import { products } from '@/data/products';
 import { getSizeChart } from '@/data/sizeCharts';
 import { useCart } from '@/context/CartContext';
