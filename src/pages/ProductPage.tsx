@@ -171,12 +171,26 @@ const ProductPage = () => {
           <div className="flex gap-3 mb-3">
             <Button
               size="lg"
-              className="flex-1 text-xs font-semibold uppercase tracking-[0.18em]"
+              className={cn(
+                'flex-1 text-xs font-semibold uppercase tracking-[0.18em] transition-all duration-300',
+                justAdded && 'bg-emerald-700 hover:bg-emerald-700 text-white scale-[0.98]'
+              )}
               onClick={() => {
-                if (selectedSize) addItem(product, selectedSize, productColor);
+                if (!selectedSize) return;
+                addItem(product, selectedSize, productColor);
+                setJustAdded(true);
+                window.setTimeout(() => setJustAdded(false), 1600);
               }}
             >
-              <ShoppingBag className="h-5 w-5 mr-2" /> Добавить в корзину
+              {justAdded ? (
+                <>
+                  <Check className="h-5 w-5 mr-2 animate-in zoom-in-50 duration-200" /> Добавлено в корзину
+                </>
+              ) : (
+                <>
+                  <ShoppingBag className="h-5 w-5 mr-2" /> Добавить в корзину
+                </>
+              )}
             </Button>
             <Button variant="outline" size="lg" onClick={() => toggleFavorite(product.id)} aria-label="Избранное">
               <Heart className={cn('h-5 w-5', fav && 'fill-foreground text-foreground')} />
