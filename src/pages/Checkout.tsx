@@ -332,7 +332,7 @@ const Checkout = () => {
               </div>
               <div>
                 <Label>Телефон *</Label>
-                <Input value={form.phone} onChange={e => updateField('phone', e.target.value)} placeholder="+7 (999) 123-45-67" className={errors.phone ? 'border-destructive' : ''} />
+                <Input value={form.phone} onChange={e => updateField('phone', e.target.value)} placeholder="+7 (999) 123-45-67" type="tel" inputMode="tel" autoComplete="tel" maxLength={18} className={errors.phone ? 'border-destructive' : ''} />
                 {errors.phone && <p className="text-xs text-destructive mt-1">{errors.phone}</p>}
               </div>
               <div>
