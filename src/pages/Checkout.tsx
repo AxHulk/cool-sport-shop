@@ -71,8 +71,33 @@ const Checkout = () => {
 
   const formatPrice = (p: number) => p.toLocaleString('ru-RU') + ' ₽';
 
+  const formatRuPhone = (value: string): string => {
+    // Берём только цифры
+    let digits = value.replace(/\D/g, '');
+    // Нормализуем код страны: 8XXXXXXXXXX или 7XXXXXXXXXX → 7XXXXXXXXXX
+    if (digits.startsWith('8')) digits = '7' + digits.slice(1);
+    if (!digits.startsWith('7')) {
+      // Если пользователь вводит без кода — считаем что это российский номер
+      if (digits.length > 0) digits = '7' + digits;
+    }
+    digits = digits.slice(0, 11);
+    if (digits.length === 0) return '';
+    const country = digits[0];
+    const a = digits.slice(1, 4);
+    const b = digits.slice(4, 7);
+    const c = digits.slice(7, 9);
+    const d = digits.slice(9, 11);
+    let out = `+${country}`;
+    if (a) out += ` (${a}${a.length === 3 ? ')' : ''}`;
+    if (b) out += ` ${b}`;
+    if (c) out += `-${c}`;
+    if (d) out += `-${d}`;
+    return out;
+  };
+
   const updateField = (field: keyof FormData, value: string) => {
-    setForm(prev => ({ ...prev, [field]: value }));
+    const v = field === 'phone' ? formatRuPhone(value) : value;
+    setForm(prev => ({ ...prev, [field]: v }));
     if (errors[field]) setErrors(prev => ({ ...prev, [field]: undefined }));
   };
 
@@ -82,6 +107,7 @@ const Checkout = () => {
     if (s === 0) {
       if (!form.name.trim()) newErrors.name = 'Введите имя';
       if (!form.phone.trim()) newErrors.phone = 'Введите телефон';
+      else if (form.phone.replace(/\D/g, '').length !== 11) newErrors.phone = 'Введите корректный российский номер';
       if (!form.email.trim()) newErrors.email = 'Введите email';
       else if (!/\S+@\S+\.\S+/.test(form.email)) newErrors.email = 'Некорректный email';
       if (!consent) {
@@ -306,7 +332,7 @@ const Checkout = () => {
               </div>
               <div>
                 <Label>Телефон *</Label>
-                <Input value={form.phone} onChange={e => updateField('phone', e.target.value)} placeholder="+7 (999) 123-45-67" className={errors.phone ? 'border-destructive' : ''} />
+                <Input value={form.phone} onChange={e => updateField('phone', e.target.value)} placeholder="+7 (999) 123-45-67" type="tel" inputMode="tel" autoComplete="tel" maxLength={18} className={errors.phone ? 'border-destructive' : ''} />
                 {errors.phone && <p className="text-xs text-destructive mt-1">{errors.phone}</p>}
               </div>
               <div>
