@@ -96,7 +96,19 @@ const Checkout = () => {
   };
 
   const updateField = (field: keyof FormData, value: string) => {
-    const v = field === 'phone' ? formatRuPhone(value) : value;
+    let v = value;
+    if (field === 'phone') {
+      // Если пользователь удалил форматирующий символ (скобку/пробел/дефис),
+      // длина строки уменьшилась, но количество цифр не изменилось — стираем ещё одну цифру.
+      const prev = form.phone;
+      const prevDigits = prev.replace(/\D/g, '');
+      const newDigits = value.replace(/\D/g, '');
+      let digitsSource = value;
+      if (value.length < prev.length && newDigits.length === prevDigits.length && newDigits.length > 0) {
+        digitsSource = newDigits.slice(0, -1);
+      }
+      v = formatRuPhone(digitsSource);
+    }
     setForm(prev => ({ ...prev, [field]: v }));
     if (errors[field]) setErrors(prev => ({ ...prev, [field]: undefined }));
   };
