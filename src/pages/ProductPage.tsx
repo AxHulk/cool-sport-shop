@@ -46,6 +46,7 @@ const ProductPage = () => {
 
   // Local state: currently displayed product variant
   const [currentId, setCurrentId] = useState(id);
+  const [justAdded, setJustAdded] = useState(false);
   useEffect(() => { setCurrentId(id); }, [id]);
   const product = products.find(p => p.id === currentId) || baseProduct;
 
