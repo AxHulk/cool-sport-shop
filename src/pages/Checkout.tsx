@@ -107,6 +107,7 @@ const Checkout = () => {
     if (s === 0) {
       if (!form.name.trim()) newErrors.name = 'Введите имя';
       if (!form.phone.trim()) newErrors.phone = 'Введите телефон';
+      else if (form.phone.replace(/\D/g, '').length !== 11) newErrors.phone = 'Введите корректный российский номер';
       if (!form.email.trim()) newErrors.email = 'Введите email';
       else if (!/\S+@\S+\.\S+/.test(form.email)) newErrors.email = 'Некорректный email';
       if (!consent) {
