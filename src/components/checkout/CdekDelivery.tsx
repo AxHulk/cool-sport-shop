@@ -155,7 +155,7 @@ const CdekDelivery = ({ quantity, value, onChange }: Props) => {
 
   // Bubble final selection up when complete
   useEffect(() => {
-    if (!city || !mode || !price) {
+    if (!city || !mode || (!price && !requiresManager)) {
       onChange(null);
       return;
     }
@@ -171,15 +171,15 @@ const CdekDelivery = ({ quantity, value, onChange }: Props) => {
       city_code: city.code,
       city_name: city.city,
       mode,
-      price: price.price,
-      period_min: price.period_min,
-      period_max: price.period_max,
+      price: price?.price ?? 0,
+      period_min: price?.period_min,
+      period_max: price?.period_max,
       pvz_code: selectedPoint?.code,
       pvz_address: selectedPoint?.address,
       courier_address: mode === 'courier_fitting' ? courierAddress.trim() : undefined,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [city, mode, price, selectedPoint, courierAddress]);
+  }, [city, mode, price, requiresManager, selectedPoint, courierAddress]);
 
   return (
     <div className="space-y-5">
