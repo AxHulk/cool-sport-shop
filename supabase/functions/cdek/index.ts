@@ -60,18 +60,21 @@ async function cdekFetch(path: string, init: RequestInit = {}) {
   return data;
 }
 
-// Габариты для расчёта: на единицу товара
-const DEFAULT_ITEM = { weight: 400, length: 25, width: 20, height: 5 }; // граммы, см
+// Габариты упаковки: коробка M для 1–3 единиц, коробка L для 4–10.
+// Свыше 10 — расчёт не производится (связь через менеджеров).
+const ITEM_WEIGHT = 400; // грамм на единицу
+const BOX_M = { length: 30, width: 25, height: 10, tare: 150 }; // см / грамм
+const BOX_L = { length: 40, width: 30, height: 20, tare: 300 };
+export const MAX_AUTO_QUANTITY = 10;
 
 function buildPackages(quantity: number) {
-  // Объединяем всё в одну посылку, вес суммируем, размеры берём базовые с учётом высоты.
-  const totalWeight = Math.max(500, quantity * DEFAULT_ITEM.weight);
-  const height = Math.min(40, Math.max(5, quantity * DEFAULT_ITEM.height));
+  const box = quantity <= 3 ? BOX_M : BOX_L;
+  const weight = Math.max(500, quantity * ITEM_WEIGHT + box.tare);
   return [{
-    weight: totalWeight,
-    length: DEFAULT_ITEM.length,
-    width: DEFAULT_ITEM.width,
-    height,
+    weight,
+    length: box.length,
+    width: box.width,
+    height: box.height,
   }];
 }
 
@@ -136,6 +139,13 @@ Deno.serve(async (req) => {
       const mode = body.mode as 'pickup' | 'courier_fitting';
       const quantity = Math.max(1, Number(body.quantity) || 1);
       if (!cityCode) throw new Error('city_code required');
+
+      if (quantity > MAX_AUTO_QUANTITY) {
+        return json({
+          requires_manager: true,
+          message: 'При заказе более 10 единиц стоимость и сроки доставки рассчитываются индивидуально. Свяжитесь с менеджером.',
+        });
+      }
 
       const tariffCode = mode === 'pickup' ? 136 : 137;
       const services = mode === 'courier_fitting'

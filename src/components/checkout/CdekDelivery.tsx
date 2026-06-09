@@ -81,6 +81,7 @@ const CdekDelivery = ({ quantity, value, onChange }: Props) => {
   const [price, setPrice] = useState<{ price: number; period_min?: number; period_max?: number } | null>(
     value ? { price: value.price, period_min: value.period_min, period_max: value.period_max } : null,
   );
+  const [requiresManager, setRequiresManager] = useState(false);
   const [calcError, setCalcError] = useState('');
   const [calculating, setCalculating] = useState(false);
 
@@ -135,8 +136,16 @@ const CdekDelivery = ({ quantity, value, onChange }: Props) => {
     if (!city || !mode) return;
     setCalculating(true);
     setCalcError('');
+    setRequiresManager(false);
     cdekCall('calculate', { city_code: city.code, mode, quantity })
-      .then((d) => setPrice({ price: d.price, period_min: d.period_min, period_max: d.period_max }))
+      .then((d) => {
+        if (d.requires_manager) {
+          setRequiresManager(true);
+          setPrice(null);
+        } else {
+          setPrice({ price: d.price, period_min: d.period_min, period_max: d.period_max });
+        }
+      })
       .catch((e) => {
         setCalcError(e.message);
         setPrice(null);
@@ -146,7 +155,7 @@ const CdekDelivery = ({ quantity, value, onChange }: Props) => {
 
   // Bubble final selection up when complete
   useEffect(() => {
-    if (!city || !mode || !price) {
+    if (!city || !mode || (!price && !requiresManager)) {
       onChange(null);
       return;
     }
@@ -162,15 +171,15 @@ const CdekDelivery = ({ quantity, value, onChange }: Props) => {
       city_code: city.code,
       city_name: city.city,
       mode,
-      price: price.price,
-      period_min: price.period_min,
-      period_max: price.period_max,
+      price: price?.price ?? 0,
+      period_min: price?.period_min,
+      period_max: price?.period_max,
       pvz_code: selectedPoint?.code,
       pvz_address: selectedPoint?.address,
       courier_address: mode === 'courier_fitting' ? courierAddress.trim() : undefined,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [city, mode, price, selectedPoint, courierAddress]);
+  }, [city, mode, price, requiresManager, selectedPoint, courierAddress]);
 
   return (
     <div className="space-y-5">
@@ -325,6 +334,14 @@ const CdekDelivery = ({ quantity, value, onChange }: Props) => {
           {calculating ? (
             <div className="flex items-center gap-2 text-muted-foreground">
               <Loader2 className="h-4 w-4 animate-spin" /> Рассчитываем стоимость…
+            </div>
+          ) : requiresManager ? (
+            <div className="space-y-1">
+              <div className="font-medium">Доставка рассчитывается индивидуально</div>
+              <p className="text-xs text-muted-foreground">
+                При заказе более 10 единиц стоимость и сроки уточняет менеджер.
+                Оформите заказ — мы свяжемся с вами для согласования доставки и оплаты.
+              </p>
             </div>
           ) : calcError ? (
             <p className="text-destructive">Не удалось рассчитать: {calcError}</p>
