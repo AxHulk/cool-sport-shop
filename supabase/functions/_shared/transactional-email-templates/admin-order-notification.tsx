@@ -27,11 +27,24 @@ interface AdminOrderNotificationProps {
   city?: string
   address?: string
   paymentMethod?: string
+  paymentStatus?: 'pending' | 'paid' | 'cancelled' | string
   discountAmount?: number
   promoCode?: string | null
 }
 
 const formatPrice = (p: number) => p.toLocaleString('ru-RU') + ' ₽'
+
+const paymentStatusMeta = (s?: string) => {
+  switch (s) {
+    case 'paid':
+      return { label: '✅ Оплачен', bg: '#e8f5ec', color: '#1b6b34', border: '#bfe3c9' }
+    case 'cancelled':
+      return { label: '❌ Не оплачен / отменён', bg: '#fdecec', color: '#9a2b2b', border: '#f3c2c2' }
+    case 'pending':
+    default:
+      return { label: '⏳ Ожидает оплаты', bg: '#fff4e0', color: '#8a5a00', border: '#f5d99a' }
+  }
+}
 
 const AdminOrderNotificationEmail = ({
   orderNumber = '00000',
@@ -45,12 +58,14 @@ const AdminOrderNotificationEmail = ({
   city = '',
   address = '',
   paymentMethod = '',
+  paymentStatus = 'pending',
   discountAmount = 0,
   promoCode = null,
 }: AdminOrderNotificationProps) => {
   const finalPrice = totalPrice + deliveryPrice
   const deliveryLabel = deliveryMethod === 'courier' ? 'Курьер' : 'Пункт выдачи'
-  const paymentLabel = paymentMethod === 'card' ? 'Карта' : 'СБП'
+  const paymentLabel = paymentMethod === 'card' ? 'Карта' : paymentMethod === 'sbp' ? 'СБП' : paymentMethod === 'dolyami' ? 'Долями' : paymentMethod
+  const statusMeta = paymentStatusMeta(paymentStatus)
 
   return (
     <Html lang="ru" dir="ltr">
