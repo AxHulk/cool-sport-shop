@@ -163,7 +163,11 @@ const AdminOrderNotificationEmail = ({
 
 export const template = {
   component: AdminOrderNotificationEmail,
-  subject: (data: Record<string, any>) => `🛒 Новый заказ №${data.orderNumber || ''} — ${data.customerName || ''}`,
+  subject: (data: Record<string, any>) => {
+    const s = data.paymentStatus
+    const tag = s === 'paid' ? '✅ ОПЛАЧЕН' : s === 'cancelled' ? '❌ НЕ ОПЛАЧЕН' : '⏳ ожидает оплаты'
+    return `🛒 Заказ №${data.orderNumber || ''} [${tag}] — ${data.customerName || ''}`
+  },
   displayName: 'Уведомление администратору о заказе',
   to: 'asana.wear@yandex.ru',
   previewData: {
