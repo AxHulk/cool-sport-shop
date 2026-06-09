@@ -170,6 +170,7 @@ Deno.serve(async (req) => {
             city: payload.city,
             address: payload.address,
             paymentMethod: payload.payment_method,
+            paymentStatus: 'pending',
             discountAmount: payload.discount_amount,
             promoCode: payload.promo_code || null,
           },
