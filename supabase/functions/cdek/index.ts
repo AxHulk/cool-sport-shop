@@ -140,6 +140,13 @@ Deno.serve(async (req) => {
       const quantity = Math.max(1, Number(body.quantity) || 1);
       if (!cityCode) throw new Error('city_code required');
 
+      if (quantity > MAX_AUTO_QUANTITY) {
+        return json({
+          requires_manager: true,
+          message: 'При заказе более 10 единиц стоимость и сроки доставки рассчитываются индивидуально. Свяжитесь с менеджером.',
+        });
+      }
+
       const tariffCode = mode === 'pickup' ? 136 : 137;
       const services = mode === 'courier_fitting'
         ? [{ code: 'TRYING_ON', parameter: '1' }]
