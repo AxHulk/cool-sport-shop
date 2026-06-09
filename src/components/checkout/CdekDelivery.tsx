@@ -136,8 +136,16 @@ const CdekDelivery = ({ quantity, value, onChange }: Props) => {
     if (!city || !mode) return;
     setCalculating(true);
     setCalcError('');
+    setRequiresManager(false);
     cdekCall('calculate', { city_code: city.code, mode, quantity })
-      .then((d) => setPrice({ price: d.price, period_min: d.period_min, period_max: d.period_max }))
+      .then((d) => {
+        if (d.requires_manager) {
+          setRequiresManager(true);
+          setPrice(null);
+        } else {
+          setPrice({ price: d.price, period_min: d.period_min, period_max: d.period_max });
+        }
+      })
       .catch((e) => {
         setCalcError(e.message);
         setPrice(null);
