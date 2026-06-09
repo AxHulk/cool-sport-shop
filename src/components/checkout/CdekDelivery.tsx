@@ -335,6 +335,14 @@ const CdekDelivery = ({ quantity, value, onChange }: Props) => {
             <div className="flex items-center gap-2 text-muted-foreground">
               <Loader2 className="h-4 w-4 animate-spin" /> Рассчитываем стоимость…
             </div>
+          ) : requiresManager ? (
+            <div className="space-y-1">
+              <div className="font-medium">Доставка рассчитывается индивидуально</div>
+              <p className="text-xs text-muted-foreground">
+                При заказе более 10 единиц стоимость и сроки уточняет менеджер.
+                Оформите заказ — мы свяжемся с вами для согласования доставки и оплаты.
+              </p>
+            </div>
           ) : calcError ? (
             <p className="text-destructive">Не удалось рассчитать: {calcError}</p>
           ) : price ? (
