@@ -81,6 +81,7 @@ const CdekDelivery = ({ quantity, value, onChange }: Props) => {
   const [price, setPrice] = useState<{ price: number; period_min?: number; period_max?: number } | null>(
     value ? { price: value.price, period_min: value.period_min, period_max: value.period_max } : null,
   );
+  const [requiresManager, setRequiresManager] = useState(false);
   const [calcError, setCalcError] = useState('');
   const [calculating, setCalculating] = useState(false);
 
