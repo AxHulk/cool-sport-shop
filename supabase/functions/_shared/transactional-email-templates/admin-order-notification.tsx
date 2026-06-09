@@ -75,6 +75,24 @@ const AdminOrderNotificationEmail = ({
         <Container style={container}>
           <Heading style={h1}>🛒 Новый заказ №{orderNumber}</Heading>
 
+          <Section style={{ marginBottom: '8px' }}>
+            <Text
+              style={{
+                display: 'inline-block',
+                padding: '6px 12px',
+                borderRadius: '999px',
+                fontSize: '13px',
+                fontWeight: 600,
+                backgroundColor: statusMeta.bg,
+                color: statusMeta.color,
+                border: `1px solid ${statusMeta.border}`,
+                margin: '0 0 8px',
+              }}
+            >
+              {statusMeta.label}
+            </Text>
+          </Section>
+
           <Section>
             <Text style={sectionTitle}>Клиент</Text>
             <Text style={text}><strong>Имя:</strong> {customerName}</Text>
@@ -94,7 +112,7 @@ const AdminOrderNotificationEmail = ({
 
           <Section>
             <Text style={sectionTitle}>Оплата</Text>
-            <Text style={text}>{paymentLabel}</Text>
+            <Text style={text}>{paymentLabel} — {statusMeta.label}</Text>
           </Section>
 
           <Hr style={hr} />
