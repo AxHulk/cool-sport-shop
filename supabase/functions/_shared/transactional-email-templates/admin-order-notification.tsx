@@ -27,11 +27,24 @@ interface AdminOrderNotificationProps {
   city?: string
   address?: string
   paymentMethod?: string
+  paymentStatus?: 'pending' | 'paid' | 'cancelled' | string
   discountAmount?: number
   promoCode?: string | null
 }
 
 const formatPrice = (p: number) => p.toLocaleString('ru-RU') + ' ₽'
+
+const paymentStatusMeta = (s?: string) => {
+  switch (s) {
+    case 'paid':
+      return { label: '✅ Оплачен', bg: '#e8f5ec', color: '#1b6b34', border: '#bfe3c9' }
+    case 'cancelled':
+      return { label: '❌ Не оплачен / отменён', bg: '#fdecec', color: '#9a2b2b', border: '#f3c2c2' }
+    case 'pending':
+    default:
+      return { label: '⏳ Ожидает оплаты', bg: '#fff4e0', color: '#8a5a00', border: '#f5d99a' }
+  }
+}
 
 const AdminOrderNotificationEmail = ({
   orderNumber = '00000',
@@ -45,12 +58,14 @@ const AdminOrderNotificationEmail = ({
   city = '',
   address = '',
   paymentMethod = '',
+  paymentStatus = 'pending',
   discountAmount = 0,
   promoCode = null,
 }: AdminOrderNotificationProps) => {
   const finalPrice = totalPrice + deliveryPrice
   const deliveryLabel = deliveryMethod === 'courier' ? 'Курьер' : 'Пункт выдачи'
-  const paymentLabel = paymentMethod === 'card' ? 'Карта' : 'СБП'
+  const paymentLabel = paymentMethod === 'card' ? 'Карта' : paymentMethod === 'sbp' ? 'СБП' : paymentMethod === 'dolyami' ? 'Долями' : paymentMethod
+  const statusMeta = paymentStatusMeta(paymentStatus)
 
   return (
     <Html lang="ru" dir="ltr">
@@ -59,6 +74,24 @@ const AdminOrderNotificationEmail = ({
       <Body style={main}>
         <Container style={container}>
           <Heading style={h1}>🛒 Новый заказ №{orderNumber}</Heading>
+
+          <Section style={{ marginBottom: '8px' }}>
+            <Text
+              style={{
+                display: 'inline-block',
+                padding: '6px 12px',
+                borderRadius: '999px',
+                fontSize: '13px',
+                fontWeight: 600,
+                backgroundColor: statusMeta.bg,
+                color: statusMeta.color,
+                border: `1px solid ${statusMeta.border}`,
+                margin: '0 0 8px',
+              }}
+            >
+              {statusMeta.label}
+            </Text>
+          </Section>
 
           <Section>
             <Text style={sectionTitle}>Клиент</Text>
@@ -79,7 +112,7 @@ const AdminOrderNotificationEmail = ({
 
           <Section>
             <Text style={sectionTitle}>Оплата</Text>
-            <Text style={text}>{paymentLabel}</Text>
+            <Text style={text}>{paymentLabel} — {statusMeta.label}</Text>
           </Section>
 
           <Hr style={hr} />
@@ -130,7 +163,11 @@ const AdminOrderNotificationEmail = ({
 
 export const template = {
   component: AdminOrderNotificationEmail,
-  subject: (data: Record<string, any>) => `🛒 Новый заказ №${data.orderNumber || ''} — ${data.customerName || ''}`,
+  subject: (data: Record<string, any>) => {
+    const s = data.paymentStatus
+    const tag = s === 'paid' ? '✅ ОПЛАЧЕН' : s === 'cancelled' ? '❌ НЕ ОПЛАЧЕН' : '⏳ ожидает оплаты'
+    return `🛒 Заказ №${data.orderNumber || ''} [${tag}] — ${data.customerName || ''}`
+  },
   displayName: 'Уведомление администратору о заказе',
   to: 'asana.wear@yandex.ru',
   previewData: {

@@ -170,6 +170,7 @@ Deno.serve(async (req) => {
             city: payload.city,
             address: payload.address,
             paymentMethod: payload.payment_method,
+            paymentStatus: 'pending',
             discountAmount: payload.discount_amount,
             promoCode: payload.promo_code || null,
           },
@@ -191,7 +192,7 @@ Deno.serve(async (req) => {
           quantity: i.quantity,
           price: i.price,
         }));
-        const tgText = `🛒 <b>Новый заказ №${payload.order_number}</b>\n\n👤 <b>Клиент:</b> ${payload.customer_name}\n📞 ${payload.customer_phone}\n📧 ${payload.customer_email}\n\n📦 <b>Доставка:</b> ${payload.delivery_method === 'courier' ? 'Курьер' : 'Пункт выдачи'}\n🏙 ${payload.city}${payload.address ? ', ' + payload.address : ''}\n\n💳 <b>Оплата:</b> ${payload.payment_method === 'card' ? 'Карта' : 'СБП'}\n\n<b>Товары:</b>\n${items.map((i, idx) => `  ${idx + 1}. ${i.product_name} (${i.size}, ${i.color}) ×${i.quantity} — ${i.price} ₽`).join('\n')}\n\n${payload.discount_amount > 0 ? `🏷 Скидка: -${payload.discount_amount} ₽\n` : ''}🚚 Доставка: ${payload.delivery_price === 0 ? 'Бесплатно' : payload.delivery_price + ' ₽'}\n💰 <b>Итого: ${payload.total_price} ₽</b>`;
+        const tgText = `🛒 <b>Новый заказ №${payload.order_number}</b>\n<i>⏳ Статус оплаты: ожидает оплаты</i>\n\n👤 <b>Клиент:</b> ${payload.customer_name}\n📞 ${payload.customer_phone}\n📧 ${payload.customer_email}\n\n📦 <b>Доставка:</b> ${payload.delivery_method === 'courier' ? 'Курьер' : 'Пункт выдачи'}\n🏙 ${payload.city}${payload.address ? ', ' + payload.address : ''}\n\n💳 <b>Оплата:</b> ${payload.payment_method === 'card' ? 'Карта' : payload.payment_method === 'sbp' ? 'СБП' : payload.payment_method === 'dolyami' ? 'Долями' : payload.payment_method}\n\n<b>Товары:</b>\n${items.map((i, idx) => `  ${idx + 1}. ${i.product_name} (${i.size}, ${i.color}) ×${i.quantity} — ${i.price} ₽`).join('\n')}\n\n${payload.discount_amount > 0 ? `🏷 Скидка: -${payload.discount_amount} ₽\n` : ''}🚚 Доставка: ${payload.delivery_price === 0 ? 'Бесплатно' : payload.delivery_price + ' ₽'}\n💰 <b>Итого: ${payload.total_price} ₽</b>\n\n<i>Уведомление об оплате придёт отдельным сообщением.</i>`;
 
         await fetch('https://connector-gateway.lovable.dev/telegram/sendMessage', {
           method: 'POST',
