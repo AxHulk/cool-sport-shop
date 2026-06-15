@@ -63,9 +63,7 @@ const Checkout = () => {
       // Clean URL
       window.history.replaceState({}, '', '/checkout');
     } else if (payment === 'fail' && order) {
-      toast.error('Оплата не прошла', {
-        description: `Заказ №${order}. Попробуйте ещё раз или выберите другой способ оплаты.`,
-      });
+      setFailedOrder(order);
       window.history.replaceState({}, '', '/checkout');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
