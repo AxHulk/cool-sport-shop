@@ -68,10 +68,12 @@ Deno.serve(async (req) => {
     const mapped = mapOrderStatus(status);
     if (mapped) update.status = mapped;
 
+    // Поддержка повторных попыток оплаты: OrderId может быть вида "42106-r12345"
+    const baseOrderNumber = String(orderId).split("-r")[0];
     const { data: existing } = await supabase
       .from("orders")
       .select("id, status, order_number, customer_name, customer_email, total_price, delivery_price")
-      .eq("order_number", orderId)
+      .eq("order_number", baseOrderNumber)
       .maybeSingle();
 
     if (existing) {

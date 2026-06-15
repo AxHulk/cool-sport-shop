@@ -37,6 +37,8 @@ const Checkout = () => {
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
   const [cdek, setCdek] = useState<CdekSelection | null>(null);
   const [cdekError, setCdekError] = useState('');
+  const [failedOrder, setFailedOrder] = useState<string | null>(null);
+  const [retrying, setRetrying] = useState<string | null>(null);
   const [form, setForm] = useState<FormData>({
     name: '',
     phone: '',
@@ -61,9 +63,7 @@ const Checkout = () => {
       // Clean URL
       window.history.replaceState({}, '', '/checkout');
     } else if (payment === 'fail' && order) {
-      toast.error('Оплата не прошла', {
-        description: `Заказ №${order}. Попробуйте ещё раз или выберите другой способ оплаты.`,
-      });
+      setFailedOrder(order);
       window.history.replaceState({}, '', '/checkout');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -147,6 +147,76 @@ const Checkout = () => {
     const hasCdekError = s === 1 && !cdek;
     return !hasFieldErrors && !hasConsentError && !hasCdekError;
   };
+
+  const handleRetryPayment = async (method: 'card' | 'sbp' | 'dolyami') => {
+    if (!failedOrder) return;
+    setRetrying(method);
+    try {
+      const projectId = import.meta.env.VITE_SUPABASE_PROJECT_ID;
+      const res = await fetch(
+        `https://${projectId}.supabase.co/functions/v1/tinkoff-retry`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'apikey': import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY },
+          body: JSON.stringify({ order_number: failedOrder, payment_method: method }),
+        }
+      );
+      const data = await res.json();
+      if (!res.ok || !data.payment_url) {
+        throw new Error(data.error || 'Не удалось создать платёж');
+      }
+      window.location.href = data.payment_url;
+    } catch (e) {
+      toast.error('Не удалось перейти к оплате', { description: (e as Error).message });
+      setRetrying(null);
+    }
+  };
+
+  if (failedOrder) {
+    return (
+      <div className="container py-20 max-w-md mx-auto text-center">
+        <SEO title="Оплата не прошла" description="Повторите оплату заказа в āsana." noindex />
+        <div className="w-16 h-16 rounded-full bg-red-100 text-red-600 flex items-center justify-center mx-auto mb-6 text-2xl">!</div>
+        <h1 className="text-2xl md:text-3xl font-serif mb-3">Оплата не прошла</h1>
+        <p className="text-muted-foreground mb-2">Заказ №{failedOrder} сохранён.</p>
+        <p className="text-sm text-muted-foreground mb-8">
+          Это не списало деньги. Попробуйте оплатить ещё раз — можно выбрать другой способ.
+        </p>
+        <div className="space-y-3">
+          <Button
+            className="w-full h-12"
+            onClick={() => handleRetryPayment('card')}
+            disabled={!!retrying}
+          >
+            {retrying === 'card' ? 'Создаём платёж…' : '💳 Оплатить картой'}
+          </Button>
+          <Button
+            variant="outline"
+            className="w-full h-12"
+            onClick={() => handleRetryPayment('sbp')}
+            disabled={!!retrying}
+          >
+            {retrying === 'sbp' ? 'Создаём платёж…' : '📱 Оплатить через СБП'}
+          </Button>
+          <Button
+            variant="outline"
+            className="w-full h-12"
+            onClick={() => handleRetryPayment('dolyami')}
+            disabled={!!retrying}
+          >
+            {retrying === 'dolyami' ? 'Создаём платёж…' : 'Оплатить Долями (4 платежа)'}
+          </Button>
+        </div>
+        <button
+          type="button"
+          className="mt-8 text-sm text-muted-foreground hover:text-foreground underline underline-offset-4"
+          onClick={() => { setFailedOrder(null); setRetrying(null); }}
+        >
+          Вернуться в магазин
+        </button>
+      </div>
+    );
+  }
 
   if (items.length === 0 && !done) {
     return (
@@ -405,6 +475,14 @@ const Checkout = () => {
                     </div>
                     <span className="text-sm font-semibold lowercase tracking-tight">долями</span>
                   </button>
+                )}
+                {form.paymentMethod === 'dolyami' && (
+                  <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
+                    <span className="text-foreground font-medium">Важно:</span> оплату Долями нужно завершить с первой попытки.
+                    Если Долями откажут или вы закроете окно оплаты — по этой ссылке оплатить уже не получится
+                    (это особенность сервиса Долями). Не переживайте: мы покажем кнопку «Оплатить заново», чтобы
+                    повторить попытку или выбрать другой способ.
+                  </p>
                 )}
                 {errors.paymentMethod && <p className="text-xs text-destructive mt-1">{errors.paymentMethod}</p>}
               </div>
