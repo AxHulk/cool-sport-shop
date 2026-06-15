@@ -476,6 +476,14 @@ const Checkout = () => {
                     <span className="text-sm font-semibold lowercase tracking-tight">долями</span>
                   </button>
                 )}
+                {form.paymentMethod === 'dolyami' && (
+                  <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
+                    <span className="text-foreground font-medium">Важно:</span> оплату Долями нужно завершить с первой попытки.
+                    Если Долями откажут или вы закроете окно оплаты — по этой ссылке оплатить уже не получится
+                    (это особенность сервиса Долями). Не переживайте: мы покажем кнопку «Оплатить заново», чтобы
+                    повторить попытку или выбрать другой способ.
+                  </p>
+                )}
                 {errors.paymentMethod && <p className="text-xs text-destructive mt-1">{errors.paymentMethod}</p>}
               </div>
             </div>
