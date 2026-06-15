@@ -37,6 +37,8 @@ const Checkout = () => {
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
   const [cdek, setCdek] = useState<CdekSelection | null>(null);
   const [cdekError, setCdekError] = useState('');
+  const [failedOrder, setFailedOrder] = useState<string | null>(null);
+  const [retrying, setRetrying] = useState<string | null>(null);
   const [form, setForm] = useState<FormData>({
     name: '',
     phone: '',
