@@ -5,7 +5,10 @@ import { Input } from '@/components/ui/input';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 
-const STORAGE_KEY = 'asana_discount_popup_shown';
+// Раз в сессию: sessionStorage очищается при закрытии вкладки/браузера.
+// Если пользователь оставил контакты — больше не показываем (постоянный флаг).
+const SESSION_KEY = 'asana_discount_popup_shown_session';
+const SUBMITTED_KEY = 'asana_discount_popup_submitted';
 const DELAY_MS = 15000;
 
 const DiscountPopup = () => {
@@ -16,14 +19,15 @@ const DiscountPopup = () => {
   const [done, setDone] = useState(false);
 
   useEffect(() => {
-    if (localStorage.getItem(STORAGE_KEY)) return;
+    if (localStorage.getItem(SUBMITTED_KEY)) return;
+    if (sessionStorage.getItem(SESSION_KEY)) return;
     const t = setTimeout(() => setOpen(true), DELAY_MS);
     return () => clearTimeout(t);
   }, []);
 
   const handleClose = (next: boolean) => {
     setOpen(next);
-    if (!next) localStorage.setItem(STORAGE_KEY, '1');
+    if (!next) sessionStorage.setItem(SESSION_KEY, '1');
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
