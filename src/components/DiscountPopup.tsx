@@ -44,7 +44,7 @@ const DiscountPopup = () => {
       toast.error('Не удалось отправить. Попробуйте ещё раз');
       return;
     }
-    localStorage.setItem(STORAGE_KEY, '1');
+    localStorage.setItem(SUBMITTED_KEY, '1');
     setDone(true);
   };
 
