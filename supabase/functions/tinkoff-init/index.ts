@@ -2,6 +2,7 @@
 // Customer is then redirected to T-Kassa form where Dolyame is one of the methods.
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.4";
 import { createHash } from "node:crypto";
+import { tinkoffFetch } from "../_shared/russian-ca.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -122,7 +123,7 @@ Deno.serve(async (req) => {
     }
     // для "card" — ничего не передаём, форма карты по умолчанию
 
-    const tinkoffRes = await fetch(TINKOFF_API, {
+    const tinkoffRes = await tinkoffFetch(TINKOFF_API, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(initPayload),

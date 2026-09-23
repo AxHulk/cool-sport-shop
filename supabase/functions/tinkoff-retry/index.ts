@@ -3,6 +3,7 @@
 // Each retry gets a fresh OrderId suffix (-r2, -r3...) — Т-Касса требует уникальный OrderId.
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.4";
 import { createHash } from "node:crypto";
+import { tinkoffFetch } from "../_shared/russian-ca.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -140,7 +141,7 @@ Deno.serve(async (req) => {
     if (method === "dolyami") initPayload.DATA = { PaymentMethod: "dolyame" };
     else if (method === "sbp") initPayload.DATA = { PaymentMethod: "sbp" };
 
-    const tinkoffRes = await fetch(TINKOFF_API, {
+    const tinkoffRes = await tinkoffFetch(TINKOFF_API, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(initPayload),
