@@ -115,3 +115,23 @@ GcyIdu7yNMMRihGVZCYr8rYiJoKiOzDqOkPkLOPdhtVlgnhowzHDxMHND/E2WA5p
 ZHuNM/m0TXt2wTTPL7JH2YC0gPz/BvvSzjksgzU5rLbRyUKQkgU=
 -----END CERTIFICATE-----`,
 ];
+
+let cachedClient: unknown | undefined;
+
+/** fetch() that trusts the Russian Trusted CA chain (for securepay.tinkoff.ru). */
+export async function tinkoffFetch(url: string, init: RequestInit): Promise<Response> {
+  try {
+    if (cachedClient === undefined) {
+      // deno-lint-ignore no-explicit-any
+      const create = (Deno as any).createHttpClient;
+      cachedClient = create ? create({ caCerts: RUSSIAN_TRUSTED_CA_CERTS }) : null;
+    }
+    if (cachedClient) {
+      // deno-lint-ignore no-explicit-any
+      return await fetch(url, { ...init, client: cachedClient } as any);
+    }
+  } catch (e) {
+    console.error("tinkoffFetch: custom CA client failed, falling back:", e);
+  }
+  return await fetch(url, init);
+}
