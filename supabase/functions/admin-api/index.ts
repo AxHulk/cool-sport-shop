@@ -20,7 +20,7 @@ const json = (body: unknown, status = 200) =>
     headers: { ...corsHeaders, 'Content-Type': 'application/json' },
   });
 
-const ADMIN_PASSWORD = Deno.env.get('ADMIN_PASSWORD') ?? '';
+const ADMIN_PASSWORD = (Deno.env.get('ADMIN_PASSWORD') ?? '').trim();
 
 const supabase = createClient(
   Deno.env.get('SUPABASE_URL')!,
@@ -64,7 +64,7 @@ Deno.serve(async (req) => {
 
   if (!ADMIN_PASSWORD) return json({ error: 'Server not configured' }, 500);
 
-  const pwd = req.headers.get('x-admin-password') ?? '';
+  const pwd = (req.headers.get('x-admin-password') ?? '').trim();
   if (pwd !== ADMIN_PASSWORD) {
     return json({ error: 'Unauthorized' }, 401);
   }
