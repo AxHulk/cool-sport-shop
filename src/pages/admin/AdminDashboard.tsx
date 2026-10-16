@@ -4,6 +4,7 @@ import { adminApi } from '@/lib/adminApi';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ShoppingCart, DollarSign, RotateCcw, Package } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { paymentInfo } from '@/lib/paymentStatus';
 
 const AdminDashboard = () => {
   const [stats, setStats] = useState({ todayOrders: 0, weekRevenue: 0, monthRevenue: 0, returns: 0, monthDelivery: 0, unpaidCount: 0, unpaidSum: 0 });
@@ -82,6 +83,17 @@ const AdminDashboard = () => {
         </Card>
       </div>
 
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <Card>
+          <CardHeader className="pb-2"><CardTitle className="text-sm font-medium text-muted-foreground">Доставка (СДЭК) за месяц, из оплаченных</CardTitle></CardHeader>
+          <CardContent><p className="text-2xl font-bold">{fmt(stats.monthDelivery)}</p></CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="pb-2"><CardTitle className="text-sm font-medium text-muted-foreground">Не оплачено за месяц</CardTitle></CardHeader>
+          <CardContent><p className="text-2xl font-bold">{fmt(stats.unpaidSum)} <span className="text-sm font-normal text-muted-foreground">({stats.unpaidCount} зак.)</span></p></CardContent>
+        </Card>
+      </div>
+
       <div className="grid lg:grid-cols-2 gap-6">
         <Card>
           <CardHeader><CardTitle className="text-base">Последние заказы</CardTitle></CardHeader>
@@ -97,6 +109,7 @@ const AdminDashboard = () => {
                       <span className="text-sm text-muted-foreground ml-2">{o.customer_name}</span>
                     </div>
                     <div className="flex items-center gap-2">
+                      <span className={`text-xs px-2 py-0.5 rounded-full ${paymentInfo(o.payment_status).cls}`}>{paymentInfo(o.payment_status).label}</span>
                       <span className={`text-xs px-2 py-0.5 rounded-full ${statusColors[o.status] || ''}`}>{statusLabels[o.status]}</span>
                       <span className="text-sm font-medium">{fmt(Number(o.total_price))}</span>
                     </div>
