@@ -6,7 +6,7 @@ import { ShoppingCart, DollarSign, RotateCcw, Package } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const AdminDashboard = () => {
-  const [stats, setStats] = useState({ todayOrders: 0, weekRevenue: 0, monthRevenue: 0, returns: 0 });
+  const [stats, setStats] = useState({ todayOrders: 0, weekRevenue: 0, monthRevenue: 0, returns: 0, monthDelivery: 0, unpaidCount: 0, unpaidSum: 0 });
   const [recentOrders, setRecentOrders] = useState<any[]>([]);
   const [lowStock, setLowStock] = useState<any[]>([]);
 
@@ -20,6 +20,9 @@ const AdminDashboard = () => {
         todayCount: number;
         weekRevenue: number;
         monthRevenue: number;
+        monthDelivery: number;
+        unpaidCount: number;
+        unpaidSum: number;
         pendingReturns: number;
         recentOrders: any[];
       }>('dashboard'),
@@ -31,6 +34,9 @@ const AdminDashboard = () => {
       weekRevenue: dash.weekRevenue,
       monthRevenue: dash.monthRevenue,
       returns: dash.pendingReturns,
+      monthDelivery: dash.monthDelivery ?? 0,
+      unpaidCount: dash.unpaidCount ?? 0,
+      unpaidSum: dash.unpaidSum ?? 0,
     });
     setRecentOrders(dash.recentOrders);
     setLowStock(stockRes.data || []);

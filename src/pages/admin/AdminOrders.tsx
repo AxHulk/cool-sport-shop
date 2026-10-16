@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { adminApi } from '@/lib/adminApi';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { paymentInfo } from '@/lib/paymentStatus';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -92,6 +93,8 @@ const AdminOrders = () => {
               <TableHead>Клиент</TableHead>
               <TableHead>Телефон</TableHead>
               <TableHead>Сумма</TableHead>
+              <TableHead>Доставка</TableHead>
+              <TableHead>Оплата</TableHead>
               <TableHead>Статус</TableHead>
               <TableHead>Дата</TableHead>
               <TableHead></TableHead>
@@ -99,13 +102,15 @@ const AdminOrders = () => {
           </TableHeader>
           <TableBody>
             {filtered.length === 0 ? (
-              <TableRow><TableCell colSpan={7} className="text-center text-muted-foreground py-8">Заказов нет</TableCell></TableRow>
+              <TableRow><TableCell colSpan={9} className="text-center text-muted-foreground py-8">Заказов нет</TableCell></TableRow>
             ) : filtered.map(o => (
               <TableRow key={o.id}>
                 <TableCell className="font-medium">#{o.order_number}</TableCell>
                 <TableCell>{o.customer_name}</TableCell>
                 <TableCell>{o.customer_phone}</TableCell>
                 <TableCell>{fmt(o.total_price)}</TableCell>
+                <TableCell>{fmt(o.delivery_price)}</TableCell>
+                <TableCell><span className={`text-xs px-2 py-0.5 rounded-full ${paymentInfo(o.payment_status).cls}`}>{paymentInfo(o.payment_status).label}</span></TableCell>
                 <TableCell>
                   <Select value={o.status} onValueChange={v => changeStatus(o.id, o.status, v)}>
                     <SelectTrigger className="w-[130px] h-7 text-xs">

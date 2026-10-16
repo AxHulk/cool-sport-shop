@@ -21,6 +21,7 @@ const json = (body: unknown, status = 200) =>
   });
 
 const ADMIN_PASSWORD = (Deno.env.get('ADMIN_PASSWORD') ?? '').trim();
+const PAID = ['CONFIRMED', 'AUTHORIZED'];
 
 const supabase = createClient(
   Deno.env.get('SUPABASE_URL')!,
@@ -178,7 +179,7 @@ Deno.serve(async (req) => {
         const since = new Date(Date.now() - 30 * 86400000).toISOString();
         const [itemsRes, recentRes, allRes] = await Promise.all([
           supabase.from('order_items').select('product_name, quantity, size'),
-          supabase.from('orders').select('total_price, created_at').gte('created_at', since),
+          supabase.from('orders').select('total_price, delivery_price, created_at').gte('created_at', since).in('payment_status', PAID),
           supabase.from('orders').select('status'),
         ]);
         if (itemsRes.error) throw itemsRes.error;
@@ -196,17 +197,23 @@ Deno.serve(async (req) => {
         const todayStart = new Date(new Date().setHours(0, 0, 0, 0)).toISOString();
         const weekStart = new Date(now - 7 * 86400000).toISOString();
         const monthStart = new Date(now - 30 * 86400000).toISOString();
-        const [todayRes, weekRes, monthRes, pendingReturnsRes, recentRes] = await Promise.all([
+        const [todayRes, monthAllRes, pendingReturnsRes, recentRes] = await Promise.all([
           supabase.from('orders').select('id', { count: 'exact', head: true }).gte('created_at', todayStart),
-          supabase.from('orders').select('total_price').gte('created_at', weekStart),
-          supabase.from('orders').select('total_price').gte('created_at', monthStart),
+          supabase.from('orders').select('total_price, delivery_price, payment_status, created_at').gte('created_at', monthStart),
           supabase.from('returns').select('id', { count: 'exact', head: true }).eq('status', 'pending'),
           supabase.from('orders').select('*').order('created_at', { ascending: false }).limit(5),
         ]);
+        const month = (monthAllRes.data ?? []) as any[];
+        const paid = month.filter((o) => PAID.includes(o.payment_status));
+        const unpaid = month.filter((o) => !PAID.includes(o.payment_status));
+        const sum = (arr: any[], k: string) => arr.reduce((s, o) => s + Number(o[k] || 0), 0);
         return json({
           todayCount: todayRes.count ?? 0,
-          weekRevenue: (weekRes.data ?? []).reduce((s, o: any) => s + Number(o.total_price || 0), 0),
-          monthRevenue: (monthRes.data ?? []).reduce((s, o: any) => s + Number(o.total_price || 0), 0),
+          weekRevenue: sum(paid.filter((o) => o.created_at >= weekStart), 'total_price'),
+          monthRevenue: sum(paid, 'total_price'),
+          monthDelivery: sum(paid, 'delivery_price'),
+          unpaidCount: unpaid.length,
+          unpaidSum: sum(unpaid, 'total_price') + sum(unpaid, 'delivery_price'),
           pendingReturns: pendingReturnsRes.count ?? 0,
           recentOrders: recentRes.data ?? [],
         });
