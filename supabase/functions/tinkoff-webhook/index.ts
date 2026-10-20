@@ -27,7 +27,6 @@ function verifyToken(payload: Record<string, unknown>): boolean {
 function mapOrderStatus(tinkoffStatus: string): string | null {
   switch (tinkoffStatus) {
     case "CONFIRMED":
-    case "AUTHORIZED":
       return "paid";
     case "REJECTED":
     case "DEADLINE_EXPIRED":

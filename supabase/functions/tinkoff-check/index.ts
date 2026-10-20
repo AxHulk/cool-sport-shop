@@ -11,7 +11,7 @@ const corsHeaders = {
 
 const TERMINAL_KEY = Deno.env.get("TINKOFF_TERMINAL_KEY")!;
 const PASSWORD = Deno.env.get("TINKOFF_PASSWORD")!;
-const FINAL = ["CONFIRMED", "AUTHORIZED", "REJECTED", "DEADLINE_EXPIRED", "CANCELED", "REVERSED", "REFUNDED", "PARTIAL_REFUNDED", "AUTH_FAIL"];
+const FINAL = ["CONFIRMED", "REJECTED", "DEADLINE_EXPIRED", "CANCELED", "REVERSED", "REFUNDED", "PARTIAL_REFUNDED", "AUTH_FAIL"];
 
 function token(p: Record<string, string>) {
   const e = Object.entries({ ...p, Password: PASSWORD }).sort((a, b) => a[0].localeCompare(b[0]));
