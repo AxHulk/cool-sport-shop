@@ -21,7 +21,7 @@ const json = (body: unknown, status = 200) =>
   });
 
 const ADMIN_PASSWORD = (Deno.env.get('ADMIN_PASSWORD') ?? '').trim();
-const PAID = ['CONFIRMED', 'AUTHORIZED'];
+const PAID = ['CONFIRMED'];
 
 const supabase = createClient(
   Deno.env.get('SUPABASE_URL')!,

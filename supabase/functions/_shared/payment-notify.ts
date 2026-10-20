@@ -51,7 +51,7 @@ export async function notifyPaymentStatus(supabase: any, order: {
 }
 
 export function mapPaymentResult(s: string): "paid" | "cancelled" | null {
-  if (s === "CONFIRMED" || s === "AUTHORIZED") return "paid";
+  if (s === "CONFIRMED") return "paid";
   if (["REJECTED", "DEADLINE_EXPIRED", "CANCELED", "REVERSED", "REFUNDED", "PARTIAL_REFUNDED", "AUTH_FAIL"].includes(s)) return "cancelled";
   return null;
 }
