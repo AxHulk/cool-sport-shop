@@ -4,7 +4,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
-import { Search, Save } from 'lucide-react';
+import { Search, Save, RotateCcw } from 'lucide-react';
 import { products } from '@/data/products';
 
 const productNameMap: Record<string, string> = {};
@@ -24,6 +24,16 @@ const AdminInventory = () => {
       setEdits({});
     } catch (e: any) {
       toast.error(e?.message || 'Не удалось загрузить остатки');
+    }
+  };
+
+  const resetReserved = async (id: string) => {
+    try {
+      await adminApi('resetReserved', { id });
+      toast.success('Бронь сброшена');
+      loadInventory();
+    } catch (e: any) {
+      toast.error(e?.message || 'Не удалось сбросить бронь');
     }
   };
 
@@ -85,7 +95,7 @@ const AdminInventory = () => {
               <TableHead>Размер</TableHead>
               <TableHead>Цвет</TableHead>
               <TableHead>Остаток</TableHead>
-              <TableHead>Бронь</TableHead>
+              <TableHead title="Товар в неоплаченных заказах. Снимается после оплаты (тогда списывается из остатка), отказа банка или через 1 час без оплаты.">Бронь ⓘ</TableHead>
               <TableHead>Доступно</TableHead>
               <TableHead></TableHead>
             </TableRow>
@@ -108,7 +118,16 @@ const AdminInventory = () => {
                       onChange={e => updateQty(item.id, e.target.value)}
                     />
                   </TableCell>
-                  <TableCell>{item.reserved}</TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-1">
+                      {item.reserved}
+                      {item.reserved > 0 && (
+                        <Button variant="ghost" size="icon" className="h-6 w-6" title="Сбросить бронь" onClick={() => resetReserved(item.id)}>
+                          <RotateCcw className="h-3 w-3" />
+                        </Button>
+                      )}
+                    </div>
+                  </TableCell>
                   <TableCell className={available <= 0 ? 'text-destructive font-medium' : ''}>{available}</TableCell>
                   <TableCell>
                     {edits[item.id] !== undefined && (
