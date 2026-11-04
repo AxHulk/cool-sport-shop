@@ -239,6 +239,13 @@ Deno.serve(async (req) => {
         return json({ ok: true });
       }
 
+      case 'resetReserved': {
+        if (!body.id) return json({ error: 'id required' }, 400);
+        const { error } = await supabase.from('products_inventory').update({ reserved: 0 }).eq('id', body.id);
+        if (error) throw error;
+        return json({ ok: true });
+      }
+
       case 'addInventory': {
         if (!body.productId || !body.size || !body.color)
           return json({ error: 'productId, size, color required' }, 400);
