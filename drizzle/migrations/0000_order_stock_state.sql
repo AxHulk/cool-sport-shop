@@ -1,0 +1,1 @@
+ALTER TABLE public.orders ADD COLUMN IF NOT EXISTS stock_state text NOT NULL DEFAULT 'released';
