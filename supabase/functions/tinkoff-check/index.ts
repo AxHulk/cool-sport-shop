@@ -2,6 +2,7 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.4";
 import { createHash } from "node:crypto";
 import { tinkoffFetch } from "../_shared/russian-ca.ts";
+import { settleStock } from "../_shared/stock.ts";
 import { mapPaymentResult, notifyPaymentStatus } from "../_shared/payment-notify.ts";
 
 const corsHeaders = {
@@ -52,6 +53,7 @@ Deno.serve(async (req) => {
         await supabase.from("orders").update({ payment_status: status }).eq("id", o.id);
         const result = mapPaymentResult(status);
         if (result) {
+          await settleStock(supabase, o.id, result === "paid" ? "deduct" : "release");
           await supabase.from("order_history").insert({
             order_id: o.id, field_changed: "payment_status",
             old_value: o.payment_status, new_value: status, changed_by: "tinkoff-check",
@@ -63,6 +65,15 @@ Deno.serve(async (req) => {
     } catch (e) {
       results.push({ order: o.order_number, error: (e as Error).message });
     }
+  }
+
+  // Release reservations of unpaid orders older than 1 hour
+  const hourAgo = new Date(Date.now() - 3600 * 1000).toISOString();
+  const { data: stale } = await supabase.from("orders").select("id, payment_status")
+    .eq("stock_state", "reserved").lt("created_at", hourAgo).limit(200);
+  for (const o of stale ?? []) {
+    if (o.payment_status === "AUTHORIZED") continue;
+    await settleStock(supabase, o.id, "release");
   }
 
   return new Response(JSON.stringify({ checked: results.length, results }), {

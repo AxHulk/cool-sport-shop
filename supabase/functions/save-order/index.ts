@@ -106,6 +106,8 @@ Deno.serve(async (req) => {
       }
     }
 
+    await supabase.from("orders").update({ stock_state: "reserved" }).eq("id", order.id);
+
     // 4. Upsert customer
     const { data: existingCustomer } = await supabase
       .from("customers")

@@ -2,6 +2,7 @@
 // Verifies Token, updates order.payment_status and order.status accordingly.
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.4";
 import { createHash } from "node:crypto";
+import { settleStock } from "../_shared/stock.ts";
 import { mapPaymentResult, notifyPaymentStatus } from "../_shared/payment-notify.ts";
 
 const PASSWORD = Deno.env.get("TINKOFF_PASSWORD")!;
@@ -76,6 +77,7 @@ Deno.serve(async (req) => {
     if (existing) {
       const { error: updErr } = await supabase.from("orders").update(update).eq("id", existing.id);
       if (updErr) console.error("Order update error:", updErr);
+      if (result) await settleStock(supabase, existing.id, result === "paid" ? "deduct" : "release");
       if (result && existing.payment_status !== status) {
         await supabase.from("order_history").insert({
           order_id: existing.id,

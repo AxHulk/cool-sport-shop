@@ -261,6 +261,7 @@ export type Database = {
           payment_status: string | null
           promo_code: string | null
           status: Database["public"]["Enums"]["order_status"]
+          stock_state: string
           total_price: number
           tracking_number: string | null
           updated_at: string
@@ -282,6 +283,7 @@ export type Database = {
           payment_status?: string | null
           promo_code?: string | null
           status?: Database["public"]["Enums"]["order_status"]
+          stock_state?: string
           total_price?: number
           tracking_number?: string | null
           updated_at?: string
@@ -303,6 +305,7 @@ export type Database = {
           payment_status?: string | null
           promo_code?: string | null
           status?: Database["public"]["Enums"]["order_status"]
+          stock_state?: string
           total_price?: number
           tracking_number?: string | null
           updated_at?: string
