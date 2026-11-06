@@ -26,6 +26,7 @@ interface OrderConfirmationProps {
   address?: string
   paymentMethod?: string
   discountAmount?: number
+  paid?: boolean
 }
 
 const formatPrice = (p: number) => p.toLocaleString('ru-RU') + ' ₽'
@@ -41,20 +42,21 @@ const OrderConfirmationEmail = ({
   address = '',
   paymentMethod = '',
   discountAmount = 0,
+  paid = false,
 }: OrderConfirmationProps) => {
   const finalPrice = totalPrice + deliveryPrice
-  const deliveryLabel = deliveryMethod === 'courier' ? 'Курьер' : 'Пункт выдачи'
-  const paymentLabel = paymentMethod === 'card' ? 'Карта' : 'СБП'
+  const deliveryLabel = deliveryMethod.includes('courier') ? 'Курьер' : 'Пункт выдачи'
+  const paymentLabel = paymentMethod === 'card' ? 'Карта' : paymentMethod === 'sbp' ? 'СБП' : paymentMethod === 'dolyame' ? 'Долями' : paymentMethod
 
   return (
     <Html lang="ru" dir="ltr">
       <Head />
-      <Preview>Заказ №{orderNumber} оформлен — {SITE_NAME}</Preview>
+      <Preview>Заказ №{orderNumber} {paid ? 'оплачен' : 'оформлен'} — {SITE_NAME}</Preview>
       <Body style={main}>
         <Container style={container}>
           <Heading style={h1}>Спасибо за заказ, {customerName}!</Heading>
           <Text style={text}>
-            Ваш заказ <strong>№{orderNumber}</strong> успешно оформлен. Мы свяжемся с вами для подтверждения.
+            Ваш заказ <strong>№{orderNumber}</strong> {paid ? 'оплачен. Мы уже готовим его к отправке.' : 'успешно оформлен. Мы свяжемся с вами для подтверждения.'}
           </Text>
 
           <Hr style={hr} />
@@ -102,7 +104,8 @@ const OrderConfirmationEmail = ({
             <Text style={sectionTitle}>Доставка</Text>
             <Text style={text}>{deliveryLabel}, {city}{address ? `, ${address}` : ''}</Text>
             <Text style={sectionTitle}>Оплата</Text>
-            <Text style={text}>{paymentLabel}</Text>
+            <Text style={text}>{paymentLabel}{paid ? ' — оплачено' : ''}</Text>
+            {paid && <Text style={text}>Кассовый чек придёт отдельным письмом от банка.</Text>}
           </Section>
 
           <Text style={footer}>С любовью, команда {SITE_NAME}</Text>
@@ -114,7 +117,7 @@ const OrderConfirmationEmail = ({
 
 export const template = {
   component: OrderConfirmationEmail,
-  subject: (data: Record<string, any>) => `Заказ №${data.orderNumber || ''} оформлен — ${SITE_NAME}`,
+  subject: (data: Record<string, any>) => `Заказ №${data.orderNumber || ''} ${data.paid ? 'оплачен' : 'оформлен'} — ${SITE_NAME}`,
   displayName: 'Подтверждение заказа',
   previewData: {
     orderNumber: '12345',
