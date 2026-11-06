@@ -50,6 +50,44 @@ export async function notifyPaymentStatus(supabase: any, order: {
   }
 }
 
+  if (result === "paid" && order.customer_email) {
+    try {
+      const { data: full } = await supabase.from("orders").select("*")
+        .eq("order_number", order.order_number).maybeSingle();
+      let items: unknown[] = [];
+      if (full?.id) {
+        const { data: its } = await supabase.from("order_items")
+          .select("product_name,size,color,quantity,price").eq("order_id", full.id);
+        items = (its || []).map((i: { product_name: string; size: string; color: string; quantity: number; price: number }) => ({
+          name: i.product_name, size: i.size, color: i.color, quantity: i.quantity, price: Number(i.price) * i.quantity,
+        }));
+      }
+      await supabase.functions.invoke("send-transactional-email", {
+        body: {
+          templateName: "order-confirmation",
+          recipientEmail: order.customer_email,
+          idempotencyKey: `order-paid-${order.order_number}`,
+          templateData: {
+            orderNumber: order.order_number,
+            customerName: order.customer_name,
+            items,
+            totalPrice: Number(order.total_price),
+            deliveryPrice: Number(order.delivery_price || 0),
+            deliveryMethod: full?.delivery_method || "",
+            city: full?.city || "",
+            address: full?.address || "",
+            paymentMethod: full?.payment_method || "",
+            discountAmount: Number(full?.discount_amount || 0),
+            paid: true,
+          },
+        },
+      });
+    } catch (e) {
+      console.error("Customer email notify error:", e);
+    }
+  }
+}
+
 export function mapPaymentResult(s: string): "paid" | "cancelled" | null {
   if (s === "CONFIRMED") return "paid";
   if (["REJECTED", "DEADLINE_EXPIRED", "CANCELED", "REVERSED", "REFUNDED", "PARTIAL_REFUNDED", "AUTH_FAIL"].includes(s)) return "cancelled";
