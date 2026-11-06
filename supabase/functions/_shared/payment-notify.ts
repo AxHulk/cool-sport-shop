@@ -48,8 +48,6 @@ export async function notifyPaymentStatus(supabase: any, order: {
   } catch (e) {
     console.error("Admin email notify error:", e);
   }
-}
-
   if (result === "paid" && order.customer_email) {
     try {
       const { data: full } = await supabase.from("orders").select("*")
