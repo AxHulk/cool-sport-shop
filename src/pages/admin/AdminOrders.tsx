@@ -50,6 +50,15 @@ const AdminOrders = () => {
     }
   };
 
+  const resendEmail = async () => {
+    if (!selected) return;
+    try {
+      const r = await adminApi<{ sent: boolean; reason?: string }>('resendCustomerEmail', { orderNumber: selected.order_number });
+      if (r.sent) toast.success('Письмо покупателю отправлено');
+      else toast.error(r.reason === 'no_email' ? 'У заказа нет почты' : 'Не удалось отправить письмо');
+    } catch { toast.error('Не удалось отправить письмо'); }
+  };
+
   const saveTracking = async () => {
     if (!selected) return;
     await adminApi('updateOrderTracking', { orderId: selected.id, trackingNumber });
@@ -152,6 +161,10 @@ const AdminOrders = () => {
                   <Input value={trackingNumber} onChange={e => setTrackingNumber(e.target.value)} placeholder="Введите трек-номер" />
                   <Button size="sm" onClick={saveTracking}>Сохранить</Button>
                 </div>
+              </div>
+
+              <div className="mt-4">
+                <Button size="sm" variant="outline" onClick={resendEmail}>Отправить письмо покупателю ещё раз</Button>
               </div>
 
               <div className="mt-4">

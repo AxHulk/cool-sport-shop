@@ -2,6 +2,7 @@
 // Auth: caller must send header `x-admin-password` matching the ADMIN_PASSWORD secret.
 import { createClient } from 'npm:@supabase/supabase-js@2';
 import { corsHeaders as baseCorsHeaders } from 'npm:@supabase/supabase-js@2/cors';
+import { sendCustomerPaidEmail } from '../_shared/payment-notify.ts';
 
 const corsHeaders = {
   ...baseCorsHeaders,
@@ -103,6 +104,12 @@ Deno.serve(async (req) => {
         if (itemsRes.error) throw itemsRes.error;
         if (histRes.error) throw histRes.error;
         return json({ items: itemsRes.data, history: histRes.data });
+      }
+
+      case 'resendCustomerEmail': {
+        if (!body.orderNumber) return json({ error: 'orderNumber required' }, 400);
+        const r = await sendCustomerPaidEmail(supabase, String(body.orderNumber), true);
+        return json(r);
       }
 
       case 'updateOrderStatus': {
