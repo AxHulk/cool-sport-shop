@@ -1,3 +1,4 @@
+import { sendAndLog } from "./send-and-log.ts";
 // Shared: notify admin (Telegram + email) about final payment status.
 // deno-lint-ignore no-explicit-any
 export async function notifyPaymentStatus(supabase: any, order: {
@@ -30,10 +31,7 @@ export async function notifyPaymentStatus(supabase: any, order: {
     console.error("Telegram notify error:", e);
   }
   try {
-    await supabase.functions.invoke("send-transactional-email", {
-      body: {
-        templateName: "admin-order-notification",
-        recipientEmail: "asana.wear@yandex.ru",
+    await sendAndLog(supabase, "admin-order-notification", "asana.wear@yandex.ru", {
         idempotencyKey: `admin-order-${order.order_number}-${result}`,
         templateData: {
           orderNumber: order.order_number,
@@ -43,7 +41,6 @@ export async function notifyPaymentStatus(supabase: any, order: {
           deliveryPrice: Number(order.delivery_price || 0),
           paymentStatus: result,
         },
-      },
     });
   } catch (e) {
     console.error("Admin email notify error:", e);
@@ -71,10 +68,8 @@ export async function sendCustomerPaidEmail(supabase: any, orderNumber: string, 
     const items = (its || []).map((i: { product_name: string; size: string; color: string; quantity: number; price: number }) => ({
       name: i.product_name, size: i.size, color: i.color, quantity: i.quantity, price: Number(i.price) * i.quantity,
     }));
-    await supabase.functions.invoke("send-transactional-email", {
-      body: {
-        templateName: "order-confirmation",
-        recipientEmail: full.customer_email,
+    await sendAndLog(supabase, "order-confirmation", full.customer_email, {
+        replyTo: "asana.wear@yandex.ru",
         idempotencyKey: `order-paid-${orderNumber}${force ? "-" + Date.now() : ""}`,
         templateData: {
           orderNumber,
@@ -89,7 +84,6 @@ export async function sendCustomerPaidEmail(supabase: any, orderNumber: string, 
           discountAmount: Number(full.discount_amount || 0),
           paid: true,
         },
-      },
     });
     return { sent: true };
   } catch (e) {

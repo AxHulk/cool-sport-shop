@@ -1,5 +1,7 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.4";
 
+import { sendAndLog } from "../_shared/send-and-log.ts";
+
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
@@ -155,10 +157,7 @@ Deno.serve(async (req) => {
         quantity: i.quantity,
         price: i.price,
       }));
-      await supabase.functions.invoke('send-transactional-email', {
-        body: {
-          templateName: 'admin-order-notification',
-          recipientEmail: 'asana.wear@yandex.ru',
+      await sendAndLog(supabase, 'admin-order-notification', 'asana.wear@yandex.ru', {
           idempotencyKey: `admin-order-${payload.order_number}`,
           templateData: {
             orderNumber: payload.order_number,
@@ -176,8 +175,25 @@ Deno.serve(async (req) => {
             discountAmount: payload.discount_amount,
             promoCode: payload.promo_code || null,
           },
-        },
       });
+      if (payload.customer_email && !['card', 'sbp', 'dolyame'].includes(payload.payment_method)) {
+        await sendAndLog(supabase, 'order-confirmation', payload.customer_email, {
+          replyTo: 'asana.wear@yandex.ru',
+          idempotencyKey: `order-confirm-${payload.order_number}`,
+          templateData: {
+            orderNumber: payload.order_number,
+            customerName: payload.customer_name,
+            items: adminItems,
+            totalPrice: payload.total_price,
+            deliveryPrice: payload.delivery_price,
+            deliveryMethod: payload.delivery_method,
+            city: payload.city,
+            address: payload.address,
+            paymentMethod: payload.payment_method,
+            discountAmount: payload.discount_amount,
+          },
+        });
+      }
     } catch (adminEmailErr) {
       console.error('Admin email notification error:', adminEmailErr);
     }
