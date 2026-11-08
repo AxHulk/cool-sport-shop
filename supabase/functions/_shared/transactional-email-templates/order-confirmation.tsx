@@ -117,7 +117,7 @@ const OrderConfirmationEmail = ({
 
 export const template = {
   component: OrderConfirmationEmail,
-  subject: (data: Record<string, any>) => `Заказ №${data.orderNumber || ''} ${data.paid ? 'оплачен' : 'оформлен'} — ${SITE_NAME}`,
+  subject: (data: Record<string, any>) => `Ваш заказ №${data.orderNumber || ''} в asana`,
   displayName: 'Подтверждение заказа',
   previewData: {
     orderNumber: '12345',

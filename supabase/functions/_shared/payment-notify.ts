@@ -49,40 +49,52 @@ export async function notifyPaymentStatus(supabase: any, order: {
     console.error("Admin email notify error:", e);
   }
   if (result === "paid" && order.customer_email) {
-    try {
-      const { data: full } = await supabase.from("orders").select("*")
-        .eq("order_number", order.order_number).maybeSingle();
-      let items: unknown[] = [];
-      if (full?.id) {
-        const { data: its } = await supabase.from("order_items")
-          .select("product_name,size,color,quantity,price").eq("order_id", full.id);
-        items = (its || []).map((i: { product_name: string; size: string; color: string; quantity: number; price: number }) => ({
-          name: i.product_name, size: i.size, color: i.color, quantity: i.quantity, price: Number(i.price) * i.quantity,
-        }));
-      }
-      await supabase.functions.invoke("send-transactional-email", {
-        body: {
-          templateName: "order-confirmation",
-          recipientEmail: order.customer_email,
-          idempotencyKey: `order-paid-${order.order_number}`,
-          templateData: {
-            orderNumber: order.order_number,
-            customerName: order.customer_name,
-            items,
-            totalPrice: Number(order.total_price),
-            deliveryPrice: Number(order.delivery_price || 0),
-            deliveryMethod: full?.delivery_method || "",
-            city: full?.city || "",
-            address: full?.address || "",
-            paymentMethod: full?.payment_method || "",
-            discountAmount: Number(full?.discount_amount || 0),
-            paid: true,
-          },
-        },
-      });
-    } catch (e) {
-      console.error("Customer email notify error:", e);
+    await sendCustomerPaidEmail(supabase, order.order_number, false);
+  }
+}
+
+// Sends "order paid" email to customer once per order (unless force=true).
+// deno-lint-ignore no-explicit-any
+export async function sendCustomerPaidEmail(supabase: any, orderNumber: string, force: boolean): Promise<{ sent: boolean; reason?: string }> {
+  try {
+    const { data: full } = await supabase.from("orders").select("*")
+      .eq("order_number", orderNumber).maybeSingle();
+    if (!full?.customer_email) return { sent: false, reason: "no_email" };
+    if (!force) {
+      const { data: prev } = await supabase.from("email_send_log").select("id")
+        .eq("template_name", "order-confirmation").eq("recipient_email", full.customer_email)
+        .in("status", ["pending", "sent"]).gte("created_at", full.created_at).limit(1);
+      if (prev && prev.length > 0) return { sent: false, reason: "already_sent" };
     }
+    const { data: its } = await supabase.from("order_items")
+      .select("product_name,size,color,quantity,price").eq("order_id", full.id);
+    const items = (its || []).map((i: { product_name: string; size: string; color: string; quantity: number; price: number }) => ({
+      name: i.product_name, size: i.size, color: i.color, quantity: i.quantity, price: Number(i.price) * i.quantity,
+    }));
+    await supabase.functions.invoke("send-transactional-email", {
+      body: {
+        templateName: "order-confirmation",
+        recipientEmail: full.customer_email,
+        idempotencyKey: `order-paid-${orderNumber}${force ? "-" + Date.now() : ""}`,
+        templateData: {
+          orderNumber,
+          customerName: full.customer_name,
+          items,
+          totalPrice: Number(full.total_price),
+          deliveryPrice: Number(full.delivery_price || 0),
+          deliveryMethod: full.delivery_method || "",
+          city: full.city || "",
+          address: full.address || "",
+          paymentMethod: full.payment_method || "",
+          discountAmount: Number(full.discount_amount || 0),
+          paid: true,
+        },
+      },
+    });
+    return { sent: true };
+  } catch (e) {
+    console.error("Customer email notify error:", e);
+    return { sent: false, reason: "error" };
   }
 }
 
