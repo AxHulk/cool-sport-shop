@@ -1,18 +1,51 @@
 import { createEmailWebhookHandler } from 'npm:@lovable.dev/email-js@0.5.0'
+import { createClient } from 'npm:@supabase/supabase-js@2'
+
+const supabase = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!)
+
+type Reason = 'bounce' | 'complaint' | 'unsubscribe'
+const STATUS: Record<Reason, string> = { bounce: 'bounced', complaint: 'complained', unsubscribe: 'suppressed' }
+const MESSAGE: Record<Reason, string> = {
+  bounce: 'Permanent bounce — email address is invalid or rejected',
+  complaint: 'Spam complaint — recipient marked email as spam',
+  unsubscribe: 'Recipient unsubscribed',
+}
+
+// Notification-only mirror of delivery outcomes; never gates sends.
+async function record(eventId: string, recipient: string, messageId: string | null | undefined, reason: Reason) {
+  const email = recipient.toLowerCase()
+  const { error: e1 } = await supabase
+    .from('suppressed_emails')
+    .upsert({ email, reason, metadata: null }, { onConflict: 'email' })
+  if (e1) {
+    console.error('suppressed_emails upsert failed', { code: e1.code, message: e1.message, event_id: eventId })
+    throw new Error('suppressed_emails upsert failed')
+  }
+  const { error: e2 } = await supabase.from('email_send_log').insert({
+    message_id: messageId ?? null,
+    template_name: 'system',
+    recipient_email: email,
+    status: STATUS[reason],
+    error_message: MESSAGE[reason],
+    metadata: null,
+  })
+  if (e2) {
+    console.error('email_send_log insert failed', { code: e2.code, message: e2.message, event_id: eventId })
+    throw new Error('email_send_log insert failed')
+  }
+}
 
 const handler = createEmailWebhookHandler({
   apiKey: Deno.env.get('LOVABLE_API_KEY')!,
   on: {
-    // Placeholder handlers — replace each log with the feature's reaction.
-    // Throw on failure so the delivery is retried.
     'email.bounced': async (event) => {
-      console.log('Email bounced', { event_id: event.event_id })
+      await record(event.event_id, event.data.recipient, event.data.message_id, 'bounce')
     },
     'email.complaint': async (event) => {
-      console.log('Email complaint', { event_id: event.event_id })
+      await record(event.event_id, event.data.recipient, event.data.message_id, 'complaint')
     },
     'email.unsubscribed': async (event) => {
-      console.log('Email unsubscribed', { event_id: event.event_id })
+      await record(event.event_id, event.data.recipient, event.data.message_id, 'unsubscribe')
     },
   },
 })
