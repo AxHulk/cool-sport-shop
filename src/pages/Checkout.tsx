@@ -340,34 +340,6 @@ const Checkout = () => {
       setDone(true);
       toast.success('Заказ оформлен!', { description: `Номер заказа: ${num}` });
 
-      // Send order confirmation email (fire-and-forget)
-      supabase.functions.invoke('send-transactional-email', {
-        body: {
-          templateName: 'order-confirmation',
-          recipientEmail: form.email,
-          idempotencyKey: `order-confirm-${num}`,
-          templateData: {
-            orderNumber: num,
-            customerName: form.name,
-            items: items.map(i => ({
-              name: i.product.name,
-              size: i.size,
-              color: i.color.name,
-              quantity: i.quantity,
-              price: i.product.price * i.quantity,
-            })),
-            totalPrice: priceAfterCombo,
-            deliveryPrice,
-            deliveryMethod: cdek?.mode === 'pickup' ? 'cdek_pvz' : 'cdek_courier_fitting',
-            city: cdek?.city_name || '',
-            address: cdek?.mode === 'pickup'
-              ? `СДЭК ПВЗ ${cdek.pvz_code}: ${cdek.pvz_address}`
-              : (cdek?.courier_address || ''),
-            paymentMethod: form.paymentMethod,
-            discountAmount: appliedCombo?.savings || 0,
-          },
-        },
-      }).catch(err => console.error('Email send error:', err));
     } catch (error) {
       console.error('Order save error:', error);
       // Still complete the order even if DB save fails
