@@ -67,13 +67,11 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      const { data } = await supabase
-        .from('products_inventory')
-        .select('product_id, size, color, quantity, reserved');
+      const { data } = await supabase.rpc('get_product_availability');
       if (cancelled || !data) return;
       const map: Record<string, number> = {};
       data.forEach((r: any) => {
-        map[stockKey(r.product_id, r.size, r.color)] = Math.max(0, (r.quantity ?? 0) - (r.reserved ?? 0));
+        map[stockKey(r.product_id, r.size, r.color)] = r.available ?? 0;
       });
       setStockMap(map);
     })();
