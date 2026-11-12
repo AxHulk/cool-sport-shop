@@ -113,6 +113,7 @@ Deno.serve(async (req) => {
     if (action === 'pickup-points') {
       const cityCode = body.city_code ?? url.searchParams.get('city_code');
       if (!cityCode) throw new Error('city_code required');
+      if (mode !== 'pickup') return json({ error: 'Доступна только доставка в пункт выдачи' }, 400);
       const data = await cdekFetch(
         `/deliverypoints?city_code=${cityCode}&type=PVZ&country_code=RU`,
       );

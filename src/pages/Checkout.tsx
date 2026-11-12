@@ -267,7 +267,7 @@ const Checkout = () => {
             address: cdek?.mode === 'pickup'
               ? `СДЭК ПВЗ ${cdek.pvz_code}: ${cdek.pvz_address}`
               : (cdek?.courier_address || ''),
-            delivery_method: cdek?.mode === 'pickup' ? 'cdek_pvz' : 'cdek_courier_fitting',
+            delivery_method: 'cdek_pvz',
             cdek_city_code: cdek?.city_code,
             cdek_pvz_code: cdek?.pvz_code || null,
             cdek_period_min: cdek?.period_min ?? null,

@@ -71,7 +71,7 @@ const CdekDelivery = ({ quantity, value, onChange }: Props) => {
     value ? { code: value.city_code, city: value.city_name, region: '', full: value.city_name } : null,
   );
 
-  const [mode, setMode] = useState<'pickup' | 'courier_fitting' | null>(value?.mode || null);
+  const [mode, setMode] = useState<'pickup' | 'courier_fitting' | null>('pickup');
   const [points, setPoints] = useState<CdekPoint[]>([]);
   const [loadingPoints, setLoadingPoints] = useState(false);
   const [selectedPoint, setSelectedPoint] = useState<CdekPoint | null>(null);
@@ -113,7 +113,6 @@ const CdekDelivery = ({ quantity, value, onChange }: Props) => {
     setCity(c);
     setQuery(c.city);
     setShowSuggestions(false);
-    setMode(null);
     setPoints([]);
     setSelectedPoint(null);
     setCourierAddress('');
@@ -223,43 +222,6 @@ const CdekDelivery = ({ quantity, value, onChange }: Props) => {
         )}
       </div>
 
-      {/* Способ доставки */}
-      {city && (
-        <div>
-          <Label className="mb-2 block">Способ доставки СДЭК *</Label>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <button
-              type="button"
-              onClick={() => setMode('pickup')}
-              className={cn(
-                'border rounded-md p-4 text-left transition-colors',
-                mode === 'pickup' ? 'border-foreground bg-foreground text-background' : 'hover:bg-secondary/40',
-              )}
-            >
-              <Package className="h-5 w-5 mb-2" />
-              <div className="font-medium">Пункт выдачи</div>
-              <div className={cn('text-xs mt-1', mode === 'pickup' ? 'opacity-80' : 'text-muted-foreground')}>
-                Получение в ПВЗ или постамате СДЭК
-              </div>
-            </button>
-            <button
-              type="button"
-              onClick={() => setMode('courier_fitting')}
-              className={cn(
-                'border rounded-md p-4 text-left transition-colors',
-                mode === 'courier_fitting' ? 'border-foreground bg-foreground text-background' : 'hover:bg-secondary/40',
-              )}
-            >
-              <Home className="h-5 w-5 mb-2" />
-              <div className="font-medium">Курьером с примеркой</div>
-              <div className={cn('text-xs mt-1', mode === 'courier_fitting' ? 'opacity-80' : 'text-muted-foreground')}>
-                Доставка до двери, можно примерить
-              </div>
-            </button>
-          </div>
-        </div>
-      )}
-
       {/* ПВЗ */}
       {city && mode === 'pickup' && (
         <div>
@@ -310,21 +272,6 @@ const CdekDelivery = ({ quantity, value, onChange }: Props) => {
               ))}
             </div>
           )}
-        </div>
-      )}
-
-      {/* Курьер */}
-      {city && mode === 'courier_fitting' && (
-        <div>
-          <Label>Адрес доставки *</Label>
-          <Input
-            value={courierAddress}
-            onChange={(e) => setCourierAddress(e.target.value)}
-            placeholder="ул. Примерная, д. 1, кв. 10"
-          />
-          <p className="text-xs text-muted-foreground mt-1">
-            Курьер привезёт и подождёт примерки до 15 минут.
-          </p>
         </div>
       )}
 
