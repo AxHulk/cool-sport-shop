@@ -27,7 +27,7 @@ const AdminDashboard = () => {
         pendingReturns: number;
         recentOrders: any[];
       }>('dashboard'),
-      supabase.from('products_inventory').select('*').lt('quantity', 3).order('quantity', { ascending: true }).limit(10),
+      adminApi<{ data: any[] }>('listInventory').then(r => ({ data: (r.data || []).filter((x: any) => x.quantity < 3).sort((a: any, b: any) => a.quantity - b.quantity).slice(0, 10) })),
     ]);
 
     setStats({
