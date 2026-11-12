@@ -479,6 +479,15 @@ export type Database = {
         Args: { payload: Json; queue_name: string }
         Returns: number
       }
+      get_product_availability: {
+        Args: never
+        Returns: {
+          available: number
+          color: string
+          product_id: string
+          size: string
+        }[]
+      }
       move_to_dlq: {
         Args: {
           dlq_name: string
