@@ -5,7 +5,7 @@ const Delivery = () => (
   <div className="container py-12 max-w-3xl mx-auto">
     <SEO
       title="Доставка и оплата"
-      description="Курьерская доставка по Москве за 1–2 дня и по России за 3–7 дней. Оплата картой, СБП. Бесплатная доставка от 5000 ₽."
+      description="Отправляем из Крыма службой СДЭК: до Москвы 4–7 дней, по России 5–12 дней. Оплата картой, СБП, Долями."
     />
     <h1 className="text-4xl font-serif mb-8 text-center">Доставка и оплата</h1>
 
@@ -14,7 +14,7 @@ const Delivery = () => (
         <Truck className="h-6 w-6 text-accent shrink-0 mt-1" />
         <div>
           <h2 className="text-xl font-semibold mb-2">Курьерская доставка</h2>
-          <p className="text-muted-foreground">По Москве — 1–2 дня (бесплатно от 5 000 ₽). По России — 3–7 дней (от 350 ₽).</p>
+          <p className="text-muted-foreground">Отправляем из Крыма службой СДЭК в течение 1–2 рабочих дней после оплаты. Москва и Санкт-Петербург — 4–7 дней, остальная Россия — 5–12 дней с момента отправки. Точный срок и стоимость рассчитываются при оформлении заказа.</p>
         </div>
       </section>
 
@@ -22,7 +22,7 @@ const Delivery = () => (
         <MapPin className="h-6 w-6 text-accent shrink-0 mt-1" />
         <div>
           <h2 className="text-xl font-semibold mb-2">Пункты выдачи</h2>
-          <p className="text-muted-foreground">Более 15 000 пунктов выдачи по всей России. Бесплатно от 3 000 ₽.</p>
+          <p className="text-muted-foreground">Пункты выдачи СДЭК по всей России. Сроки те же, стоимость рассчитывается при оформлении заказа.</p>
         </div>
       </section>
 
