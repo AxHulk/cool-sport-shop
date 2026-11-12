@@ -1,4 +1,4 @@
-import { Truck, CreditCard, RefreshCw, MapPin } from 'lucide-react';
+import { CreditCard, RefreshCw, MapPin } from 'lucide-react';
 import SEO from '@/components/SEO';
 
 const Delivery = () => (
@@ -11,18 +11,10 @@ const Delivery = () => (
 
     <div className="space-y-8">
       <section className="flex gap-4">
-        <Truck className="h-6 w-6 text-accent shrink-0 mt-1" />
-        <div>
-          <h2 className="text-xl font-semibold mb-2">Курьерская доставка</h2>
-          <p className="text-muted-foreground">Отправляем из Крыма службой СДЭК в течение 1–2 рабочих дней после оплаты. Москва и Санкт-Петербург — 4–7 дней, остальная Россия — 5–12 дней с момента отправки. Точный срок и стоимость рассчитываются при оформлении заказа.</p>
-        </div>
-      </section>
-
-      <section className="flex gap-4">
         <MapPin className="h-6 w-6 text-accent shrink-0 mt-1" />
         <div>
-          <h2 className="text-xl font-semibold mb-2">Пункты выдачи</h2>
-          <p className="text-muted-foreground">Пункты выдачи СДЭК по всей России. Сроки те же, стоимость рассчитывается при оформлении заказа.</p>
+          <h2 className="text-xl font-semibold mb-2">Доставка в пункты выдачи СДЭК</h2>
+          <p className="text-muted-foreground">Отправляем из Крыма в пункты выдачи СДЭК по всей России в течение 1–2 рабочих дней после оплаты. Москва и Санкт-Петербург — 4–7 дней, остальная Россия — 5–12 дней с момента отправки. Стоимость рассчитывается при оформлении заказа.</p>
         </div>
       </section>
 
@@ -30,7 +22,7 @@ const Delivery = () => (
         <CreditCard className="h-6 w-6 text-accent shrink-0 mt-1" />
         <div>
           <h2 className="text-xl font-semibold mb-2">Оплата</h2>
-          <p className="text-muted-foreground">Банковская карта, СБП, рассрочка от Т-Банк (0-0-4). Оплата при получении для курьерской доставки.</p>
+          <p className="text-muted-foreground">Банковская карта, СБП, рассрочка от Т-Банк (0-0-4).</p>
         </div>
       </section>
 
@@ -38,7 +30,7 @@ const Delivery = () => (
         <RefreshCw className="h-6 w-6 text-accent shrink-0 mt-1" />
         <div>
           <h2 className="text-xl font-semibold mb-2">Возврат и обмен</h2>
-          <p className="text-muted-foreground">Бесплатный возврат в течение 14 дней. Примерка при получении курьером. Обмен размера — бесплатно.</p>
+          <p className="text-muted-foreground">Бесплатный возврат в течение 14 дней. Обмен размера — бесплатно.</p>
         </div>
       </section>
     </div>
